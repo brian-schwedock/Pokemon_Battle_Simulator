@@ -2,6 +2,8 @@ package pokemon_simulator;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -10,21 +12,21 @@ public class AnimationPanel extends JPanel {
 	GameApplication ga;
 	ImageIcon playerImage;
 	ImageIcon opposingPlayerImage;
-	ImageIcon pokeballImage;
+	Image pokeballImage;
 	
 	public AnimationPanel (GameApplication ga, ImageIcon playerImage,
 			ImageIcon opposingPlayerImage) {
 		this.ga = ga;
 		this.playerImage = playerImage;
 		this.opposingPlayerImage = opposingPlayerImage;
-		//pokeballImage = 
 		
+		//Get the pokeballImage and resize it
+		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
 	}
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		
-		g.setFont(new Font (g.getFont().getName(), g.getFont().getStyle(), 50));
-		g.drawString("Imagine two Pokemon here", 100, 200);
+		g.drawImage(pokeballImage, 50, 50, 20, 20, null);
 	}
 }
