@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 public class AnimationPanel extends JPanel {
 	GameApplication ga;
+	// test comment
 	ImageIcon playerImage;
 	ImageIcon opposingPlayerImage;
 	ImageIcon pokeballImage;
