@@ -1,5 +1,5 @@
 package pokemon_simulator;
-
+//Allen test commit
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -18,6 +18,7 @@ public class AnimationPanel extends JPanel {
 		this.playerImage = playerImage;
 		this.opposingPlayerImage = opposingPlayerImage;
 		//pokeballImage = 
+		
 	}
 	
 	protected void paintComponent (Graphics g) {
