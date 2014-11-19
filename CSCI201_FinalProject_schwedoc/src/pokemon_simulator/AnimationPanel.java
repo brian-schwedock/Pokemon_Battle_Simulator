@@ -1,5 +1,6 @@
 package pokemon_simulator;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,6 +15,7 @@ public class AnimationPanel extends JPanel {
 	Image opposingPlayerImage;
 	Image pokeballImage;
 	Image pokemonImage;
+	ImageIcon p;
 	
 	public AnimationPanel (GameApplication ga, Image playerImage,
 			Image opposingPlayerImage) {
@@ -23,14 +25,16 @@ public class AnimationPanel extends JPanel {
 		
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
 		
-		pokemonImage = (new ImageIcon ("images/frontSprites/BlastoiseFront.gif")).getImage();
+		pokemonImage = (new ImageIcon ("images/frontSprites/MewtwoFront.gif")).getImage();
+		//p = new ImageIcon ("images/frontSprites/BlastoiseFront.gif");
 	}
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		
 		//g.drawImage(pokeballImage, 50, 50, 20, 20, null);
-		g.drawImage(pokemonImage, 50, 50, 100, 100, this);
+		g.drawImage(pokemonImage, 150, 150, 100, 100, this);
+		//p.paintIcon(this, g, 200, 200);
 	}
 	
 	public void crossOutPokemon (Graphics g, int whichPokemon) {
