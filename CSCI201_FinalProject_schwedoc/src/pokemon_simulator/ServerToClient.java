@@ -13,6 +13,7 @@ public class ServerToClient implements Serializable {
 	ArrayList<Pokemon> allPokemon;
 	int pokemonInPlay;
 	//Changed this from ImageIcon to Image
+	//Might change it back.  Idk yet.
 	Image opposingPokemonImage;
 	int opposingCurrentHP;
 	int opposingMaxHP;
