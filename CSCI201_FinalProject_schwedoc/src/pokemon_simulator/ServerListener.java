@@ -13,14 +13,30 @@ public class ServerListener extends Thread {
 	}
 	
 	public void run () {
+		ServerToClient stc = null;
 		try {
-			ServerToClient stc = (ServerToClient) ois.readObject ();
+			stc = (ServerToClient) ois.readObject ();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		
+		if (stc.action == 1){
+			ga.addMessage(stc.message);
+		}
+		else {
+			//ga.setAllPokemon ();
+			//ga.setCurrentPokemon ();
+			//ga.setOpposingPokemonImage ();
+			//ga.setOpposingPokemonCurrentHP ();
+			//ga.setOpposingPokemonMaxHP ();
+			//ga.setOpposingPokemonAlive ();
+			
+			//Add a message indicating damage percentage lost
+			//and whether a Pokemon has fainted
+			
+			//And some additional info based on value of action
+		}
 	}
 }

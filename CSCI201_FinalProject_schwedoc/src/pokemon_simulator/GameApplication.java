@@ -160,75 +160,85 @@ public class GameApplication extends JFrame {
 	}
 	
 	public String getPlayerName () {
+		//TODO: write the function
 		return null;
 	}
 
     public ImageIcon getPokemonImage (int number) {
-		return null;
+    	//TODO: write the function
+    	return null;
     }
 
     public ImageIcon getCurrentPokemonImage () {
+    	//TODO: write the function
     	return null;
     }
 
     public ImageIcon getOpposingPokemonImage () {
+    	//TODO: write the function
     	return null;
     }
 
     public String getPokemonName () {
+    	//TODO: write the function
     	return null;
     }
 
     public String getOpposingPokemonName () {
+    	//TODO: write the function
     	return null;
     }
 
     public int getCurrentHP () {
+    	//TODO: write the function
     	return 0;
     }
 
     public int getOpposingCurrentHP () {
+    	//TODO: write the function
     	return 0;
     }
 
     public int getMaxHP () {
+    	//TODO: write the function
     	return 0;
     }
 
     public int getOpposingMaxHP () {
+    	//TODO: write the function
     	return 0;
     }
 
     public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
-
+    	//TODO: write the function
     }
 
     public void setCurrentPokemon (int current) {
-
+    	//TODO: write the function
     }
 
     public void setOpposingPokemonImage (ImageIcon opposingPokemonImage) {
-
+    	//TODO: write the function
     }
 
     public void setOpposingPokemonCurrentHP (int currentHP) {
-
+    	//TODO: write the function
     }
 
     public void setOpposingPokemonMaxHP (int maxHP) {
-
+    	//TODO: write the function
     }
 
     public void setOpposingPokemonAlive (int alive) {
-
+    	//TODO: write the function
     }
 
     public void addMessage (String message) {
-
+    	//TODO: write the function
     }
 
     public void resetBottomPanel () {
- 
+    	//TODO: write the function
     }
 
 	

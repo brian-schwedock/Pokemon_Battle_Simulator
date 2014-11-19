@@ -10,23 +10,40 @@ import javax.swing.JPanel;
 
 public class AnimationPanel extends JPanel {
 	GameApplication ga;
-	ImageIcon playerImage;
-	ImageIcon opposingPlayerImage;
+	Image playerImage;
+	Image opposingPlayerImage;
 	Image pokeballImage;
 	
-	public AnimationPanel (GameApplication ga, ImageIcon playerImage,
-			ImageIcon opposingPlayerImage) {
+	public AnimationPanel (GameApplication ga, Image playerImage,
+			Image opposingPlayerImage) {
 		this.ga = ga;
 		this.playerImage = playerImage;
 		this.opposingPlayerImage = opposingPlayerImage;
 		
-		//Get the pokeballImage and resize it
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
+		
+	
 	}
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		
-		g.drawImage(pokeballImage, 50, 50, 20, 20, null);
+		//g.drawImage(pokeballImage, 50, 50, 20, 20, null);
+	}
+	
+	public void crossOutPokemon (Graphics g, int whichPokemon) {
+		//TODO: write function
+	}
+	
+	public void crossOutOpposingPokemon (Graphics g, int numberOfPokemon) {
+		//TODO: write function
+	}
+	
+	public void drawHP (Graphics g, int currentHP, int maxHP) {
+		//TODO: write function
+	}
+	
+	public void drawOpposingHP (Graphics g, int opposingCurrentHP, int opposingMaxHP) {
+		//TODO: write function
 	}
 }

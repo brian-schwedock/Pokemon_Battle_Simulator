@@ -1,6 +1,11 @@
 package pokemon_simulator;
 
-public class ClientToServer {
+import java.io.Serializable;
+
+public class ClientToServer implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	int action;
 	String message;
 	int moveChosen;

@@ -1,15 +1,19 @@
 package pokemon_simulator;
 
+import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+public class ServerToClient implements Serializable {
 
-public class ServerToClient {
+	private static final long serialVersionUID = 1L;
+	
 	int action;
 	int playerNumber;
 	ArrayList<Pokemon> allPokemon;
 	int pokemonInPlay;
-	ImageIcon opposingPokemonImage;
+	//Changed this from ImageIcon to Image
+	Image opposingPokemonImage;
 	int opposingCurrentHP;
 	int opposingMaxHP;
 	int opposingPokemonAlive;
@@ -18,7 +22,7 @@ public class ServerToClient {
 	
 	public ServerToClient (int action, int playerNumber,
 			ArrayList<Pokemon> allPokemon, int pokemonInPlay,
-			ImageIcon opposingPokemonImage, int opposingCurrentHP,
+			Image opposingPokemonImage, int opposingCurrentHP,
 			int opposingMaxHP, int opposingPokemonAlive, String message,
 			int damageTaken) {
 		this.action = action;
