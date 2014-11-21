@@ -66,7 +66,8 @@ public class GameApplication extends JFrame {
 	int opposingPokemonMaxHP;
 	int opposingPokemonAlive;
 	
-	public GameApplication () {
+	public GameApplication (ServerToClient stc) {
+		//GUI Initializations
 		super("Pokemon Battle Simulator");
 		setSize(1200, 650);
 		setResizable(false);
@@ -77,24 +78,13 @@ public class GameApplication extends JFrame {
 		createGameScreenPanel();
 		
 		
-		
-		//This is test code to make sure the GUI works
-		Pokemon p1 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
-		Pokemon p2 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
-		Pokemon p3 = new Pokemon ("Bulbasaur", "Grass", 345, 100, 150, 400, 250, 375);
-		Pokemon p4 = new Pokemon ("Gengar", "Ghost", 345, 100, 150, 400, 250, 375);
-		Pokemon p5 = new Pokemon ("Porygon", "Normal", 345, 100, 150, 400, 250, 375);
-		Pokemon p6 = new Pokemon ("Machamp", "Fighting", 345, 100, 150, 400, 250, 375);
-		ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon> ();
-		allPokemon.add (p1);
-		allPokemon.add (p2);
-		allPokemon.add (p3);
-		allPokemon.add (p4);
-		allPokemon.add (p5);
-		allPokemon.add (p6);
-		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
-				350, 350, 6, "message", 100);
-		
+		//Set all initial Pokemon information
+		setAllPokemon(stc.allPokemon);
+		setCurrentPokemon(stc.pokemonInPlay);
+		setOpposingPokemonImage(stc.opposingPokemonImage);
+		setOpposingPokemonCurrentHP(stc.opposingCurrentHP);
+		setOpposingPokemonMaxHP(stc.opposingMaxHP);
+		setOpposingPokemonAlive(stc.opposingPokemonAlive);
 		
 		
 		setVisible(true);
@@ -186,19 +176,17 @@ public class GameApplication extends JFrame {
 		return null;
 	}
 
-    public ImageIcon getPokemonImage (int number) {
-    	//TODO: write the function
-    	return null;
+	//We may not need this method
+    public Image getPokemonImage (int number) {
+    	return allPokemon.get(currentPokemon).getFrontImage();
     }
 
-    public ImageIcon getCurrentPokemonImage () {
-    	//TODO: write the function
-    	return null;
+    public Image getCurrentPokemonImage () {
+    	return allPokemon.get(currentPokemon).getBackImage();
     }
 
-    public ImageIcon getOpposingPokemonImage () {
-    	//TODO: write the function
-    	return null;
+    public Image getOpposingPokemonImage () {
+    	return opposingPokemonImage;
     }
 
     public String getPokemonName () {
@@ -232,15 +220,16 @@ public class GameApplication extends JFrame {
     }
 
     public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
-    	//TODO: write the function
+    	this.allPokemon = allPokemon;
     }
 
     public void setCurrentPokemon (int current) {
-    	//TODO: write the function
+    	currentPokemon = current;
+    	//TODO: change the GUI to reflect current Pokemon
     }
 
-    public void setOpposingPokemonImage (ImageIcon opposingPokemonImage) {
-    	//TODO: write the function
+    public void setOpposingPokemonImage (Image opposingPokemonImage) {
+    	this.opposingPokemonImage = opposingPokemonImage;
     }
 
     public void setOpposingPokemonCurrentHP (int currentHP) {
@@ -270,6 +259,27 @@ public class GameApplication extends JFrame {
 		//Only after connecting to the server,
 		//create the GUI
 		
-		new GameApplication ();
+		
+		
+		//This is test code to make sure the GUI works
+		Pokemon p1 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p2 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p3 = new Pokemon ("Bulbasaur", "Grass", 345, 100, 150, 400, 250, 375);
+		Pokemon p4 = new Pokemon ("Gengar", "Ghost", 345, 100, 150, 400, 250, 375);
+		Pokemon p5 = new Pokemon ("Porygon", "Normal", 345, 100, 150, 400, 250, 375);
+		Pokemon p6 = new Pokemon ("Machamp", "Fighting", 345, 100, 150, 400, 250, 375);
+		ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon> ();
+		allPokemon.add (p1);
+		allPokemon.add (p2);
+		allPokemon.add (p3);
+		allPokemon.add (p4);
+		allPokemon.add (p5);
+		allPokemon.add (p6);
+		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
+				350, 350, 6, "message", 100);
+		
+		
+		
+		new GameApplication (stc);
 	}
 }

@@ -14,7 +14,7 @@ public class AnimationPanel extends JPanel {
 	Image playerImage;
 	Image opposingPlayerImage;
 	Image pokeballImage;
-	Image pokemonImage;
+	//Image pokemonImage;
 	
 	public AnimationPanel (GameApplication ga, Image playerImage,
 			Image opposingPlayerImage) {
@@ -23,14 +23,16 @@ public class AnimationPanel extends JPanel {
 		this.opposingPlayerImage = opposingPlayerImage;
 		
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
-		
-		//pokemonImage = (new ImageIcon ("images/frontSprites/Mewtwo.gif")).getImage();
 	}
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		
-		g.drawImage(pokemonImage, 150, 150, this);
+		Image pokemonImage = ga.getCurrentPokemonImage();
+		Image opposingPokemonImage = ga.getOpposingPokemonImage();
+		
+		g.drawImage(pokemonImage, 150, 250, this);
+		g.drawImage(opposingPokemonImage, 450, 100, this);
 	}
 	
 	public void crossOutPokemon (Graphics g, int whichPokemon) {
