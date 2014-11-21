@@ -79,7 +79,7 @@ public class GameApplication extends JFrame {
 		setOpposingPokemonCurrentHP(stc.opposingCurrentHP);
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
 		setOpposingPokemonAlive(stc.opposingPokemonAlive);
-		
+		setOpposingPokemonName(stc.opposingPokemonName);
 		
 		
 		//GUI Initializations
@@ -205,23 +205,19 @@ public class GameApplication extends JFrame {
     }
 
     public int getCurrentHP () {
-    	//TODO: write the function
-    	return 0;
+    	return allPokemon.get(currentPokemon - 1).getCurrentHP();
     }
 
     public int getOpposingCurrentHP () {
-    	//TODO: write the function
-    	return 0;
+    	return opposingPokemonCurrentHP;
     }
 
     public int getMaxHP () {
-    	//TODO: write the function
-    	return 0;
+    	return allPokemon.get(currentPokemon - 1).getMaxHP();
     }
 
     public int getOpposingMaxHP () {
-    	//TODO: write the function
-    	return 0;
+    	return opposingPokemonMaxHP;
     }
 
     public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
@@ -238,11 +234,11 @@ public class GameApplication extends JFrame {
     }
 
     public void setOpposingPokemonCurrentHP (int currentHP) {
-    	//TODO: write the function
+    	this.opposingPokemonCurrentHP = currentHP;
     }
 
     public void setOpposingPokemonMaxHP (int maxHP) {
-    	//TODO: write the function
+    	this.opposingPokemonMaxHP = maxHP;
     }
 
     public void setOpposingPokemonAlive (int alive) {
@@ -297,10 +293,10 @@ public class GameApplication extends JFrame {
 		allPokemon.add (p6);
 		
 		//int action, int playerNumber, ArrayList<Pokemon> allPokemon, int pokemonInPlay,
-		//Image opposingPokemonImage, int opposingCurrentHP, int opposingMaxHP, 
+		//Image opposingPokemonImage, String opposingPokemonName,  int opposingCurrentHP, int opposingMaxHP, 
 		//int opposingPokemonAlive, String message, int damageTaken
 		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
-				350, 350, 6, "message", 100);
+				"Pikachu", 200, 350, 6, "message", 100);
 		
 		
 		

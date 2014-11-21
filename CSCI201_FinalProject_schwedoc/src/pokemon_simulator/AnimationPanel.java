@@ -32,18 +32,33 @@ public class AnimationPanel extends JPanel {
 		
 		//Draw components for player
 		g.drawImage(playerImage, 20, 275, 60, 100, this);
-		g.drawString(playerName, 30, 260);
+		g.setFont(new Font ("Arial", Font.BOLD, 16));
+		g.drawString(playerName, 20, 260);
 		
 		Image pokemonImage = ga.getCurrentPokemonImage();
+		String pokemonName = ga.getPokemonName();
 		g.drawImage(pokemonImage, 150, 250, this);
-		
+		g.setFont(g.getFont().deriveFont((float) 25));
+		g.drawString(pokemonName, 150, 200);
+		g.drawRect(150, 210, 151, 15);
+		g.setColor(Color.GREEN);
+		g.fillRect(151, 211, 150 * ga.getCurrentHP() / ga.getMaxHP(), 13);
+		g.setColor(Color.BLACK);
 		
 		//Draw components for opponent
 		g.drawImage(opposingPlayerImage, 700, 75, 60, 100, this);
-		g.drawString(opposingPlayerName, 710, 60);
+		g.setFont(g.getFont().deriveFont((float) 16));;
+		g.drawString(opposingPlayerName, 700, 60);
 		
 		Image opposingPokemonImage = ga.getOpposingPokemonImage();
+		String opposingPokemonName = ga.getOpposingPokemonName();
 		g.drawImage(opposingPokemonImage, 450, 100, this);
+		g.setFont(g.getFont().deriveFont((float) 25));
+		g.drawString(opposingPokemonName, 450, 50);
+		g.drawRect(450, 60, 151, 15);
+		g.setColor(Color.GREEN);
+		g.fillRect(451, 61, 150 * ga.getOpposingCurrentHP() / ga.getOpposingMaxHP(), 13);
+		g.setColor(Color.BLACK);
 	}
 	
 	private void setImages () {
