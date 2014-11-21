@@ -10,6 +10,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -59,7 +60,7 @@ public class GameApplication extends JFrame {
 	
 	ArrayList<Pokemon> allPokemon;
 	int currentPokemon;
-	ImageIcon opposingPokemonImage;
+	Image opposingPokemonImage;
 	String opposingPokemonName;
 	int opposingPokemonCurrentHP;
 	int opposingPokemonMaxHP;
@@ -74,6 +75,27 @@ public class GameApplication extends JFrame {
 		
 		createChatBoxPanel();
 		createGameScreenPanel();
+		
+		
+		
+		//This is test code to make sure the GUI works
+		Pokemon p1 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p2 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p3 = new Pokemon ("Bulbasaur", "Grass", 345, 100, 150, 400, 250, 375);
+		Pokemon p4 = new Pokemon ("Gengar", "Ghost", 345, 100, 150, 400, 250, 375);
+		Pokemon p5 = new Pokemon ("Porygon", "Normal", 345, 100, 150, 400, 250, 375);
+		Pokemon p6 = new Pokemon ("Machamp", "Fighting", 345, 100, 150, 400, 250, 375);
+		ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon> ();
+		allPokemon.add (p1);
+		allPokemon.add (p2);
+		allPokemon.add (p3);
+		allPokemon.add (p4);
+		allPokemon.add (p5);
+		allPokemon.add (p6);
+		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
+				350, 350, 6, "message", 100);
+		
+		
 		
 		setVisible(true);
 	}
