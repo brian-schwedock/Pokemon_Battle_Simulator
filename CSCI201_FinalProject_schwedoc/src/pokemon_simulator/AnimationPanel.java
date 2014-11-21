@@ -14,25 +14,49 @@ public class AnimationPanel extends JPanel {
 	Image playerImage;
 	Image opposingPlayerImage;
 	Image pokeballImage;
-	//Image pokemonImage;
+	String playerName;
+	String opposingPlayerName;
 	
-	public AnimationPanel (GameApplication ga, Image playerImage,
-			Image opposingPlayerImage) {
+	public AnimationPanel (GameApplication ga, String playerName, String opposingPlayerName) {
 		this.ga = ga;
-		this.playerImage = playerImage;
-		this.opposingPlayerImage = opposingPlayerImage;
+		this.playerName = playerName;
+		this.opposingPlayerName = opposingPlayerName;
+		this.playerName = playerName;
+		this.opposingPlayerName = opposingPlayerName;
 		
-		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
+		setImages();
 	}
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		
-		Image pokemonImage = ga.getCurrentPokemonImage();
-		Image opposingPokemonImage = ga.getOpposingPokemonImage();
+		//Draw components for player
+		g.drawImage(playerImage, 20, 275, 60, 100, this);
+		g.drawString(playerName, 30, 260);
 		
+		Image pokemonImage = ga.getCurrentPokemonImage();
 		g.drawImage(pokemonImage, 150, 250, this);
+		
+		
+		//Draw components for opponent
+		g.drawImage(opposingPlayerImage, 700, 75, 60, 100, this);
+		g.drawString(opposingPlayerName, 710, 60);
+		
+		Image opposingPokemonImage = ga.getOpposingPokemonImage();
 		g.drawImage(opposingPokemonImage, 450, 100, this);
+	}
+	
+	private void setImages () {
+		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
+		
+		if (playerName.equals("Player 1")) {
+			playerImage = (new ImageIcon ("images/ash.png")).getImage();
+			opposingPlayerImage = (new ImageIcon ("images/gary.gif")).getImage();
+		}
+		else {
+			opposingPlayerImage = (new ImageIcon ("images/ash.png")).getImage();
+			playerImage = (new ImageIcon ("images/gary.gif")).getImage();
+		}
 	}
 	
 	public void crossOutPokemon (Graphics g, int whichPokemon) {

@@ -59,6 +59,8 @@ public class GameApplication extends JFrame {
 	 */
 	
 	ArrayList<Pokemon> allPokemon;
+	String playerName;
+	String opposingPlayerName;
 	int currentPokemon;
 	Image opposingPokemonImage;
 	String opposingPokemonName;
@@ -67,18 +69,10 @@ public class GameApplication extends JFrame {
 	int opposingPokemonAlive;
 	
 	public GameApplication (ServerToClient stc) {
-		//GUI Initializations
 		super("Pokemon Battle Simulator");
-		setSize(1200, 650);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout ());
-		
-		createChatBoxPanel();
-		createGameScreenPanel();
-		
 		
 		//Set all initial Pokemon information
+		setPlayerNames(stc.playerNumber);
 		setAllPokemon(stc.allPokemon);
 		setCurrentPokemon(stc.pokemonInPlay);
 		setOpposingPokemonImage(stc.opposingPokemonImage);
@@ -86,6 +80,16 @@ public class GameApplication extends JFrame {
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
 		setOpposingPokemonAlive(stc.opposingPokemonAlive);
 		
+		
+		
+		//GUI Initializations
+		setSize(1200, 650);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout ());
+		
+		createChatBoxPanel();
+		createGameScreenPanel();
 		
 		setVisible(true);
 	}
@@ -102,7 +106,7 @@ public class GameApplication extends JFrame {
 		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		bottomChatPanel = new JPanel ();
-		JLabel chatBoxPlayerLabel = new JLabel ("Player 1");
+		JLabel chatBoxPlayerLabel = new JLabel (playerName);
 		JTextField messageField = new JTextField ();
 		messageField.setPreferredSize(new Dimension (350, 30));
 		
@@ -124,7 +128,7 @@ public class GameApplication extends JFrame {
 	}
 	
 	public void createAnimationPanel () {
-		animationPanel = new AnimationPanel (this, null, null);
+		animationPanel = new AnimationPanel (this, playerName, opposingPlayerName);
 		gameScreenPanel.add(animationPanel, BorderLayout.CENTER);
 	}
 	
@@ -172,17 +176,20 @@ public class GameApplication extends JFrame {
 	}
 	
 	public String getPlayerName () {
-		//TODO: write the function
-		return null;
+		return playerName;
+	}
+	
+	public String getOpposingPlayerName () {
+		return opposingPlayerName;
 	}
 
 	//We may not need this method
     public Image getPokemonImage (int number) {
-    	return allPokemon.get(currentPokemon).getFrontImage();
+    	return allPokemon.get(currentPokemon - 1).getFrontImage();
     }
 
     public Image getCurrentPokemonImage () {
-    	return allPokemon.get(currentPokemon).getBackImage();
+    	return allPokemon.get(currentPokemon - 1).getBackImage();
     }
 
     public Image getOpposingPokemonImage () {
@@ -190,13 +197,11 @@ public class GameApplication extends JFrame {
     }
 
     public String getPokemonName () {
-    	//TODO: write the function
-    	return null;
+    	return allPokemon.get(currentPokemon - 1).getName();
     }
 
     public String getOpposingPokemonName () {
-    	//TODO: write the function
-    	return null;
+    	return opposingPokemonName;
     }
 
     public int getCurrentHP () {
@@ -243,6 +248,21 @@ public class GameApplication extends JFrame {
     public void setOpposingPokemonAlive (int alive) {
     	//TODO: write the function
     }
+    
+    public void setOpposingPokemonName (String name) {
+    	opposingPokemonName = name;
+    }
+    
+    public void setPlayerNames (int playerNumber) {
+    	if (playerNumber == 1) {
+    		playerName = "Player 1";
+    		opposingPlayerName = "Player 2";
+    	}
+    	else {
+    		playerName = "Player 2";
+    		opposingPlayerName = "Player 1";
+    	}
+    }
 
     public void addMessage (String message) {
     	//TODO: write the function
@@ -262,8 +282,8 @@ public class GameApplication extends JFrame {
 		
 		
 		//This is test code to make sure the GUI works
-		Pokemon p1 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
-		Pokemon p2 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p1 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
+		Pokemon p2 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
 		Pokemon p3 = new Pokemon ("Bulbasaur", "Grass", 345, 100, 150, 400, 250, 375);
 		Pokemon p4 = new Pokemon ("Gengar", "Ghost", 345, 100, 150, 400, 250, 375);
 		Pokemon p5 = new Pokemon ("Porygon", "Normal", 345, 100, 150, 400, 250, 375);
@@ -275,6 +295,10 @@ public class GameApplication extends JFrame {
 		allPokemon.add (p4);
 		allPokemon.add (p5);
 		allPokemon.add (p6);
+		
+		//int action, int playerNumber, ArrayList<Pokemon> allPokemon, int pokemonInPlay,
+		//Image opposingPokemonImage, int opposingCurrentHP, int opposingMaxHP, 
+		//int opposingPokemonAlive, String message, int damageTaken
 		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
 				350, 350, 6, "message", 100);
 		
