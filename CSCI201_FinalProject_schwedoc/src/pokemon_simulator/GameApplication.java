@@ -7,10 +7,11 @@ package pokemon_simulator;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -146,11 +147,15 @@ public class GameApplication extends JFrame {
 		alignPanel.add(attackLabel, BorderLayout.WEST);
 		actionPanel.add(alignPanel);
 		
+		//Create attack buttons
 		JPanel attackButtonPanel = new JPanel ();
-		attackButtons = new ArrayList<JButton>();
+		attackButtons = new ArrayList<JButton> ();
+		AttackListener al = new AttackListener ();
 		for (int i=1; i <= 4; ++i){
 			JButton attackButton = new JButton ("Attack " + i);
 			attackButton.setPreferredSize(new Dimension (190, 30));
+			attackButton.addActionListener(al);
+			attackButton.setToolTipText("type, type, power");
 			attackButtons.add(attackButton);
 			attackButtonPanel.add(attackButton);
 		}
@@ -162,11 +167,15 @@ public class GameApplication extends JFrame {
 		alignPanel.add(pokemonSwitchLabel, BorderLayout.WEST);
 		actionPanel.add(alignPanel);
 		
+		//Create Pokemon switch buttons
 		JPanel pokemonSwitchButtonPanel = new JPanel ();
 		pokemonSwitchButtons = new ArrayList<JButton>();
+		PokemonSwitchListener psl = new PokemonSwitchListener ();
 		for (int i=1; i <= 6; ++i){
 			JButton pokemonSwitchButton = new JButton ("Pokemon " + i);
 			pokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
+			pokemonSwitchButton.addActionListener(psl);
+			pokemonSwitchButton.setToolTipText("HP/HP, type");
 			pokemonSwitchButtons.add(pokemonSwitchButton);
 			pokemonSwitchButtonPanel.add(pokemonSwitchButton);
 		}
@@ -268,6 +277,39 @@ public class GameApplication extends JFrame {
     	//TODO: write the function
     }
 
+    class AttackListener implements ActionListener {
+		public void actionPerformed(ActionEvent ae) {
+			if (ae.getSource() == attackButtons.get(0))
+				System.out.println("Attack 1 clicked");
+			else if (ae.getSource() == attackButtons.get(1))
+				System.out.println("Attack 2 clicked");
+			else if (ae.getSource() == attackButtons.get(2))
+				System.out.println("Attack 3 clicked");
+			else
+				System.out.println("Attack 4 clicked");
+		}
+    }
+    
+    class PokemonSwitchListener implements ActionListener {
+		public void actionPerformed(ActionEvent ae) {
+			if (ae.getSource() == pokemonSwitchButtons.get(0))
+				System.out.println("Pokemon 1 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(1))
+				System.out.println("Pokemon 2 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(2))
+				System.out.println("Pokemon 3 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(3))
+				System.out.println("Pokemon 4 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(4))
+				System.out.println("Pokemon 5 clicked");
+			else
+				System.out.println("Pokemon 6 clicked");
+		}
+    }
+    
+    class MoveInformation extends MouseAdapter {
+    	
+    }
 	
 	public static void main (String [] args) {
 		
