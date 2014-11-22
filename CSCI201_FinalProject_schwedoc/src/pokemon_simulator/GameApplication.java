@@ -8,10 +8,13 @@ package pokemon_simulator;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -171,8 +174,18 @@ public class GameApplication extends JFrame {
 		JPanel pokemonSwitchButtonPanel = new JPanel ();
 		pokemonSwitchButtons = new ArrayList<JButton>();
 		PokemonSwitchListener psl = new PokemonSwitchListener ();
-		for (int i=1; i <= 6; ++i){
-			JButton pokemonSwitchButton = new JButton ("Pokemon " + i);
+		for (int i=0; i < 6; ++i){
+			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
+			
+			/*
+			BufferedImage bi = (BufferedImage) allPokemon.get(i).getFrontImage().getScaledInstance(5, 5, Image.SCALE_DEFAULT);
+			pokemonSwitchButton.setIcon(new ImageIcon (bi));
+			*/
+			
+			BufferedImage bi = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
+			bi.getGraphics().drawImage(allPokemon.get(i).getFrontImage(), 0, 0, null);
+			pokemonSwitchButton.setIcon(new ImageIcon (bi));
+			
 			pokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
 			pokemonSwitchButton.addActionListener(psl);
 			pokemonSwitchButton.setToolTipText("HP/HP, type");
