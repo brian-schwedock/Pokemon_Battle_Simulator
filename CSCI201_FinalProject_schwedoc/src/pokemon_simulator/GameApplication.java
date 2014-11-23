@@ -178,11 +178,15 @@ public class GameApplication extends JFrame {
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
 			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-			pokemonSwitchButton.setIcon(new ImageIcon (scaledImage));			
+			pokemonSwitchButton.setIcon(new ImageIcon (scaledImage));		
+			
+			int curHP = allPokemon.get(i).getCurrentHP();
+			int maxHP = allPokemon.get(i).getMaxHP();
+			String type =  allPokemon.get(i).getType();
+			pokemonSwitchButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
 			
 			pokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
 			pokemonSwitchButton.addActionListener(psl);
-			pokemonSwitchButton.setToolTipText("HP/HP, type");
 			pokemonSwitchButtons.add(pokemonSwitchButton);
 			pokemonSwitchButtonPanel.add(pokemonSwitchButton);
 		}

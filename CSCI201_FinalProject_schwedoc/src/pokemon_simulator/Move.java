@@ -2,7 +2,6 @@ package pokemon_simulator;
 
 public class Move {
 	private String name;
-	//Design doc said "type" is int, but in Pokemon class is String
 	private String type;
 	private int attack;
 	private int specialAttack;

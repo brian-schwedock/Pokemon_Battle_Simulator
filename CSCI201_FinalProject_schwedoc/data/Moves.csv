@@ -1,0 +1,131 @@
+Move Name,Move Type,Move Power,Move Accuracy,"Physical = 0, Special = 1"
+Acid,Poison,40,100,1
+Aerial Ace,Flying,60,100,0
+Air Cutter,Flying,60,95,1
+Ancient Power,Rock,60,100,1
+Aqua Jet,Water,40,100,0
+Aqua Tail,Water,90,100,0
+Bite,Normal,40,100,0
+Blaze Kick,Fire,85,90,0
+Blizzard,Ice,120,70,1
+Body Slam,Normal,85,100,0
+Bone Club,Ground,65,85,0
+Brave Bird,Flying,120,100,0
+Brick Break,Fighting,75,100,0
+Bubblebeam,Water,65,100,1
+Bug Bite,Bug,60,100,0
+Bug Buzz,Bug,90,100,1
+Charge Beam,Electric,50,90,1
+Clamp,Water,35,85,0
+Close Combat,Fighting,120,100,0
+Confusion,Psychic,50,100,1
+Crabhammer,Water,100,90,0
+Cross Chop,Fighting,100,80,0
+Cut,Normal,50,95,0
+Dig,Ground,80,100,0
+Dive,Water,80,100,0
+Double-Edge,Normal,120,100,0
+Dragon Claw,Dragon,80,100,0
+Dragon Pulse,Dragon,85,100,1
+Dragonbreath,Dragon,60,100,1
+Drain Punch,Fighting,75,100,0
+Drill Peck,Flying,80,100,0
+Drill Run,Ground,80,95,0
+Earth Power,Ground,90,100,1
+Earthquake,Ground,100,100,0
+Egg Bomb,Normal,100,75,0
+Electroweb,Electric,55,95,1
+Ember,Fire,40,100,1
+Energy Ball,Grass,90,100,1
+Extrasensory,Psychic,80,100,1
+Extreme Speed,Normal,80,100,0
+Facade,Normal,70,100,0
+Fire Blast,Fire,110,85,1
+Fire Fang,Fire,65,95,0
+Fire Punch,Fire,75,100,0
+Flamethrower,Fire,90,100,1
+Flare Blitz,Fire,120,100,0
+Focus Blast,Fighting,120,70,1
+Giga Drain,Grass,75,100,1
+Gunk Shot,Poison,120,80,0
+Gust,Flying,40,100,1
+Headbutt,Normal,70,100,0
+Heat Wave,Fire,95,90,1
+Hidden Power Bug,Bug,70,100,1
+Hidden Power Fighting,Fighting,70,100,1
+Hidden Power Fire,Fire,70,100,1
+Hidden Power Ghost,Ghost,70,100,1
+Hidden Power Grass,Grass,70,100,1
+Hidden Power Ground,Ground,70,100,1
+Hidden Power Ice,Ice,70,100,1
+Hidden Power Water,Water,70,100,1
+High Jump Kick,Fighting,130,90,0
+Horn Attack,Normal,65,100,0
+Hurricane,Flying,110,70,1
+Hydro Pump,Water,110,80,1
+Hyper Fang,Normal,80,90,0
+Hyper Voice,Normal,90,100,1
+Ice Beam,Ice,95,100,1
+Ice Punch,Ice,75,100,0
+Ice Shard,Ice,40,100,0
+Icy Wind,Ice,55,95,1
+Leaf Blade,Grass,90,100,0
+Leaf Storm,Grass,130,90,1
+Lick,Ghost,30,100,0
+Low Kick,Fighting,70,100,0
+Magical Leaf,Grass,60,100,1
+Mega Kick,Normal,120,75,0
+Mega Punch,Normal,80,85,0
+Megahorn,Bug,120,85,0
+Mud Bomb,Ground,65,85,1
+Mud-Slap,Ground,20,100,1
+Poison Fang,Poison,50,100,0
+Poison Jab,Poison,80,100,0
+Poison Sting,Poison,15,100,0
+Pound,Normal,40,100,0
+Power Whip,Grass,120,85,0
+Psybeam,Psychic,65,100,1
+Psychic,Psychic,90,100,1
+Psyshock,Psychic,80,100,1
+Razor Leaf,Grass,55,95,1
+Razor Shell,Water,75,95,0
+Return,Normal,,100,0
+Rock Climb,Normal,90,85,0
+Rock Slide,Rock,75,90,0
+Rock Tomb,Rock,60,95,0
+Scald,Water,70,100,1
+Scratch,Normal,40,100,0
+Secret Power,Normal,70,100,0
+Seed Bomb,Grass,80,100,0
+Seismic Toss,Fighting,100,100,0
+Shadow Ball,Ghost,80,100,1
+Shadow Claw,Ghost,70,100,0
+Shadow Punch,Ghost,60,100,0
+Signal Beam,Bug,75,100,1
+Slam,Normal,80,75,0
+Slash,Normal,70,100,0
+Sludge,Poison,65,100,1
+Sludge Bomb,Poison,90,100,1
+Sludge Wave,Poison,95,100,1
+Smog,Poison,30,70,1
+Solar Beam,Grass,120,100,1
+Spark,Electric,65,100,1
+Splash,Water,0,100,0
+Stone Edge,Rock,100,80,0
+Strength,Normal,80,100,0
+Super Fang,Normal,75,100,0
+Superpower,Fighting,120,100,0
+Surf,Water,90,100,1
+Swift,Normal,60,100,1
+Tackle,Grass,50,100,0
+Thunder,Electric,110,70,1
+Thunder Punch,Electric,75,100,0
+Thunderbolt,Electric,90,100,1
+Thundershock,Electric,40,100,1
+Tri Attack,Normal,80,100,1
+Vine Whip,Grass,45,100,0
+Water Gun,Water,55,100,1
+Waterfall,Water,80,100,0
+Wild Charge,Electric,90,100,0
+X-Scissor,Bug,80,100,0
+Zen Headbutt,Psychic,80,90,0
