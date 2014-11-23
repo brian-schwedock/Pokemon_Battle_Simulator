@@ -279,7 +279,7 @@ public class GameApplication extends JFrame {
     }
 
     public void addMessage (String message) {
-    	//TODO: write the function
+    	//TODO: write the function change what the gui looks like on yours
     }
 
     public void resetBottomPanel () {
@@ -306,7 +306,13 @@ public class GameApplication extends JFrame {
 			}
 		}
     }
-    
+    class sendMessageListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		//	if 
+		}
+    	
+    }
     class PokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			if (ae.getSource() == pokemonSwitchButtons.get(0)){
