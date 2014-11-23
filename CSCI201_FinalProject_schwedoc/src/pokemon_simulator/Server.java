@@ -37,7 +37,7 @@ import java.util.Scanner;
 public class Server {
 	static Map<String, Move> allMoves = new HashMap<String,Move>();
 	static Map<Integer, Pokemon> allPokemon = new HashMap<Integer, Pokemon>();
-		
+	static Map<String, Integer> movePairs = new HashMap<String, Integer>();
 	
 	private static Player playerOne;
 	private static Player playerTwo;
@@ -63,6 +63,22 @@ public class Server {
 	 * (2 actions)
 	 */
 	private int actionCount;
+	
+	private double typeChart[][] = {{1,1,1,1,1,1,1,1,1,1,1,1,0.5,0,1},
+										{1,0.5,0.5,2,1,2,1,1,1,1,1,2,0.5,1,0.5},
+										{1,2,0.5,0.5,1,1,1,1,2,1,1,1,2,1,0.5},
+										{1,0.5,2,0.5,1,1,1,0.5,2,0.5,1,0.5,2,1,0.5},
+										{1,1,2,0.5,0.5,1,1,1,0,2,1,1,1,1,0.5},
+										{1,0.5,0.5,2,1,0.5,1,1,2,2,1,1,1,1,2},
+										{2,1,1,1,1,2,1,0.5,1,0.5,0.5,0.5,2,0,1},
+										{1,1,1,2,1,1,1,0.5,0.5,1,1,1,0.5,0.5,1},
+										{1,2,1,0.5,2,1,1,2,1,0,1,0.5,2,1,1,1},
+										{1,1,1,2,0.5,1,2,1,1,1,1,2,0.5,1,1},
+										{1,1,1,1,1,1,2,2,1,1,0.5,1,1,1,1},
+										{1,0.5,1,2,1,1,0.5,0.5,1,0.5,2,1,1,0.5,1},
+										{1,2,1,1,1,2,0.5,1,0.5,2,1,2,1,1,1},
+										{0,1,1,1,1,1,1,1,1,1,1,2,1,1,2},
+										{1,1,1,1,1,1,1,1,1,1,1,1,1,1,2}};
 	
 	
 	Server(){
@@ -95,6 +111,23 @@ public class Server {
 			
 			outToClientP2.writeObject(p2Start);
 			outToClientP2.flush();
+			
+			// initialize the move pairings with integers
+			movePairs.put("Normal", 0);
+			movePairs.put("Fire", 1);
+			movePairs.put("Water",2);
+			movePairs.put("Grass", 3);
+			movePairs.put("Electric", 4);
+			movePairs.put("Ice", 5);
+			movePairs.put("Fighting", 6);
+			movePairs.put("Poison", 7);
+			movePairs.put("Ground", 8);
+			movePairs.put("Flying", 9);
+			movePairs.put("Psychic", 10);
+			movePairs.put("Bug", 11);
+			movePairs.put("Rock", 12);
+			movePairs.put("Ghost", 13);
+			movePairs.put("Dragon", 14);
 
 			
 			/*
@@ -250,6 +283,15 @@ public class Server {
 	
 	/**
 	 * calculates the amount of damage a certain move does to a player's pokemon
+	 * <p>
+	 * <li>Dmg = ( [0.84] * [{Attack(attacking) * AttackStat(attacking)} / Defense or SpDefense(defending)] /50 + 2) * Modifier
+	 * <li>attack: the attack power of the move used
+	 * <li>attackStat: the attack stat of the attacking pokemon. Will be SpAttack or just Attack based on  the type of the attacking move used. 
+	 * <li>Defense or SpDefense: defense stat of the defending pokemon. Will be based on the type of the
+	 *  type of the attacking move used. Ex: if opponent uses SpAttack then defense stat will be 
+	 *  SpDefense and vice versa with just Attack. 
+	 * <li>modifer is based on the type effectiveness and STAB quality of the move
+	 * <li>resulting damage is rounded down and truncated (no remainders or decimals)
 	 * @param player true if player one is attacked, otherwise playerTwo
 	 * is being attacked
 	 * @param move is the move determined by the CTS class sent to the server
@@ -257,17 +299,73 @@ public class Server {
 	 * @return the amount of damage calculated
 	 */
 	private int calculateDamage(boolean player, Move move){
-		return 0;
+		Pokemon defendingPokemon;
+		Pokemon attackingPokemon;
+		
+		Map<String,Integer> defendingStats;
+		Map<String, Integer> attackingStats;
+		if(player){
+			defendingPokemon = playerOne.getPokemon(1);
+			attackingPokemon = playerTwo.getPokemon(1);
+		}else{
+			defendingPokemon = playerTwo.getPokemon(1);
+			attackingPokemon = playerOne.getPokemon(1);
+		}
+		defendingStats = defendingPokemon.getAllStats();
+		attackingStats = attackingPokemon.getAllStats();
+		int moveIntType = movePairs.get(move.getType());
+		int defendingType = movePairs.get(defendingPokemon.getType());
+		int attackingType = movePairs.get(attackingPokemon.getType());
+		
+		double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
+		double stabMultiplier = getStab(moveIntType, attackingType);
+		double modifier = typeEffectiveness * stabMultiplier * (Math.random() + 0.86);
+		
+		double damage =  (0.84 *((move.getAttack() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
+		
+		return (int)damage;
 	}
 	
 	/**
-	 * 
-	 * @param typeOne
-	 * @param typeTwo
-	 * @return
+	 * returns the type effectiveness of typeOne over typeTwo
+	 * <p>
+	 * Ex: if type one is FIRE and type two is GRASS then there is 2X type 
+	 * effectiveness. Look at the chart given above to see a full list of type 
+	 * effectiveness rankings.
+	 * Type effectiveness should be stored in a 2D array that represents the 
+	 * chart given above
+	 * @param typeOne the type of the attacking pokemon
+	 * @param typeTwo the type of the defending pokemon
+	 * @return the type effectiveness caused by the move on the 
+	 * player's pokemon. values are in the range {0.0,0.5,1.0,2.0}
 	 */
 	private double getTypeEffectiveness(int typeOne, int typeTwo){
+		return typeChart[typeOne][typeTwo];
+	}
+	
+	/**
+	 * gets the damage modifer for the given type
+	 * @param typeOne
+	 * @param typeTwo
+	 * @return the damage modifier 
+	 */
+	private double getModifier(int typeOne, int typeTwo){
+		
 		return 0.0;
+		
+	}
+	
+	/**
+	 * a move has STAB if the moveType and the pokemonType are the same 
+	 * @param moveType is the type of the attacking move
+	 * @param pokemonType is the type of the attacking pokemon
+	 * @return return stab multipliers
+	 */
+	private double getStab(int moveType, int pokemonType){
+		if( moveType == pokemonType)
+			return 1.5;
+		else
+			return 1.0;
 	}
 	
 	//Extra functions for testing/randomizing

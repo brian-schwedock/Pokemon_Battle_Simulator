@@ -48,5 +48,9 @@ public class Player {
 		return playablePokemon;
 	}
 	
+	public Pokemon getPokemon(int i){
+		return allPokemon.get(i + 1);
+	}
+	
 
 }
