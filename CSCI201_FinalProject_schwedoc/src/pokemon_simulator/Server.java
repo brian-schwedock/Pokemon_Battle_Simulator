@@ -18,6 +18,7 @@ public class Server {
 	static Map<String, Move> allMoves = new HashMap<String,Move>();
 	static Map<Integer, Pokemon> allPokemon = new HashMap<Integer, Pokemon>();
 		
+	
 	Server(){
 		try {
 			ServerSocket socketPorts = new ServerSocket(9000);
@@ -158,6 +159,7 @@ public class Server {
 		
 		return pokemonParty;
 	}
+	
 	
 	
 	
