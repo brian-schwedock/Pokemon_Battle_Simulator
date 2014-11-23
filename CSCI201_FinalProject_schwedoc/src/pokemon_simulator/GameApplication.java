@@ -15,7 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -252,8 +255,9 @@ public class GameApplication extends JFrame {
     	//TODO: change the GUI to reflect current Pokemon
     }
 
-    public void setOpposingPokemonImage (Image opposingPokemonImage) {
-    	this.opposingPokemonImage = opposingPokemonImage;
+    public void setOpposingPokemonImage (String opposingPokemonString) {
+    	Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
+    	this.opposingPokemonImage = opposingPokemon;
     }
 
     public void setOpposingPokemonCurrentHP (int currentHP) {
@@ -328,34 +332,21 @@ public class GameApplication extends JFrame {
 	public static void main (String [] args) {
 		
 		//Connecting to the server
-		/*try {
-			Socket startGame = new Socket("127.0.0.1", 9000);
-		} catch (Exception e){}*/
+		Socket startGame = null;
+		ServerToClient stc = null;
+		try {
+			startGame = new Socket("127.0.0.1", 9000);
+			
+			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
+			stc = (ServerToClient) inFromServer.readObject();
+			startGame.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		
-		
-		//This is test code to make sure the GUI works
-		Pokemon p1 = new Pokemon ("Alakazam", "Psychic", 345, 100, 150, 400, 250, 375);
-		Pokemon p2 = new Pokemon ("Mewtwo", "Psychic", 345, 100, 150, 400, 250, 375);
-		Pokemon p3 = new Pokemon ("Bulbasaur", "Grass", 345, 100, 150, 400, 250, 375);
-		Pokemon p4 = new Pokemon ("Gengar", "Ghost", 345, 100, 150, 400, 250, 375);
-		Pokemon p5 = new Pokemon ("Porygon", "Normal", 345, 100, 150, 400, 250, 375);
-		Pokemon p6 = new Pokemon ("Machamp", "Fighting", 345, 100, 150, 400, 250, 375);
-		ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon> ();
-		allPokemon.add (p1);
-		allPokemon.add (p2);
-		allPokemon.add (p3);
-		allPokemon.add (p4);
-		allPokemon.add (p5);
-		allPokemon.add (p6);
-		
-		//int action, int playerNumber, ArrayList<Pokemon> allPokemon, int pokemonInPlay,
-		//Image opposingPokemonImage, String opposingPokemonName,  int opposingCurrentHP, int opposingMaxHP, 
-		//int opposingPokemonAlive, String message, int damageTaken
-		ServerToClient stc = new ServerToClient (1, 1, allPokemon, 1, (new ImageIcon ("images/frontSprites/Pikachu.gif")).getImage(), 
-				"Pikachu", 200, 350, 6, "message", 100);
-		
-		
-		
+		for (Pokemon k: stc.allPokemon)
+			k.setImages();
+			
 		new GameApplication (stc);
 	}
 }

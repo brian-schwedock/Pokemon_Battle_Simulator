@@ -1,20 +1,21 @@
 package pokemon_simulator;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-public class Pokemon {
+public class Pokemon implements Serializable {
 	private String name;
 	private String type;
 	private int currentHP;
 	private int maxHP;
 	private Map<String, Integer> allStats = new HashMap<String, Integer>();
-	private Image frontImage;
-	private Image backImage;
+	transient private Image frontImage;
+	transient private Image backImage;
 	ArrayList<Move> allMoves;
 	
 	public Pokemon (String name, String type, int HP, int atk,
@@ -29,10 +30,10 @@ public class Pokemon {
 		allStats.put("SpecialDefense", spDef);
 		allStats.put("Speed", spd);
 
-		setImages();
+		//setImages();
 	}
 	
-	private void setImages () {
+	public void setImages () {
 		frontImage = (new ImageIcon ("images/frontSprites/" + name + ".gif")).getImage();
 		backImage = (new ImageIcon ("images/backSprites/" + name + ".gif")).getImage();
 	}

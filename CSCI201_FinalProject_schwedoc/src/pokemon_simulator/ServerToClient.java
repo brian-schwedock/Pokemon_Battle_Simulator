@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class ServerToClient implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	
 	int action;
 	int playerNumber;
 	ArrayList<Pokemon> allPokemon;
 	int pokemonInPlay;
-	Image opposingPokemonImage;
 	String opposingPokemonName;
+	String opposingPokemonImage;
 	int opposingCurrentHP;
 	int opposingMaxHP;
 	int opposingPokemonAlive;
@@ -21,7 +21,7 @@ public class ServerToClient implements Serializable {
 	int damageTaken;
 	
 	public ServerToClient (int action, int playerNumber, ArrayList<Pokemon> allPokemon, 
-			int pokemonInPlay, Image opposingPokemonImage, String opposingPokemonName, 
+			int pokemonInPlay, String opposingPokemonImage, String opposingPokemonName, 
 			int opposingCurrentHP,int opposingMaxHP, int opposingPokemonAlive, String message,
 			int damageTaken) {
 		this.action = action;
