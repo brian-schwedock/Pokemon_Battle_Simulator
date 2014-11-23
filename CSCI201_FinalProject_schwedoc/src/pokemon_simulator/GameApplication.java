@@ -108,7 +108,9 @@ public class GameApplication extends JFrame {
 		
 		bottomChatPanel = new JPanel ();
 		JLabel chatBoxPlayerLabel = new JLabel (playerName);
-		JTextField messageField = new JTextField ();
+		messageField = new JTextField ();
+		sendMessageListener sml= new sendMessageListener();
+		messageField.addActionListener(sml);
 		messageField.setPreferredSize(new Dimension (350, 30));
 		
 		bottomChatPanel.add(chatBoxPlayerLabel);
@@ -309,7 +311,12 @@ public class GameApplication extends JFrame {
     class sendMessageListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-		//	if 
+			String enteredMessage=messageField.getText();
+			if(!enteredMessage.equals("")){
+				chatTextArea.append(playerName+": " + enteredMessage);
+				chatTextArea.append("\n");
+				messageField.setText("");
+			}
 		}
     	
     }
