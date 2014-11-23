@@ -46,11 +46,9 @@ public class Server {
 
 			outToClientP1.writeObject(p1Start);
 			outToClientP1.flush();
-			outToClientP1.close();
 			
 			outToClientP2.writeObject(p2Start);
 			outToClientP2.flush();
-			outToClientP2.close();
 
 			
 			/*
@@ -61,6 +59,10 @@ public class Server {
 			g2.start();
 			 
 			 */
+			
+			while (true);
+			
+			
 		} catch (Exception e) {
 			System.out.println("Error in server");
 			e.printStackTrace();

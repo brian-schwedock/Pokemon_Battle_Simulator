@@ -338,19 +338,20 @@ public class GameApplication extends JFrame {
 		//Connecting to the server
 		Socket startGame = null;
 		ServerToClient stc = null;
-		try {
-			startGame = new Socket("127.0.0.1", 9000);
-			
-			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
-			stc = (ServerToClient) inFromServer.readObject();
-			startGame.close();
-		} catch (Exception e){
-			System.out.println("Please run the server first");
-		}
+
+		try { 
+			startGame = new Socket("127.0.0.1", 9000); 
+ 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream()); 
+ 			stc = (ServerToClient) inFromServer.readObject(); 
+ 			
+ 			for (Pokemon k: stc.allPokemon)
+ 				k.setImages();
+ 			new GameApplication (stc);
+ 			
+			//startGame.close(); 
+ 		} catch (Exception e){ 
+ 			System.out.println("Please run the server first"); 
+		} 	
 		
-		for (Pokemon k: stc.allPokemon)
-			k.setImages();
-			
-		new GameApplication (stc);
 	}
 }
