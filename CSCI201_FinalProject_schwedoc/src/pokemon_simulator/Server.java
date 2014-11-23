@@ -28,7 +28,7 @@ public class Server {
 			ArrayList<Pokemon> partyOne = generatePokemon();
 			
 			//Player Two initialization
-			//Socket p2Socket = socketPorts.accept();
+			Socket p2Socket = socketPorts.accept();
 			ArrayList<Pokemon> partyTwo = generatePokemon();
 
 			//Arguments: Action#, Player#, PokemonList, CurrPokemon, Opponent Pokemon Image, Opponent Pokemon Name
@@ -37,19 +37,20 @@ public class Server {
 			ServerToClient p1Start = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
 					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0);
 			
-			String imageTwo = "./images/frontSprites/" + partyOne.get(0).getName();
+			String imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 			ServerToClient p2Start = new ServerToClient(1, 2, partyTwo, 1, imageTwo, partyOne.get(0).getName(),
 					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
 			
 			ObjectOutputStream outToClientP1 = new ObjectOutputStream(p1Socket.getOutputStream());
-			//ObjectOutputStream outToClientP2 = new ObjectOutputStream(p2Socket.getOutputStream());		
+			ObjectOutputStream outToClientP2 = new ObjectOutputStream(p2Socket.getOutputStream());		
 
 			outToClientP1.writeObject(p1Start);
 			outToClientP1.flush();
 			outToClientP1.close();
 			
-			//outToClientP2.writeObject(p2Start);
-			//outToClientP2.flush();
+			outToClientP2.writeObject(p2Start);
+			outToClientP2.flush();
+			outToClientP2.close();
 
 			
 			/*
