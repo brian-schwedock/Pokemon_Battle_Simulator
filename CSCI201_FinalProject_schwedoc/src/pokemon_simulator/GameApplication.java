@@ -177,14 +177,8 @@ public class GameApplication extends JFrame {
 		for (int i=0; i < 6; ++i){
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
 			
-			/*
-			BufferedImage bi = (BufferedImage) allPokemon.get(i).getFrontImage().getScaledInstance(5, 5, Image.SCALE_DEFAULT);
-			pokemonSwitchButton.setIcon(new ImageIcon (bi));
-			*/
-			
-			BufferedImage bi = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
-			bi.getGraphics().drawImage(allPokemon.get(i).getFrontImage(), 0, 0, null);
-			pokemonSwitchButton.setIcon(new ImageIcon (bi));
+			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+			pokemonSwitchButton.setIcon(new ImageIcon (scaledImage));			
 			
 			pokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
 			pokemonSwitchButton.addActionListener(psl);
