@@ -35,4 +35,9 @@ public class Move {
 	public int getAccuracy () {
 		return accuracy;
 	}
+	
+	public void printAllStats(){
+		System.out.print("Move Name:" + name + " Type:" + type);
+		System.out.println(" Phys Att:" + attack + " Sp. Att:" + specialAttack + " Accuracy:" + accuracy);
+	}
 }

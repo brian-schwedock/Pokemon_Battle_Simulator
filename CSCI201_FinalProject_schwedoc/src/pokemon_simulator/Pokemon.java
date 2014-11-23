@@ -2,6 +2,7 @@ package pokemon_simulator;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -9,10 +10,9 @@ import javax.swing.ImageIcon;
 public class Pokemon {
 	private String name;
 	private String type;
-	//private int ID  -- Are we using this?
 	private int currentHP;
 	private int maxHP;
-	private Map<String, Integer> allStats;
+	private Map<String, Integer> allStats = new HashMap<String, Integer>();
 	private Image frontImage;
 	private Image backImage;
 	ArrayList<Move> allMoves;
@@ -22,8 +22,13 @@ public class Pokemon {
 		this.name = name;
 		this.type = type;
 		this.maxHP = this.currentHP = HP;
-		//Set stats
-		//setMoves();
+		
+		allStats.put("Attack", atk);
+		allStats.put("Defense", def);
+		allStats.put("SpecialAttack", spAtk);
+		allStats.put("SpecialDefense", spDef);
+		allStats.put("Speed", spd);
+
 		setImages();
 	}
 	
@@ -32,14 +37,9 @@ public class Pokemon {
 		backImage = (new ImageIcon ("images/backSprites/" + name + ".gif")).getImage();
 	}
 	
-	private void setMoves () {
-		//TODO: write the function
+	public void setMoves (ArrayList<Move> inMoves) {
+		allMoves = inMoves;
 	}
-	
-	/*
-	 public int getID () {
-	 }
-	 */
 	
 	public String getName () {
 		return name;
@@ -71,5 +71,17 @@ public class Pokemon {
 	
 	public int getMaxHP () {
 		return maxHP;
+	}
+	
+	public void printAllStats(){
+		System.out.println("Name:" + name + "   Type:" + type + "   HP:" + maxHP);
+		System.out.println("Attack:" + allStats.get("Attack") + "   Defense:" + allStats.get("Defense"));
+		System.out.print("Sp. Attack:" + allStats.get("SpecialAttack") + "   Special Defense" + allStats.get("SpecialDefense"));
+		System.out.println("   Speed:" + allStats.get("Speed"));
+		
+		for (int i=0; i<4; i++)
+			allMoves.get(i).printAllStats();
+		
+		System.out.println("----------------------------------------------------------------------------");
 	}
 }

@@ -86,22 +86,22 @@ Doduo,Flying,274,269,189,169,169,249,Brave Bird,Return,Drill Peck,Tri Attack
 Dodrio,Flying,324,319,239,219,219,299,Tri Attack,Brave Bird,Return,Hidden Power Ground
 Seel,Ice,334,189,209,189,239,189,Ice Beam,Dive,Scald,Secret Power
 Dewgong,Ice,384,239,259,239,289,239,Headbutt,Signal Beam,Icy Wind,Aqua Jet
-Grimer,Poison,364,259,199,179,199,149,Mud-slap,Sludge,Gunk Shot,Pound
+Grimer,Poison,364,259,199,179,199,149,Mud-Slap,Sludge,Gunk Shot,Pound
 Muk,Poison,414,309,249,229,299,199,Poison Jab,Ice Punch,Shadow Punch,Thunder Punch
 Shellder,Water,364,229,299,189,149,179,Ice Shard,Water Gun,Blizzard,Clamp
-Cloyster,Water,304,289,459,269,189,239,Icicle Crash,Razor Shell,Swift,Ice beam
-Gastly,Ghost,264,169,159,299,169,259,,,Lick,Shadow Ball
-Haunter,Ghost,294,199,189,329,209,289,Lick,Shadow Ball,Shadow Punch,
-Gengar,Ghost,324,229,259,439,289,359,Shadow Punch,Shadow Ball,Sucker Punch,
-Onix,Rock,274,189,419,159,189,239,Tackle,Rock Throw,Dragonbreath,Stone Edge
+Cloyster,Water,304,289,459,269,189,239,Ice Shard,Razor Shell,Swift,Ice Beam
+Gastly,Ghost,264,169,159,299,169,259,Hidden Power Ghost,Psychic,Lick,Shadow Ball
+Haunter,Ghost,294,199,189,329,209,289,Lick,Shadow Ball,Shadow Punch,Shadow Claw
+Gengar,Ghost,324,229,259,439,289,359,Shadow Punch,Shadow Ball,Psychic,Shadow Claw
+Onix,Rock,274,189,419,159,189,239,Tackle,Rock Slide,Dragonbreath,Stone Edge
 Drowzee,Psychic,324,195,189,185,279,183,Pound,Headbutt,Ice Punch,Thunder Punch
 Hypno,Psychic,374,245,239,245,329,233,Psychic,Shadow Ball,Seismic Toss,Signal Beam
-Krabby,Water,264,309,279,149,149,199,Bubblebeam,Rock Slide,Return,X-Scissor
+Krabby,Water,264,309,279,149,149,199,Bubble Beam,Rock Slide,Return,X-Scissor
 Kingler,Water,314,359,329,199,199,249,Crabhammer,X-Scissor,Return,Superpower
-Voltorb,Electric,284,159,199,209,209,299,,Tackle,Spark,Thunder
-Electrode,Electric,324,199,239,259,259,379,Tackle,,Thunder,Sonic Boom
-Exeggcute,Grass,324,179,259,219,189,179,Sludge Bomb,,,Strength
-Exeggutor,Grass,394,289,269,349,229,209,Egg Bomb,Leaf Storm,Strength,
+Voltorb,Electric,284,159,199,209,209,299,Return,Tackle,Spark,Thunder
+Electrode,Electric,324,199,239,259,259,379,Tackle,Return,Thunder,Sonic Boom
+Exeggcute,Grass,324,179,259,219,189,179,Sludge Bomb,Psychic,Tackle,Strength
+Exeggutor,Grass,394,289,269,349,229,209,Egg Bomb,Leaf Storm,Strength,Psychic
 Cubone,Ground,304,199,289,179,199,169,Bone Club,Headbutt,Earthquake,Dig
 Marowak,Ground,324,259,319,199,259,189,Bone Club,Headbutt,Earthquake,Dig
 Hitmonlee,Fighting,304,339,205,169,319,273,High Jump Kick,Stone Edge,Blaze Kick,Mega Kick
@@ -117,7 +117,7 @@ Kangaskhan,Normal,414,349,299,219,299,299,Earthquake,Drain Punch,Return,Aqua Tai
 Horsea,Water,264,179,239,239,149,219,Water Gun,Hidden Power Grass,Ice Beam,Dragonbreath
 Seadra,Water,314,229,289,289,189,269,Hydro Pump,Blizzard,Ice Beam,Dragon Pulse
 Goldeen,Water,294,233,219,169,199,225,Aqua Tail,Megahorn,Drill Run,Horn Attack
-Seaking,Water,364,283,229,229,259,235,Waterfall,Megahorn,Return,Ice beam
+Seaking,Water,364,283,229,229,259,235,Waterfall,Megahorn,Return,Ice Beam
 Staryu,Water,264,189,209,239,209,269,Water Gun,Thunder,Icy Wind,Psychic
 Starmie,Water,324,249,269,299,269,329,Ice Beam,Thunderbolt,Hydro Pump,Psyshock
 Mr. Mime,Psychic,284,189,229,299,339,279,Psychic,Shadow Ball,Thunderbolt,Focus Blast
@@ -127,7 +127,7 @@ Electabuzz,Electric,334,265,213,289,269,309,Thunderbolt,Focus Blast,Hidden Power
 Magmar,Fire,334,289,213,299,269,285,Fire Blast,Cross Chop,Thunder Punch,Body Slam
 Pinsir,Bug,334,409,339,229,279,309,Megahorn,Return,Earthquake,Stone Edge
 Tauros,Normal,354,299,289,179,239,319,Earthquake,Rock Slide,Zen Headbutt,Rock Climb
-Magikarp,Water,244,119,209,129,139,259,Splash,Tackle,Flail,
+Magikarp,Water,244,119,209,129,139,259,Splash,Tackle,Flail,Hyper Beam
 Gyarados,Water,394,409,317,239,359,261,Hydro Pump,Surf,Waterfall,Hyper Beam
 Lapras,Water,464,269,259,269,289,219,Ice Beam,Surf,Thunderbolt,Psychic
 Eevee,Normal,320,349,201,279,279,250,Tackle,Return,Shadow Ball,Mud-Slap
@@ -139,13 +139,13 @@ Omanyte,Rock,274,179,299,279,209,169,Hydro Pump,Ice Beam,Earth Power,Hidden Powe
 Omastar,Rock,344,219,349,329,239,209,Hydro Pump,Ice Beam,Stone Edge,Hidden Power Grass
 Kabuto,Rock,264,259,279,209,189,209,Rock Slide,Waterfall,Aerial Ace,Return
 Kabutops,Rock,324,329,309,229,239,259,Waterfall,Stone Edge,Low Kick,Headbutt
-Aerodactyl,Rock,364,309,229,219,249,359,Rock Slide,Earthquake,Ice Fang,Aerial Ace
-Snorlax,Normal,524,319,229,229,319,159,Earthquake,Return,,Fire Punch
+Aerodactyl,Rock,364,309,229,219,249,359,Rock Slide,Earthquake,Hyper Beam,Aerial Ace
+Snorlax,Normal,524,319,229,229,319,159,Earthquake,Return,Hyper Beam,Fire Punch
 Articuno,Ice,384,269,299,289,349,269,Hurricane,Air Cutter,Ancient Power,Blizzard
 Zapdos,Electric,384,279,269,349,279,299,Thunderbolt,Heat Wave,Air Cutter,Extrasensory
 Moltres,Fire,384,299,279,349,269,279,Fire Blast,Hurricane,Flamethrower,Ancient Power
-Dratini,Dragon,286,227,189,199,199,199,Fire Blast,Iron Tail,Aqua Jet,Headbutt
+Dratini,Dragon,286,227,189,199,199,199,Fire Blast,Hidden Power Grass,Aqua Jet,Headbutt
 Dragonair,Dragon,326,267,229,239,239,239,Aqua Tail,Thunderbolt,Ice Beam,Flamethrower
 Dragonite,Dragon,386,367,289,299,299,259,Dragon Claw,Fire Punch,Thunder Punch,Earthquake
-Mewtwo,Psychic,416,319,279,407,279,359,Psychic,Fire Blast,Shadow Blast,Focus Blast
+Mewtwo,Psychic,416,319,279,407,279,359,Psychic,Fire Blast,Shadow Ball,Focus Blast
 Mew,Psychic,404,299,299,299,299,299,Psychic,Surf,Thunderbolt,Sludge Bomb

@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -324,10 +327,10 @@ public class GameApplication extends JFrame {
 	
 	public static void main (String [] args) {
 		
-		//First, try to connect to the server
-		//Only after connecting to the server,
-		//create the GUI
-		
+		//Connecting to the server
+		/*try {
+			Socket startGame = new Socket("127.0.0.1", 9000);
+		} catch (Exception e){}*/
 		
 		
 		//This is test code to make sure the GUI works
