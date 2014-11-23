@@ -35,6 +35,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class GameApplication extends JFrame {
 	
@@ -330,6 +331,9 @@ public class GameApplication extends JFrame {
     }
 	
 	public static void main (String [] args) {
+		try { 
+	        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); } 
+	    catch(Exception e){}
 		
 		//Connecting to the server
 		Socket startGame = null;

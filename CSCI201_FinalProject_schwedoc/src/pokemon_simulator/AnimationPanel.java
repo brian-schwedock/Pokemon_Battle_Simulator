@@ -65,11 +65,11 @@ public class AnimationPanel extends JPanel {
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
 		
 		if (playerName.equals("Player 1")) {
-			playerImage = (new ImageIcon ("images/ash.png")).getImage();
+			playerImage = (new ImageIcon ("images/ash.gif")).getImage();
 			opposingPlayerImage = (new ImageIcon ("images/gary.gif")).getImage();
 		}
 		else {
-			opposingPlayerImage = (new ImageIcon ("images/ash.png")).getImage();
+			opposingPlayerImage = (new ImageIcon ("images/ash.gif")).getImage();
 			playerImage = (new ImageIcon ("images/gary.gif")).getImage();
 		}
 	}
