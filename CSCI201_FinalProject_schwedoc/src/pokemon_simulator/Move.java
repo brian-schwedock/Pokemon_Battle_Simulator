@@ -5,16 +5,16 @@ import java.io.Serializable;
 public class Move implements Serializable{
 	private String name;
 	private String type;
-	private int attack;
-	private int specialAttack;
+	private int power;
+	private boolean attackType;
 	private int accuracy;
 	
 	public Move (String name, String type, int attack,
-			int specialAttack, int accuracy) {
+			boolean isSpecial, int accuracy) {
 		this.name = name;
 		this.type = type;
-		this.attack = attack;
-		this.specialAttack = specialAttack;
+		this.power = attack;
+		this.attackType = isSpecial;
 		this.accuracy = accuracy;
 	}
 	
@@ -26,12 +26,12 @@ public class Move implements Serializable{
 		return type;
 	}
 	
-	public int getAttack () {
-		return attack;
+	public int getAttackPower () {
+		return power;
 	}
 	
-	public int getSpecialAttack () {
-		return specialAttack;
+	public boolean isSpecial () {
+		return attackType;
 	}
 	
 	public int getAccuracy () {
@@ -40,6 +40,6 @@ public class Move implements Serializable{
 	
 	public void printAllStats(){
 		System.out.print("Move Name:" + name + " Type:" + type);
-		System.out.println(" Phys Att:" + attack + " Sp. Att:" + specialAttack + " Accuracy:" + accuracy);
+		System.out.println(" Attack power:" + power + " Physical/Special (0/1):" + attackType + " Accuracy:" + accuracy);
 	}
 }

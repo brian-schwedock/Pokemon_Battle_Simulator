@@ -178,13 +178,9 @@ public class Server {
 				String moveType = moveReader.next();
 				int movePower = Integer.parseInt(moveReader.next());
 				int moveAccuracy = Integer.parseInt(moveReader.next());
-				int isSpecial = Integer.parseInt(moveReader.next().trim());
+				boolean isSpecial = moveReader.nextBoolean();
 				
-				if (isSpecial == 0) //If the move is physical, special att = 0
-					allMoves.put(moveName, new Move(moveName, moveType, movePower, 0, moveAccuracy));
-				if (isSpecial == 1)
-					allMoves.put(moveName, new Move(moveName, moveType, 0 , movePower, moveAccuracy));
-				
+				allMoves.put(moveName, new Move(moveName, moveType, movePower, isSpecial, moveAccuracy));
 			}
 			moveReader.close();
 		} catch (FileNotFoundException e) {
@@ -325,7 +321,7 @@ public class Server {
 		double stabMultiplier = getStab(moveIntType, attackingType);
 		double modifier = typeEffectiveness * stabMultiplier * (Math.random() + 0.86);
 		
-		double damage =  (0.84 *((move.getAttack() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
+		double damage =  (0.84 *((move.getAttackPower() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
 		
 		return (int)damage;
 	}
