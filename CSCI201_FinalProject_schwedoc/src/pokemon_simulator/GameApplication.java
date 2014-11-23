@@ -8,25 +8,16 @@ package pokemon_simulator;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 public class GameApplication extends JFrame {
@@ -298,37 +288,59 @@ public class GameApplication extends JFrame {
 
     class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
-			if (ae.getSource() == attackButtons.get(0))
+			if (ae.getSource() == attackButtons.get(0)){
 				System.out.println("Attack 1 clicked");
-			else if (ae.getSource() == attackButtons.get(1))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
-			else if (ae.getSource() == attackButtons.get(2))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
-			else
+				//TODO: Remove print and send message to server
+			}
+			else{
 				System.out.println("Attack 4 clicked");
+				//TODO: Remove print and send message to server
+			}
 		}
     }
     
     class PokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
-			if (ae.getSource() == pokemonSwitchButtons.get(0))
+			if (ae.getSource() == pokemonSwitchButtons.get(0)){
 				System.out.println("Pokemon 1 clicked");
-			else if (ae.getSource() == pokemonSwitchButtons.get(1))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
 				System.out.println("Pokemon 2 clicked");
-			else if (ae.getSource() == pokemonSwitchButtons.get(2))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
 				System.out.println("Pokemon 3 clicked");
-			else if (ae.getSource() == pokemonSwitchButtons.get(3))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
 				System.out.println("Pokemon 4 clicked");
-			else if (ae.getSource() == pokemonSwitchButtons.get(4))
+				//TODO: Remove print and send message to server
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
 				System.out.println("Pokemon 5 clicked");
-			else
+				//TODO: Remove print and send message to server
+			}
+			else{
 				System.out.println("Pokemon 6 clicked");
+				//TODO: Remove print and send message to server
+			}
 		}
     }
     
-    class MoveInformation extends MouseAdapter {
-    	
-    }
+    /*
+     * Add a key listener so that when the enter key is clicked
+     * if there is a message in the textbox, the message shows up
+     * in the textarea and the message is sent to the server
+     */
 	
 	public static void main (String [] args) {
 		try { 

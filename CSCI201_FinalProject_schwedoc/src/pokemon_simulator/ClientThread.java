@@ -1,13 +1,21 @@
+//Changed name from ServerListener to ClientThread
+
+//The job of this class is to listen to messages (ServerToClient)
+//and call the corresponding functions in GameApplication
+
+//This class will never send information to the Server
+//GameApplication will be the only class to send information to the Server
+
 package pokemon_simulator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class ServerListener extends Thread {
+public class ClientThread extends Thread {
 	ObjectInputStream ois;
 	GameApplication ga;
 	
-	public ServerListener (ObjectInputStream ois, GameApplication ga) {
+	public ClientThread (ObjectInputStream ois, GameApplication ga) {
 		this.ois = ois;
 		this.ga = ga;
 	}

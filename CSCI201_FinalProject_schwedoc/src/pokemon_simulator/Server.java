@@ -1,11 +1,8 @@
 package pokemon_simulator;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -130,16 +127,23 @@ public class Server {
 			movePairs.put("Dragon", 14);
 
 			
+			
+			//Remove this while loop when you use the serverthreads
+			//This loop is preventing the connections between server and clients from closing automatically
+			while (true);
+			
+			
+			//I recommend creating the inputstreams here also and then passing in
+			//the streams instead of the sockets into server thread if you want
+			//to leave the above code as is.
+			
 			/*
 			ServerThread g1 = new ServerThread(p1Socket, p2Socket);
 			ServerThread g2 = new ServerThread(p1Socket, p2Socket);
 			
 			g1.start();
 			g2.start();
-			 
-			 */
-			
-			while (true);
+			*/
 			
 			
 		} catch (Exception e) {
