@@ -39,6 +39,9 @@ public class Server {
 	private static Player playerOne;
 	private static Player playerTwo;
 	
+	private ObjectOutputStream outToClientP1;
+	private ObjectOutputStream outToClientP2;
+	
 	// true if playerOne wins the game false otherwise
 	private boolean playerOneVictory;
 	// true if playerTwo wins the game false otherwise
@@ -100,8 +103,8 @@ public class Server {
 			ServerToClient p2Start = new ServerToClient(1, 2, partyTwo, 1, imageTwo, partyOne.get(0).getName(),
 					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
 			
-			ObjectOutputStream outToClientP1 = new ObjectOutputStream(p1Socket.getOutputStream());
-			ObjectOutputStream outToClientP2 = new ObjectOutputStream(p2Socket.getOutputStream());		
+			outToClientP1 = new ObjectOutputStream(p1Socket.getOutputStream());
+			outToClientP2 = new ObjectOutputStream(p2Socket.getOutputStream());		
 
 			outToClientP1.writeObject(p1Start);
 			outToClientP1.flush();
@@ -138,11 +141,11 @@ public class Server {
 			//to leave the above code as is.
 			
 			/*
-			ServerThread g1 = new ServerThread(p1Socket, p2Socket);
-			ServerThread g2 = new ServerThread(p1Socket, p2Socket);
+			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream());
+			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream());
 			
-			g1.start();
-			g2.start();
+			st1.start();
+			st2.start();
 			*/
 			
 			
@@ -384,7 +387,7 @@ public class Server {
 	
 	public static void main (String [] args){
 		//Parsing all Pokemon moves and Pokemon
-		parseMoves();
+		//parseMoves();
 		parsePokemon();
 		
 		//Start the server
