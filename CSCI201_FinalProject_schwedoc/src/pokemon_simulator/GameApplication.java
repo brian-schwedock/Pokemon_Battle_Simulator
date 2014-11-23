@@ -341,7 +341,7 @@ public class GameApplication extends JFrame {
 			stc = (ServerToClient) inFromServer.readObject();
 			startGame.close();
 		} catch (Exception e){
-			e.printStackTrace();
+			System.out.println("Please run the server first");
 		}
 		
 		for (Pokemon k: stc.allPokemon)
