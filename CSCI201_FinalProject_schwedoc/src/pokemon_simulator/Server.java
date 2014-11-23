@@ -157,20 +157,6 @@ public class Server {
 		
 	}
 	
-	class ServerThread extends Thread {
-		private Socket p1Socket, p2Socket;
-		
-		ServerThread(Socket p1, Socket p2){
-			p1Socket = p1;
-			p2Socket = p2;
-		}
-		
-		public void run(){
-			while (true){}
-		}
-	}
-	
-	
 	//Parsing functions
 	private static void parseMoves(){
 		try {
