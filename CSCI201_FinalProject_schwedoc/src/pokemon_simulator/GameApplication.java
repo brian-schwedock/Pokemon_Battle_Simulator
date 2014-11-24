@@ -102,6 +102,7 @@ public class GameApplication extends JFrame {
 		chatTextArea = new JTextArea ();
 		chatTextArea.setPreferredSize(new Dimension (400, 572));
 		chatTextArea.setEnabled(false);
+		chatTextArea.setLineWrap(true);
 		JScrollPane jsp = new JScrollPane (chatTextArea);
 		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -186,6 +187,8 @@ public class GameApplication extends JFrame {
 		PokemonSwitchListener psl = new PokemonSwitchListener ();
 		for (int i=0; i < 6; ++i){
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
+			if (i == currentPokemon - 1)
+				pokemonSwitchButton.setEnabled(false);
 			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 			pokemonSwitchButton.setIcon(new ImageIcon (scaledImage));		
