@@ -63,7 +63,7 @@ public class AnimationPanel extends JPanel {
 	
 	private void setImages () {
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
-		backgroundImage= new ImageIcon ("images/trail.jpg").getImage();
+		backgroundImage= new ImageIcon ("images/back.jpg").getImage();
 		if (playerName.equals("Player 1")) {
 			playerImage = (new ImageIcon ("images/ash.gif")).getImage();
 			opposingPlayerImage = (new ImageIcon ("images/gary.gif")).getImage();
