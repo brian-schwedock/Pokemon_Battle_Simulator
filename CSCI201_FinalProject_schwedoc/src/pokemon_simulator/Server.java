@@ -43,6 +43,8 @@ public class Server {
 	private ObjectOutputStream outToClientP1;
 	private ObjectOutputStream outToClientP2;
 	
+	private ArrayList<Pokemon> partyOne;
+	private ArrayList<Pokemon> partyTwo;
 	// true if playerOne wins the game false otherwise
 	private boolean playerOneVictory;
 	// true if playerTwo wins the game false otherwise
@@ -88,11 +90,11 @@ public class Server {
 			
 			//Player One initialization
 			Socket p1Socket = socketPorts.accept();
-			ArrayList<Pokemon> partyOne = generatePokemon();
+			partyOne = generatePokemon();
 			
 			//Player Two initialization
 			Socket p2Socket = socketPorts.accept();
-			ArrayList<Pokemon> partyTwo = generatePokemon();
+			partyTwo = generatePokemon();
 
 			//Arguments: Action#, Player#, PokemonList, CurrPokemon, Opponent Pokemon Image, Opponent Pokemon Name
 			// Opponent Pokemon Curr HP, Opponent Pokemon Max HP, Opponent Pokemon still alive, Message, Damage Taken
