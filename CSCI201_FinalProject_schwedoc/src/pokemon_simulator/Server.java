@@ -87,6 +87,9 @@ public class Server {
 										{1,1,1,1,1,1,1,1,1,1,1,1,1,1,2}};
 	
 	
+	private ClientToServer ctsOne;
+	private ClientToServer ctsTwo;
+	
 	Server(){
 		try {
 			ServerSocket socketPorts = new ServerSocket(9000);
@@ -450,7 +453,53 @@ public class Server {
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
 	    return randomNum;
 	}
+	/**
+	 * sets the client to server class to the appropriate player
+	 * @param playerOne true if cts belongs to playerOne, in which case 
+	 * set ctsOne to cts. otherwise cts belongs to playerTwo, in which case set
+	 * ctsTwo to cts;
+	 * @param cts the client to server class object from server thread
+	 */
+	public void setCTS(boolean playerOne, ClientToServer cts){
+		if(playerOne){
+			ctsOne = cts;
+		}else{
+			ctsTwo = cts;
+		}
+	}
 	
+	public void incrementActionCount(){
+		actionCount++;
+	}
+	
+	public void resetActionCount(){
+		actionCount = 0;
+	}
+	
+	public void sendMessageToPlayerTwo(ClientToServer cts){
+		try {
+			System.out.println("sendmessage to player two");
+			outToClientP2.writeObject(new ServerToClient(1, 0, null, 0, null,null,0, 0, 0, cts.message, 0));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessageToPlayerOne(ClientToServer cts){
+		try {
+			System.out.println("sendMessage to player one");
+			outToClientP1.writeObject(new ServerToClient(1, 0, null, 0, null,null,0, 0, 0, cts.message, 0));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendSTC(){
+		
+	}
+
 	
 	
 	public static void main (String [] args){

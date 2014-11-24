@@ -20,8 +20,13 @@ public class ServerThread extends Thread {
 				ClientToServer cts = (ClientToServer) ois.readObject();
 				if(cts.action == 1)
 				{
+					System.out.println("Message Received by server thread: " + playerNumber);
+					if(playerNumber == 1){
+						server.sendMessageToPlayerTwo(cts);
+					}else if (playerNumber == 2){
+						server.sendMessageToPlayerOne(cts);
+					}
 					//Chat Message
-					
 				}
 				else if(cts.action == 2)
 				{

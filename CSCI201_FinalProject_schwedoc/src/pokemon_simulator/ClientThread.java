@@ -24,6 +24,7 @@ public class ClientThread extends Thread {
 		ServerToClient stc = null;
 		try {
 			stc = (ServerToClient) ois.readObject ();
+			//System.out.println("read in client to server class");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -31,6 +32,7 @@ public class ClientThread extends Thread {
 		}
 		
 		if (stc.action == 1){
+			//System.out.println("Client Class adding a message");
 			ga.addMessage(stc.message);
 		}
 		else {
