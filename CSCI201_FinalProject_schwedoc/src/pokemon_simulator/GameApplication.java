@@ -294,8 +294,10 @@ public class GameApplication extends JFrame {
     	}
     }
 
-    public void addMessage (String message) {
-    	//TODO: write the function change what the gui looks like on yours
+    public void addMessage (String message, String playerName) {
+		chatTextArea.append(playerName + ": " + message);
+		chatTextArea.append("\n");
+		messageField.setText("");
     }
 
     public void resetBottomPanel () {
@@ -324,12 +326,13 @@ public class GameApplication extends JFrame {
     }
     class sendMessageListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			String enteredMessage=messageField.getText();
+			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
-				chatTextArea.append(playerName+": " + enteredMessage);
-				chatTextArea.append("\n");
-				messageField.setText("");
+				addMessage (enteredMessage, playerName);
+				
+				/*
+				 * Send CTS to the server
+				 */
 			}
 		}
     	

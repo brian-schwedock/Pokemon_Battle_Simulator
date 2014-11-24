@@ -33,7 +33,14 @@ public class ClientThread extends Thread {
 		
 		if (stc.action == 1){
 			//System.out.println("Client Class adding a message");
-			ga.addMessage(stc.message);
+			
+			String opposingPlayerName;
+			if (stc.playerNumber == 1)
+				opposingPlayerName = "Player 2";
+			else
+				opposingPlayerName = "Player 1";
+			
+			ga.addMessage(stc.message, opposingPlayerName);
 		}
 		else {
 			//ga.setAllPokemon ();
