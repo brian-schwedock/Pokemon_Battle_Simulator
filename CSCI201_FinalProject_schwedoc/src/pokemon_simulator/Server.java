@@ -2,6 +2,7 @@ package pokemon_simulator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -141,8 +142,8 @@ public class Server {
 			//to leave the above code as is.
 			
 			/*
-			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream());
-			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream());
+			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream()));
+			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream()));
 			
 			st1.start();
 			st2.start();
