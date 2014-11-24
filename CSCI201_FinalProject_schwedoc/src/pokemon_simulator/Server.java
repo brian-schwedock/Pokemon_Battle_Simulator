@@ -112,6 +112,9 @@ public class Server {
 	private ClientToServer ctsOne;
 	private ClientToServer ctsTwo;
 	
+	public static boolean playerOneMadeMove = false;
+	public static boolean playerTwoMadeMove = false;
+	
 	Server(){
 		try {
 			ServerSocket socketPorts = new ServerSocket(9000);
@@ -204,6 +207,45 @@ public class Server {
 		}
 		return i;
 	}
+	
+	/**
+	 * makes the appropriate moves based on the CTS(client to server) class given. 
+	 * This only occurs once both players have chosen an action 
+	 * (move, or change pokemon) specified with integers 2 and 3 
+	 * respectively in the CTS class. This method will call all the other methods
+	 * needed to make player moves such as calculate damage, switchPokemon. 
+	 */
+	public void makePlayerMoves(){
+		System.out.println("Both players have made an action, now making player moves");
+		int playerOneSpeed = partyOne.get(0).getAllStats().get("Speed");
+		int playerTwoSpeed = partyTwo.get(0).getAllStats().get("Speed");
+		
+		if(playerOneSpeed > playerTwoSpeed){
+			if(ctsOne.action == 3){
+				switchPokemon(ctsOne.pokemonChosen - 1, 1);
+				System.out.println("Switching playerOne pokemon");
+			}
+			
+			if(ctsTwo.action == 3){
+				switchPokemon(ctsTwo.pokemonChosen - 1, 2);
+				System.out.println("Switching playerTwo pokemon");
+			}
+		}else if(playerTwoSpeed <= playerOneSpeed){
+			if(ctsTwo.action == 3){
+				switchPokemon(ctsTwo.pokemonChosen - 1, 2);
+				System.out.println("Switching playerTwo pokemon");
+			}
+			if(ctsOne.action == 3){
+				switchPokemon(ctsOne.pokemonChosen - 1, 1);
+				System.out.println("Switching playerOne pokemon");
+			}
+		}
+		
+		// turn is now over reset control values
+		resetActionCount();
+		playerOneMadeMove = false;
+		playerTwoMadeMove = false;
+	}
 	void switchPokemon(int number,int playerNumber)
 	{	
 		
@@ -229,6 +271,7 @@ public class Server {
 			Pokemon temp = partyTwo.get(number);
 			partyTwo.set(number,partyTwo.get(0));
 			partyTwo.set(0,temp);
+			
 			/*ServerToClient stc = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
 					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), returnAlive(1), "", 0);
 			try {
@@ -239,6 +282,7 @@ public class Server {
 				e.printStackTrace();
 			}*/
 		}
+		
 		
 	}
 	//Parsing functions
@@ -329,7 +373,7 @@ public class Server {
 	
 	/**
 	 * Performs an attack on the other player. 
-	 * @param playerOne true if player one is attacked by player two
+	 * @param player true if player one is attacked by player two
 	 * otherwise player two is attacked by player one
 	 * @param move is the move determined by the CTS class sent to the server
 	 * by the attacking player.
@@ -477,13 +521,13 @@ public class Server {
 	}
 	/**
 	 * sets the client to server class to the appropriate player
-	 * @param playerOne true if cts belongs to playerOne, in which case 
+	 * @param player true if cts belongs to playerOne, in which case 
 	 * set ctsOne to cts. otherwise cts belongs to playerTwo, in which case set
 	 * ctsTwo to cts;
 	 * @param cts the client to server class object from server thread
 	 */
-	public void setCTS(boolean playerOne, ClientToServer cts){
-		if(playerOne){
+	public void setCTS(boolean player, ClientToServer cts){
+		if(player){
 			ctsOne = cts;
 		}else{
 			ctsTwo = cts;
@@ -496,6 +540,10 @@ public class Server {
 	 */
 	public void incrementActionCount(){
 		actionCount++;
+	}
+	
+	public int getActionCount(){
+		return actionCount;
 	}
 	
 	/**
@@ -539,8 +587,18 @@ public class Server {
 	}
 	
 	// TODO send a STC class once the action count has reached 2
-	public void sendSTC(){
-		
+	public void sendSTC(ServerToClient stc, boolean player){
+		try{
+			if(player){
+				outToClientP1.writeObject(stc);
+				outToClientP1.flush();
+			}else{
+				outToClientP2.writeObject(stc);
+				outToClientP2.flush();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	

@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,8 +27,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 public class GameApplication extends JFrame {
 	
@@ -37,9 +41,12 @@ public class GameApplication extends JFrame {
 	
 	//Components for chatbox
 	private JPanel chatBoxPanel;
-	private JTextArea chatTextArea;
+	private StyledDocument doc;
+	//private JTextArea chatTextArea;
+	private JTextPane chatTextPane;
 	private JPanel bottomChatPanel;
 	private JLabel chatBoxPlayerLabel;
+	
 	private JTextField messageField;
 	
 	//Container for all non-chat elements
@@ -65,6 +72,7 @@ public class GameApplication extends JFrame {
 	String playerName;
 	String opposingPlayerName;
 	int currentPokemon;
+	int playerNumber;
 	Image opposingPokemonImage;
 	String opposingPokemonName;
 	int opposingPokemonCurrentHP;
@@ -82,6 +90,7 @@ public class GameApplication extends JFrame {
 		
 		//Set all initial Pokemon information
 		setPlayerNames(stc.playerNumber);
+		playerNumber = stc.playerNumber;
 		setAllPokemon(stc.allPokemon);
 		setCurrentPokemon(stc.pokemonInPlay);
 		setOpposingPokemonImage(stc.opposingPokemonImage);
@@ -109,11 +118,11 @@ public class GameApplication extends JFrame {
 		chatBoxPanel = new JPanel ();
 		chatBoxPanel.setLayout(new BoxLayout (chatBoxPanel, BoxLayout.Y_AXIS));
 		
-		chatTextArea = new JTextArea ();
-		chatTextArea.setPreferredSize(new Dimension (400, 572));
-		chatTextArea.setEnabled(false);
-		chatTextArea.setLineWrap(true);
-		JScrollPane jsp = new JScrollPane (chatTextArea);
+		chatTextPane = new JTextPane ();
+		doc = chatTextPane.getStyledDocument();
+		chatTextPane.setPreferredSize(new Dimension (400, 572));
+		chatTextPane.setEnabled(false);
+		JScrollPane jsp = new JScrollPane (chatTextPane);
 		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
@@ -305,8 +314,24 @@ public class GameApplication extends JFrame {
     }
 
     public void addMessage (String message, String playerName) {
-		chatTextArea.append(playerName + ": " + message);
-		chatTextArea.append("\n");
+    	try{
+    	if(message.equalsIgnoreCase("Kappa")){
+    		doc.insertString(doc.getLength(), playerName + ": ", null);
+    		chatTextPane.setCaretPosition(doc.getLength());
+    		chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
+    		doc.insertString(doc.getLength(), "\n", null);
+    	}else{
+    
+			doc.insertString(doc.getLength(), playerName + ": " + message + "\n", null);
+		}
+    	}catch(BadLocationException e){
+    		e.printStackTrace();
+    	}
+    	//String chatStr = chatTextPane.getText();
+		//chatTextPane.append(playerName + ": " + message);
+    	//chatStr.concat(playerName + ": " + message + "\n");
+		//chatTextPane.append("\n");
+    	//chatTextPane.setText(chatStr);
 		messageField.setText("");
     }
 
@@ -316,22 +341,30 @@ public class GameApplication extends JFrame {
 
     class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
+			int moveChosen = 0;
 			if (ae.getSource() == attackButtons.get(0)){
 				System.out.println("Attack 1 clicked");
 				//TODO: Remove print and send message to server
+				moveChosen = 1;
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
 				//TODO: Remove print and send message to server
+				moveChosen = 2;
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
 				//TODO: Remove print and send message to server
+				moveChosen = 3;
 			}
 			else{
 				System.out.println("Attack 4 clicked");
 				//TODO: Remove print and send message to server
+				moveChosen = 4;
 			}
+			System.out.println("Sending client to server class to attack");
+			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
+			sendCTS(cts);
 		}
     }
     
@@ -350,46 +383,66 @@ public class GameApplication extends JFrame {
 				addMessage (enteredMessage, playerName);
 				//System.out.println("Trying to send message from client: " + playerName );
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
-				try {
-					outToServer.writeObject(cts);
-					outToServer.flush();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				sendCTS(cts);
 			}
 		}
     	
     }
+    
     class PokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
+			int chosenPokemon;
 			if (ae.getSource() == pokemonSwitchButtons.get(0)){
 				System.out.println("Pokemon 1 clicked");
 				//TODO: Remove print and send message to server
+				chosenPokemon = 1;
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
 				System.out.println("Pokemon 2 clicked");
 				//TODO: Remove print and send message to server
+				chosenPokemon = 2;
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
 				System.out.println("Pokemon 3 clicked");
+				chosenPokemon = 3;
 				//TODO: Remove print and send message to server
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
 				System.out.println("Pokemon 4 clicked");
+				chosenPokemon = 4;
 				//TODO: Remove print and send message to server
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
 				System.out.println("Pokemon 5 clicked");
+				chosenPokemon = 5;
 				//TODO: Remove print and send message to server
 			}
 			else{
 				System.out.println("Pokemon 6 clicked");
+				chosenPokemon = 6;
 				//TODO: Remove print and send message to server
 			}
+			System.out.println("Sending client to server class to switch pokemon");
+			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
+			sendCTS(cts);
 		}
     }
     
+    /**
+     * Sends the cts object to the server by putting it in the
+     * object output stream
+     * @param cts is the client to server object being sent
+     */
+    private void sendCTS(ClientToServer cts){
+    	try {
+			outToServer.writeObject(cts);
+			outToServer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
     /*
      * Add a key listener so that when the enter key is clicked
      * if there is a message in the textbox, the message shows up

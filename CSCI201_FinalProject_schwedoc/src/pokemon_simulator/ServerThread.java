@@ -7,11 +7,13 @@ public class ServerThread extends Thread {
 	private Server server;
 	private ObjectInputStream ois;
 	private int playerNumber;
+	private boolean moveMade;
 	
 	ServerThread(Server server, ObjectInputStream ois, int playerNumber){
 		this.server = server;
 		this.ois = ois;
 		this.playerNumber = playerNumber;
+		moveMade = false;
 	}
 	
 	public void run(){
@@ -27,7 +29,26 @@ public class ServerThread extends Thread {
 						server.sendMessageToPlayerOne(cts);
 					}
 					//Chat Message
-				}
+				}else{
+					// this occurs when actions 2 or three are chosen. the server class
+					// will handle appropriate implementation of these instances
+					if(playerNumber == 1 && !server.playerOneMadeMove){
+						server.setCTS(true, cts);
+						server.playerOneMadeMove = true;
+						server.incrementActionCount();
+					}else if (playerNumber == 2 && !server.playerTwoMadeMove){
+						server.setCTS(false, cts);
+						server.playerTwoMadeMove = true;
+						server.incrementActionCount();
+					}
+					
+					
+					if(server.getActionCount() >=2){
+						server.makePlayerMoves();
+						
+					}
+					
+				}/*
 				else if(cts.action == 2)
 				{
 					//Move
@@ -35,8 +56,12 @@ public class ServerThread extends Thread {
 				else if(cts.action == 3)
 				{
 					//Switch Pokemon
+					System.out.println("player: " + playerNumber + " wants to switch pokemon");
+					server.incrementActionCount();
+					if(server.getActionCount() >=2){
 					server.switchPokemon(cts.pokemonChosen - 1, playerNumber);
-				}
+					}
+				}*/
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
