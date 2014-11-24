@@ -1,6 +1,6 @@
 /*
  * Team members: Brian Schwedock, Ryan Chen,
- * Allen Shi, Chris Holmes, and Alejandro Lopez
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
  */
 
 package pokemon_simulator;
