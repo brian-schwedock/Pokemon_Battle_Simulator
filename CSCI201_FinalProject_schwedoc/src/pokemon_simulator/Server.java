@@ -168,9 +168,12 @@ public class Server {
 				String moveType = moveReader.next();
 				int movePower = Integer.parseInt(moveReader.next());
 				int moveAccuracy = Integer.parseInt(moveReader.next());
-				System.out.println(moveAccuracy);
-				int isSpecial = Integer.parseInt(moveReader.next());
-				
+				String tempIsSpecial;
+				tempIsSpecial=moveReader.nextLine();
+				StringBuilder sb = new StringBuilder(tempIsSpecial);
+				sb.deleteCharAt(0);
+				int isSpecial = Integer.parseInt(sb.toString());
+				System.out.println(isSpecial);
 				allMoves.put(moveName, new Move(moveName, moveType, movePower, isSpecial, moveAccuracy));
 			}
 			moveReader.close();
