@@ -11,7 +11,9 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -69,7 +71,13 @@ public class GameApplication extends JFrame {
 	int opposingPokemonMaxHP;
 	int opposingPokemonAlive;
 	
-	public GameApplication (ServerToClient stc) {
+	/**
+	 * the outToServer stream is a connection to the server that every client (GameApplication) uses
+	 * to send ClientToServer objects to the server
+	 */
+	ObjectOutputStream outToServer;
+	
+	public GameApplication (ServerToClient stc, ObjectOutputStream ops) {
 		super("Pokemon Battle Simulator");
 		
 		//Set all initial Pokemon information
@@ -92,6 +100,8 @@ public class GameApplication extends JFrame {
 		createChatBoxPanel();
 		createGameScreenPanel();
 		
+		outToServer = ops;
+		
 		setVisible(true);
 	}
 	
@@ -110,7 +120,7 @@ public class GameApplication extends JFrame {
 		bottomChatPanel = new JPanel ();
 		JLabel chatBoxPlayerLabel = new JLabel (playerName);
 		messageField = new JTextField ();
-		sendMessageListener sml= new sendMessageListener();
+		SendMessageListener sml= new SendMessageListener();
 		messageField.addActionListener(sml);
 		messageField.setPreferredSize(new Dimension (350, 30));
 		
@@ -324,15 +334,29 @@ public class GameApplication extends JFrame {
 			}
 		}
     }
-    class sendMessageListener implements ActionListener {
+    
+    /**
+     * 
+     *	This is called when the user has pressed enter and wishes to send a message
+     * 	that they typed out in the chat box.
+     * 	It adds their message to their chat field and sends their message to the 
+     *  server to be sent to the opposing player as well.
+     *
+     */
+    class SendMessageListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
 				addMessage (enteredMessage, playerName);
-				
-				/*
-				 * Send CTS to the server
-				 */
+				//System.out.println("Trying to send message from client: " + playerName );
+				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
+				try {
+					outToServer.writeObject(cts);
+					outToServer.flush();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
     	
@@ -383,13 +407,15 @@ public class GameApplication extends JFrame {
 
 		try { 
 			startGame = new Socket("127.0.0.1", 9000); 
- 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream()); 
+ 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
+ 			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
  			stc = (ServerToClient) inFromServer.readObject(); 
  			
  			for (Pokemon k: stc.allPokemon)
  				k.setImages();
- 			GameApplication ga = new GameApplication (stc);
- 			new ClientThread (inFromServer, ga);
+ 			GameApplication ga = new GameApplication (stc, outToServer);
+ 			ClientThread ct = new ClientThread (inFromServer, ga);
+ 			ct.start();
  			
 			//startGame.close(); 
  		} catch (Exception e){ 

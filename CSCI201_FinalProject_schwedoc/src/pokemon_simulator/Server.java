@@ -70,6 +70,28 @@ public class Server {
 	 */
 	private int actionCount;
 	
+	/**
+	 * 2D Array in which each index represents the type effectiveness of the column type 
+	 * over the row type. For example, index [1][1] represents the type effectivenss of 
+	 * Normal vs. Normal where type Normal is represented as 0. 
+	 * The integer representations of types are as follows
+	 * <p>
+	 * <li> Fire = 1
+	 * <li> Water = 2
+	 * <li> Grass = 3
+	 * <li> Electric = 4
+	 * <li> Ice = 5
+	 * <li> Fighting = 6
+	 * <li> Poison = 7
+	 * <li> Ground = 8
+	 * <li> Flying = 9
+	 * <li> Psychic = 10
+	 * <li> Bug = 11
+	 * <li> Rock = 12
+	 * <li> Ghost = 13
+	 * <li> Dragon = 14
+	 */
+	
 	private double typeChart[][] = {{1,1,1,1,1,1,1,1,1,1,1,1,0.5,0,1},
 										{1,0.5,0.5,2,1,2,1,1,1,1,1,2,0.5,1,0.5},
 										{1,2,0.5,0.5,1,1,1,1,2,1,1,1,2,1,0.5},
@@ -468,34 +490,55 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * increments playerAction. Note this value should not go above 2
+	 * For explanation of what justifies an action see {@link resetActionCount()}
+	 */
 	public void incrementActionCount(){
 		actionCount++;
 	}
 	
+	/**
+	 * At the end of every turn action count should be reset to 0.
+	 * A turn is when both players complete an action. An action
+	 * is either an attack, or a pokemon switch. A chat message is not
+	 * a player action
+	 */
 	public void resetActionCount(){
 		actionCount = 0;
 	}
 	
+	/**
+	 * Sends chat message to player two
+	 * @param cts is the given chat message to player one
+	 */
 	public void sendMessageToPlayerTwo(ClientToServer cts){
 		try {
-			System.out.println("sendmessage to player two");
-			outToClientP2.writeObject(new ServerToClient(1, 0, null, 0, null,null,0, 0, 0, cts.message, 0));
+			System.out.println("sendMessage to player two");
+			outToClientP2.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0));
+			outToClientP2.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Sends chat message to player one 
+	 * @param cts is the given cts class from player two 
+	 */
 	public void sendMessageToPlayerOne(ClientToServer cts){
 		try {
 			System.out.println("sendMessage to player one");
-			outToClientP1.writeObject(new ServerToClient(1, 0, null, 0, null,null,0, 0, 0, cts.message, 0));
+			outToClientP1.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0));
+			outToClientP1.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	// TODO send a STC class once the action count has reached 2
 	public void sendSTC(){
 		
 	}
@@ -509,7 +552,6 @@ public class Server {
 		
 		//Start the server
 		new Server();
-		
-		
+
 	}
 }

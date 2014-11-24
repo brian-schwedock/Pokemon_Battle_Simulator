@@ -22,8 +22,10 @@ public class ClientThread extends Thread {
 	
 	public void run () {
 		ServerToClient stc = null;
+		while(true){
 		try {
 			stc = (ServerToClient) ois.readObject ();
+			
 			//System.out.println("read in client to server class");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -31,14 +33,17 @@ public class ClientThread extends Thread {
 			e.printStackTrace();
 		}
 		
+		
+		
 		if (stc.action == 1){
 			//System.out.println("Client Class adding a message");
 			
-			String opposingPlayerName;
+			String opposingPlayerName = "Player 1";
 			if (stc.playerNumber == 1)
-				opposingPlayerName = "Player 2";
-			else
 				opposingPlayerName = "Player 1";
+			else if(stc.playerNumber == 2)
+				opposingPlayerName = "Player 2";
+			
 			
 			ga.addMessage(stc.message, opposingPlayerName);
 		}
@@ -54,6 +59,7 @@ public class ClientThread extends Thread {
 			//and whether a Pokemon has fainted
 			
 			//And some additional info based on value of action
+		}
 		}
 	}
 }
