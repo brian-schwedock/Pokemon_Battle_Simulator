@@ -47,6 +47,9 @@ public class ClientThread extends Thread {
 			ga.addMessage(stc.message, opposingPlayerName);
 		}
 		else {
+ 			for (Pokemon k: stc.allPokemon)
+ 				k.setImages();
+ 			
 			ga.setAllPokemon(stc.allPokemon);
 			ga.setCurrentPokemon(stc.pokemonInPlay);
 			System.out.println(ga.getPokemonName());
