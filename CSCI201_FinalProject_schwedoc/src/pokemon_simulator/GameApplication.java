@@ -382,7 +382,8 @@ public class GameApplication extends JFrame {
  			
  			for (Pokemon k: stc.allPokemon)
  				k.setImages();
- 			new GameApplication (stc);
+ 			GameApplication ga = new GameApplication (stc);
+ 			new ClientThread (inFromServer, ga);
  			
 			//startGame.close(); 
  		} catch (Exception e){ 
