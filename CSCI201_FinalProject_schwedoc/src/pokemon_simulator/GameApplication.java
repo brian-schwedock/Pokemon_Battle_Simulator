@@ -338,6 +338,23 @@ public class GameApplication extends JFrame {
     public void resetBottomPanel () {
     	//TODO: write the function
     }
+    
+    public void updateSwitchButtons(){
+    	for (int i=0; i < 6; ++i){
+			JButton tempButton = pokemonSwitchButtons.get(i);
+			tempButton.setText(allPokemon.get(i).getName());
+			if (i == currentPokemon - 1)
+				tempButton.setEnabled(false);
+			
+			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+			tempButton.setIcon(new ImageIcon (scaledImage));		
+			
+			int curHP = allPokemon.get(i).getCurrentHP();
+			int maxHP = allPokemon.get(i).getMaxHP();
+			String type =  allPokemon.get(i).getType();
+			tempButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
+		}
+    }
 
     class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
@@ -427,6 +444,8 @@ public class GameApplication extends JFrame {
 			sendCTS(cts);
 		}
     }
+    
+ 
     
     /**
      * Sends the cts object to the server by putting it in the
