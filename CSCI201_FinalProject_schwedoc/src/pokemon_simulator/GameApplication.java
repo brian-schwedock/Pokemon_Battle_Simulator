@@ -153,8 +153,8 @@ public class GameApplication extends JFrame {
 		JPanel attackButtonPanel = new JPanel ();
 		attackButtons = new ArrayList<JButton> ();
 		AttackListener al = new AttackListener ();
-		for (int i=1; i <= 4; ++i){
-			JButton attackButton = new JButton ("Attack " + i);
+		for (int i=0; i < 4; ++i){
+			JButton attackButton = new JButton (allPokemon.get(currentPokemon - 1).getMoves().get(i).getName());
 			attackButton.setPreferredSize(new Dimension (190, 30));
 			attackButton.addActionListener(al);
 			attackButton.setToolTipText("type, type, power");
