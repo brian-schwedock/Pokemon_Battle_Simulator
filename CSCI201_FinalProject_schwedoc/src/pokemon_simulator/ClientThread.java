@@ -52,7 +52,7 @@ public class ClientThread extends Thread {
 			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
 			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
-			
+			ga.setOpposingPokemonName(stc.opposingPokemonName);
 			ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");
 			//Add a message indicating damage percentage lost
 			//and whether a Pokemon has fainted
