@@ -36,7 +36,8 @@ public class ServerThread extends Thread {
 						server.setCTS(true, cts);
 						server.playerOneMadeMove = true;
 						server.incrementActionCount();
-					}else if (playerNumber == 2 && !server.playerTwoMadeMove){
+					}
+					if(playerNumber == 2 && !server.playerTwoMadeMove){
 						server.setCTS(false, cts);
 						server.playerTwoMadeMove = true;
 						server.incrementActionCount();

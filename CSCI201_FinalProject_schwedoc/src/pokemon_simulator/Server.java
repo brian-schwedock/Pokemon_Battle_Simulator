@@ -224,29 +224,19 @@ public class Server {
 		
 		int playerOneDamageTaken = 0;
 		int playerTwoDamageTaken = 0;
-		if(playerOneSpeed > playerTwoSpeed){
-			
-			if(ctsOne.action == 3){
-				switchPokemon(ctsOne.pokemonChosen - 1, 1);
-				System.out.println("Switching playerOne pokemon");
-			}
-			
-			if(ctsTwo.action == 3){
-				switchPokemon(ctsTwo.pokemonChosen - 1, 2);
-				System.out.println("Switching playerTwo pokemon");
-			}
-		}else if(playerTwoSpeed <= playerOneSpeed){
-			
-			if(ctsTwo.action == 3){
-				switchPokemon(ctsTwo.pokemonChosen - 1, 2);
-				System.out.println("Switching playerTwo pokemon");
-			}
-			if(ctsOne.action == 3){
-				switchPokemon(ctsOne.pokemonChosen - 1, 1);
-				System.out.println("Switching playerOne pokemon");
-			}
-		}
 		
+		if(ctsOne.action == 3){
+			switchPokemon(ctsOne.pokemonChosen - 1, 1);
+			System.out.println("Switching playerOne pokemon");
+		}
+			
+		if(ctsTwo.action == 3){
+			switchPokemon(ctsTwo.pokemonChosen - 1, 2);
+			System.out.println("Switching playerTwo pokemon");
+		}
+	
+			
+			
 		imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 		imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
@@ -617,11 +607,13 @@ public class Server {
 		try{
 			if(player){
 				outToClientP1.reset();
+				outToClientP2.reset();
 				System.out.println("Sending stc to client one");
 				outToClientP1.writeObject(stc);
 				outToClientP1.flush();
 			}else{
 				outToClientP2.reset();
+				outToClientP1.reset();
 				outToClientP2.writeObject(stc);
 				outToClientP2.flush();
 			}
