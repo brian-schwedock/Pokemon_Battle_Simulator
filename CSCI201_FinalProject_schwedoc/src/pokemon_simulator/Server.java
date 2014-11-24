@@ -251,7 +251,7 @@ public class Server {
 		imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
 				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
-		stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
+		stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageTwo,partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
 		
 		sendSTC(stcOne, true);
@@ -404,20 +404,32 @@ public class Server {
 		if(player)
 		{
 			if(dmg >= partyOne.get(0).getCurrentHP())
-			{return true;}
+			{
+				partyOne.get(0).setCurrentHP(dmg);
+				return true;
+			}
 			
 			else
-			{return false;}
+			{
+				partyOne.get(0).setCurrentHP(dmg);
+				return false;
+			}
 		}
 		
 		//p2 attacked by p1
 		else
 		{
 			if(dmg >= partyTwo.get(0).getCurrentHP())
-			{return true;}
+			{
+				partyTwo.get(0).setCurrentHP(dmg);
+				return true;
+			}
 			
 			else
-			{return false;}
+			{
+				partyTwo.get(0).setCurrentHP(dmg);
+				return false;
+			}
 		}
 	}
 	/**
