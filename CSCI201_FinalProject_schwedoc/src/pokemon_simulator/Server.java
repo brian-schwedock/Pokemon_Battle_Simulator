@@ -175,7 +175,6 @@ public class Server {
 				StringBuilder sb = new StringBuilder(tempIsSpecial);
 				sb.deleteCharAt(0);
 				int isSpecial = Integer.parseInt(sb.toString());
-				System.out.println(isSpecial);
 				allMoves.put(moveName, new Move(moveName, moveType, movePower, isSpecial, moveAccuracy));
 			}
 			moveReader.close();
