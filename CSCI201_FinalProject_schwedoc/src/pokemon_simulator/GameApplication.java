@@ -157,7 +157,18 @@ public class GameApplication extends JFrame {
 			JButton attackButton = new JButton (allPokemon.get(currentPokemon - 1).getMoves().get(i).getName());
 			attackButton.setPreferredSize(new Dimension (190, 30));
 			attackButton.addActionListener(al);
-			attackButton.setToolTipText("type, type, power");
+
+			String type =  allPokemon.get(currentPokemon - 1).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(currentPokemon - 1).getMoves().get(i).isSpecial();
+			String specialPhysical;
+			if (isSpecial == 0)
+				specialPhysical = "Physical";
+			else
+				specialPhysical = "Special";
+			int power = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAccuracy();
+			attackButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
+
 			attackButtons.add(attackButton);
 			attackButtonPanel.add(attackButton);
 		}
