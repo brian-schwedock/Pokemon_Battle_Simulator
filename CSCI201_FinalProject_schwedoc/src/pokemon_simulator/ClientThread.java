@@ -22,7 +22,9 @@ public class ClientThread extends Thread {
 	
 	public void run () {
 		ServerToClient stc = null;
+
 		while(true){
+			
 		try {
 			stc = (ServerToClient) ois.readObject ();
 			
@@ -45,15 +47,16 @@ public class ClientThread extends Thread {
 			ga.addMessage(stc.message, opposingPlayerName);
 		}
 		else {
-			
 			ga.setAllPokemon(stc.allPokemon);
 			ga.setCurrentPokemon(stc.pokemonInPlay);
+			System.out.println(ga.getPokemonName());
 			ga.setOpposingPokemonImage (stc.opposingPokemonImage);
 			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
 			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
 			ga.setOpposingPokemonName(stc.opposingPokemonName);
 			ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");
+			ga.repaint();
 			//Add a message indicating damage percentage lost
 			//and whether a Pokemon has fainted
 			

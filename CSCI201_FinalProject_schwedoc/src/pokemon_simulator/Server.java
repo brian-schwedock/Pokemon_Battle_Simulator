@@ -253,7 +253,6 @@ public class Server {
 				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
 		stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageTwo,partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
-		
 		sendSTC(stcOne, true);
 		sendSTC(stcTwo, false);
 		
@@ -617,10 +616,12 @@ public class Server {
 	public void sendSTC(ServerToClient stc, boolean player){
 		try{
 			if(player){
+				outToClientP1.reset();
 				System.out.println("Sending stc to client one");
 				outToClientP1.writeObject(stc);
 				outToClientP1.flush();
 			}else{
+				outToClientP2.reset();
 				outToClientP2.writeObject(stc);
 				outToClientP2.flush();
 			}
@@ -629,8 +630,6 @@ public class Server {
 		}
 	}
 
-	
-	
 	public static void main (String [] args){
 		//Parsing all Pokemon moves and Pokemon
 		parseMoves();
