@@ -136,20 +136,20 @@ public class Server {
 			
 			//Remove this while loop when you use the serverthreads
 			//This loop is preventing the connections between server and clients from closing automatically
-			while (true);
+			//while (true);
 			
 			
 			//I recommend creating the inputstreams here also and then passing in
 			//the streams instead of the sockets into server thread if you want
 			//to leave the above code as is.
 			
-			/*
-			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream()));
-			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream()));
+			
+			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream()),1);
+			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream()),2);
 			
 			st1.start();
 			st2.start();
-			*/
+			
 			
 			
 		} catch (Exception e) {
