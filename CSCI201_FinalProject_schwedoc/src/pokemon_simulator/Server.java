@@ -159,7 +159,29 @@ public class Server {
 		
 		
 	}
-	
+	void switchPokemon(int number,int playerNumber)
+	{
+		if(playerNumber == 1)
+		{
+		/*	for(Pokemon x : partyOne)
+				System.out.println(x.getName());*/
+			Pokemon temp = partyOne.get(number);
+			partyOne.set(number,partyOne.get(0));
+			partyOne.set(0,temp);
+		//	for(Pokemon x : partyOne)
+			//	System.out.println(x.getName());
+		}
+		else if(playerNumber == 2)
+		{
+			//for(Pokemon x : partyTwo)
+				//System.out.println(x.getName());
+			Pokemon temp = partyTwo.get(number);
+			partyTwo.set(number,partyTwo.get(0));
+			partyTwo.set(0,temp);
+			//for(Pokemon x : partyTwo)
+				//System.out.println(x.getName());
+		}
+	}
 	//Parsing functions
 	private static void parseMoves(){
 		try {

@@ -29,7 +29,7 @@ public class ServerThread extends Thread {
 				else if(cts.action == 3)
 				{
 					//Switch Pokemon
-					
+					server.switchPokemon(cts.pokemonChosen - 1, playerNumber);
 				}
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
