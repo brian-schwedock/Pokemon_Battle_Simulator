@@ -312,9 +312,29 @@ public class Server {
 	 * pokemon false otherwise
 	 * 
 	 */
-	private boolean attack(boolean playerOne, Move move){
+	private boolean attack(boolean player, Move move){
 		
-		return false;
+		int dmg = calculateDamage(player, move);
+		
+		//player1 attacked by player 2
+		if(player)
+		{
+			if(dmg >= partyOne.get(0).getCurrentHP())
+			{return true;}
+			
+			else
+			{return false;}
+		}
+		
+		//p2 attacked by p1
+		else
+		{
+			if(dmg >= partyTwo.get(0).getCurrentHP())
+			{return true;}
+			
+			else
+			{return false;}
+		}
 	}
 	/**
 	 * 

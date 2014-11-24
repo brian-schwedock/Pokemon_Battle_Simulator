@@ -14,7 +14,7 @@ public class Player {
 	private ArrayList<Pokemon> allPokemon;
 	// an integer range [1,6] inclusive representing the current pokemon in play
 	private int currentPokemon;
-	// an integer [0,6] representing the amount of playale pokemon (not fainted)
+	// an integer [0,6] representing the amount of playable pokemon (not fainted)
 	// in the player's party
 	private int playablePokemon;
 	
@@ -45,6 +45,17 @@ public class Player {
 	 * @return			the amount of playablePokemon in the party
 	 */
 	public int getPlayablePokemon(){
+		int numAlive = 0;
+		
+		for(int i=0; i<allPokemon.size(); i++)
+		{
+//			if pokemon not fainted, increment
+			if( !allPokemon.get(i).isFainted() )
+			{numAlive++;}
+		}
+		
+		playablePokemon = numAlive;
+		
 		return playablePokemon;
 	}
 	
