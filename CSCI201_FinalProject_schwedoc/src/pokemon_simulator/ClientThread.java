@@ -33,28 +33,27 @@ public class ClientThread extends Thread {
 			e.printStackTrace();
 		}
 		
-		
+		String opposingPlayerName = "Player 1";
+		if (stc.playerNumber == 1)
+			opposingPlayerName = "Player 1";
+		else if(stc.playerNumber == 2)
+			opposingPlayerName = "Player 2";
 		
 		if (stc.action == 1){
 			//System.out.println("Client Class adding a message");
 			
-			String opposingPlayerName = "Player 1";
-			if (stc.playerNumber == 1)
-				opposingPlayerName = "Player 1";
-			else if(stc.playerNumber == 2)
-				opposingPlayerName = "Player 2";
-			
-			
 			ga.addMessage(stc.message, opposingPlayerName);
 		}
 		else {
-			//ga.setAllPokemon ();
-			//ga.setCurrentPokemon ();
-			//ga.setOpposingPokemonImage ();
-			//ga.setOpposingPokemonCurrentHP ();
-			//ga.setOpposingPokemonMaxHP ();
-			//ga.setOpposingPokemonAlive ();
 			
+			ga.setAllPokemon(stc.allPokemon);
+			ga.setCurrentPokemon(stc.pokemonInPlay);
+			ga.setOpposingPokemonImage (stc.opposingPokemonImage);
+			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
+			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
+			
+			ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");
 			//Add a message indicating damage percentage lost
 			//and whether a Pokemon has fainted
 			

@@ -217,10 +217,15 @@ public class Server {
 	 */
 	public void makePlayerMoves(){
 		System.out.println("Both players have made an action, now making player moves");
+		ServerToClient stcOne;
+		ServerToClient stcTwo;
 		int playerOneSpeed = partyOne.get(0).getAllStats().get("Speed");
 		int playerTwoSpeed = partyTwo.get(0).getAllStats().get("Speed");
 		
+		int playerOneDamageTaken = 0;
+		int playerTwoDamageTaken = 0;
 		if(playerOneSpeed > playerTwoSpeed){
+			
 			if(ctsOne.action == 3){
 				switchPokemon(ctsOne.pokemonChosen - 1, 1);
 				System.out.println("Switching playerOne pokemon");
@@ -231,6 +236,7 @@ public class Server {
 				System.out.println("Switching playerTwo pokemon");
 			}
 		}else if(playerTwoSpeed <= playerOneSpeed){
+			
 			if(ctsTwo.action == 3){
 				switchPokemon(ctsTwo.pokemonChosen - 1, 2);
 				System.out.println("Switching playerTwo pokemon");
@@ -241,6 +247,16 @@ public class Server {
 			}
 		}
 		
+		imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+		imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+		stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
+				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
+		stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
+				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
+		
+		sendSTC(stcOne, true);
+		sendSTC(stcTwo, false);
+		
 		// turn is now over reset control values
 		resetActionCount();
 		playerOneMadeMove = false;
@@ -249,8 +265,7 @@ public class Server {
 	void switchPokemon(int number,int playerNumber)
 	{	
 		
-		imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
-		imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+		
 		if(playerNumber == 1)
 		{
 			Pokemon temp = partyOne.get(number);
@@ -590,6 +605,7 @@ public class Server {
 	public void sendSTC(ServerToClient stc, boolean player){
 		try{
 			if(player){
+				System.out.println("Sending stc to client one");
 				outToClientP1.writeObject(stc);
 				outToClientP1.flush();
 			}else{

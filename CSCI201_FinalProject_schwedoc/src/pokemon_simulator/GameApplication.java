@@ -237,11 +237,11 @@ public class GameApplication extends JFrame {
 
 	//We may not need this method
     public Image getPokemonImage (int number) {
-    	return allPokemon.get(currentPokemon - 1).getFrontImage();
+    	return allPokemon.get(number - 1).getFrontImage();
     }
 
     public Image getCurrentPokemonImage () {
-    	return allPokemon.get(currentPokemon - 1).getBackImage();
+    	return allPokemon.get(0).getBackImage();
     }
 
     public Image getOpposingPokemonImage () {
@@ -249,7 +249,7 @@ public class GameApplication extends JFrame {
     }
 
     public String getPokemonName () {
-    	return allPokemon.get(currentPokemon - 1).getName();
+    	return allPokemon.get(0).getName();
     }
 
     public String getOpposingPokemonName () {
@@ -257,7 +257,7 @@ public class GameApplication extends JFrame {
     }
 
     public int getCurrentHP () {
-    	return allPokemon.get(currentPokemon - 1).getCurrentHP();
+    	return allPokemon.get(0).getCurrentHP();
     }
 
     public int getOpposingCurrentHP () {
@@ -265,7 +265,7 @@ public class GameApplication extends JFrame {
     }
 
     public int getMaxHP () {
-    	return allPokemon.get(currentPokemon - 1).getMaxHP();
+    	return allPokemon.get(0).getMaxHP();
     }
 
     public int getOpposingMaxHP () {
