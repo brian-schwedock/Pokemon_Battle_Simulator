@@ -6,11 +6,11 @@ public class Move implements Serializable{
 	private String name;
 	private String type;
 	private int power;
-	private boolean attackType;
+	private int attackType;
 	private int accuracy;
 	
 	public Move (String name, String type, int attack,
-			boolean isSpecial, int accuracy) {
+			int isSpecial, int accuracy) {
 		this.name = name;
 		this.type = type;
 		this.power = attack;
@@ -30,7 +30,7 @@ public class Move implements Serializable{
 		return power;
 	}
 	
-	public boolean isSpecial () {
+	public int isSpecial () {
 		return attackType;
 	}
 	

@@ -167,7 +167,8 @@ public class Server {
 				String moveType = moveReader.next();
 				int movePower = Integer.parseInt(moveReader.next());
 				int moveAccuracy = Integer.parseInt(moveReader.next());
-				boolean isSpecial = moveReader.nextBoolean();
+				System.out.println(moveAccuracy);
+				int isSpecial = Integer.parseInt(moveReader.next());
 				
 				allMoves.put(moveName, new Move(moveName, moveType, movePower, isSpecial, moveAccuracy));
 			}
@@ -373,7 +374,7 @@ public class Server {
 	
 	public static void main (String [] args){
 		//Parsing all Pokemon moves and Pokemon
-		//parseMoves();
+		parseMoves();
 		parsePokemon();
 		
 		//Start the server
