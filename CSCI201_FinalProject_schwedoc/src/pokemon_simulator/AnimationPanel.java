@@ -13,6 +13,7 @@ public class AnimationPanel extends JPanel {
 	Image playerImage;
 	Image opposingPlayerImage;
 	Image pokeballImage;
+	Image backgroundImage;
 	String playerName;
 	String opposingPlayerName;
 	
@@ -28,7 +29,7 @@ public class AnimationPanel extends JPanel {
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		
+		g.drawImage(backgroundImage,0,0, getWidth(), getHeight(),null);
 		//Draw components for player
 		g.drawImage(playerImage, 20, 275, 60, 100, this);
 		g.setFont(new Font ("Arial", Font.BOLD, 16));
@@ -62,7 +63,7 @@ public class AnimationPanel extends JPanel {
 	
 	private void setImages () {
 		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
-		
+		backgroundImage= new ImageIcon ("images/trail.jpg").getImage();
 		if (playerName.equals("Player 1")) {
 			playerImage = (new ImageIcon ("images/ash.png")).getImage();
 			opposingPlayerImage = (new ImageIcon ("images/gary.gif")).getImage();
