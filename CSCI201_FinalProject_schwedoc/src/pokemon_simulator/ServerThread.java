@@ -21,6 +21,7 @@ public class ServerThread extends Thread {
 				if(cts.action == 1)
 				{
 					//Chat Message
+					
 				}
 				else if(cts.action == 2)
 				{

@@ -73,7 +73,12 @@ public class Pokemon implements Serializable {
 	public int getMaxHP () {
 		return maxHP;
 	}
-	
+	public boolean isFainted()
+	{
+		if(currentHP == 0)
+			return true;
+		return false;
+	}
 	public void printAllStats(){
 		System.out.println("Name:" + name + "   Type:" + type + "   HP:" + maxHP);
 		System.out.println("Attack:" + allStats.get("Attack") + "   Defense:" + allStats.get("Defense"));

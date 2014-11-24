@@ -2,6 +2,7 @@ package pokemon_simulator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -52,6 +53,8 @@ public class Server {
 	// true if the game is still going on meaning neither player has won
 	private boolean gameOn;
 	
+	String imageOne;
+	String imageTwo;
 	/**
 	 * array list containing all of the ServerThreads created
 	 * (the number of connections to the server socket)
@@ -98,11 +101,11 @@ public class Server {
 
 			//Arguments: Action#, Player#, PokemonList, CurrPokemon, Opponent Pokemon Image, Opponent Pokemon Name
 			// Opponent Pokemon Curr HP, Opponent Pokemon Max HP, Opponent Pokemon still alive, Message, Damage Taken
-			String imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+			imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 			ServerToClient p1Start = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
 					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0);
 			
-			String imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+			imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 			ServerToClient p2Start = new ServerToClient(1, 2, partyTwo, 1, imageTwo, partyOne.get(0).getName(),
 					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
 			
@@ -159,28 +162,59 @@ public class Server {
 		
 		
 	}
-	void switchPokemon(int number,int playerNumber)
+	private int returnAlive(int playerNumber)
 	{
+		int i = 0;
 		if(playerNumber == 1)
 		{
-		/*	for(Pokemon x : partyOne)
-				System.out.println(x.getName());*/
+			for(Pokemon x: partyOne)
+				if(!x.isFainted())
+					i++;
+		}
+		else
+		{
+			for(Pokemon x: partyTwo)
+				if(!x.isFainted())
+					i++;
+		}
+		return i;
+	}
+	void switchPokemon(int number,int playerNumber)
+	{	
+		
+		imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+		imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+		if(playerNumber == 1)
+		{
 			Pokemon temp = partyOne.get(number);
 			partyOne.set(number,partyOne.get(0));
 			partyOne.set(0,temp);
-		//	for(Pokemon x : partyOne)
-			//	System.out.println(x.getName());
+		/*	ServerToClient stc = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), returnAlive(2), "", 0);
+			try {
+				outToClientP1.writeObject(stc);
+				outToClientP1.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 		else if(playerNumber == 2)
 		{
-			//for(Pokemon x : partyTwo)
-				//System.out.println(x.getName());
 			Pokemon temp = partyTwo.get(number);
 			partyTwo.set(number,partyTwo.get(0));
 			partyTwo.set(0,temp);
-			//for(Pokemon x : partyTwo)
-				//System.out.println(x.getName());
+			/*ServerToClient stc = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), returnAlive(1), "", 0);
+			try {
+				outToClientP2.writeObject(stc);
+				outToClientP2.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
+		
 	}
 	//Parsing functions
 	private static void parseMoves(){
