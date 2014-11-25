@@ -472,12 +472,20 @@ public class Server {
 		int moveIntType = movePairs.get(move.getType());
 		int defendingType = movePairs.get(defendingPokemon.getType());
 		int attackingType = movePairs.get(attackingPokemon.getType());
+		double damage;
+		if(randInt(0,100)>=move.getAccuracy()){
+
+			double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
+			double stabMultiplier = getStab(moveIntType, attackingType);
+			double modifier = typeEffectiveness * stabMultiplier * (Math.random() + 0.86);
+			
+			damage =  (0.84 *((move.getAttackPower() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
+		}
+		else {
+			//missed
+			damage=0;
+		}
 		
-		double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
-		double stabMultiplier = getStab(moveIntType, attackingType);
-		double modifier = typeEffectiveness * stabMultiplier * (Math.random() + 0.86);
-		
-		double damage =  (0.84 *((move.getAttackPower() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
 		
 		return (int)damage;
 	}
