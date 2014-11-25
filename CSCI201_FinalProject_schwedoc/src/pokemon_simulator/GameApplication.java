@@ -316,37 +316,82 @@ public class GameApplication extends JFrame {
 
 	public void addMessage (String message, String playerName) {
 		try{
+			doc.insertString(doc.getLength(), playerName + ": ", null);
 			String buff =message.toLowerCase();
+			chatTextPane.setCaretPosition(doc.getLength());
 			if(buff.contains("kappa")){
-				chatTextPane.setCaretPosition(doc.getLength());
-				String before = message.substring(0,buff.indexOf("kappa"));
-				doc.insertString(doc.getLength(), before, null);
-				chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
-				String after = message.substring(buff.indexOf("kappa") + 5, message.length());
-				doc.insertString(doc.getLength(), after, null);
-				doc.insertString(doc.getLength(), "\n", null);
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("kappa"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
+					message = message.substring(buff.indexOf("kappa") + 5, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 5 || !buff.contains("kappa"))
+						break;
+				}
 			}
 			else if(buff.contains("frankerz")){
 				chatTextPane.setCaretPosition(doc.getLength());
-				String before = message.substring(0,buff.indexOf("frankerz"));
-				doc.insertString(doc.getLength(), before, null);
-				chatTextPane.insertIcon(new ImageIcon("./images/frankerz.png"));
-				String after = message.substring(buff.indexOf("frankerz") + 8, message.length());
-				doc.insertString(doc.getLength(), after, null);
-				doc.insertString(doc.getLength(), "\n", null);
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("frankerz"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/frankerz.png"));
+					message = message.substring(buff.indexOf("frankerz") + 8, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 5 || !buff.contains("frankerz"))
+						break;
+				}
 			}
 			else if(buff.contains("residentsleeper")){
 				chatTextPane.setCaretPosition(doc.getLength());
-				String before = message.substring(0,buff.indexOf("residentsleeper"));
-				doc.insertString(doc.getLength(), before, null);
-				chatTextPane.insertIcon(new ImageIcon("./images/residentsleeper.png"));
-				String after = message.substring(buff.indexOf("residentsleeper") + 15, message.length());
-				doc.insertString(doc.getLength(), after, null);
-				doc.insertString(doc.getLength(), "\n", null);
+					while(true)
+					{
+						buff =message.toLowerCase();
+						String before = message.substring(0,buff.indexOf("residentsleeper"));
+						doc.insertString(doc.getLength(), before, null);
+						chatTextPane.insertIcon(new ImageIcon("./images/residentsleeper.png"));
+						message = message.substring(buff.indexOf("residentsleeper") + 15, message.length());
+						buff = message.toLowerCase();
+						if(buff.length()< 5 || !buff.contains("residentsleeper"))
+							break;
+					}
+			}
+			else if(buff.contains("dududu")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("dududu"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/duDudu.png"));
+					message = message.substring(buff.indexOf("dududu") + 6, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 5 || !buff.contains("dududu"))
+						break;
+				}
+			}
+			else if(buff.contains("praiseit")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("praiseit"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/praiseit.png"));
+					message = message.substring(buff.indexOf("praiseit") + 8, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 5 || !buff.contains("praiseit"))
+						break;
+				}
 			}
 			else{
-				doc.insertString(doc.getLength(), playerName + ": " + message + "\n", null);
+				doc.insertString(doc.getLength(), message + "\n", null);
 			}
+			doc.insertString(doc.getLength(), "\n", null);
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
