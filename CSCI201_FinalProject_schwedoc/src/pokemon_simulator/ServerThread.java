@@ -50,12 +50,9 @@ public class ServerThread extends Thread {
 					}
 					
 				}
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e)
+			{
+				System.exit(0);
 			}
 		}
 	}

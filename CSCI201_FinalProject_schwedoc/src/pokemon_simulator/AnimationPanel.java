@@ -59,10 +59,24 @@ public class AnimationPanel extends JPanel {
 		g.setColor(Color.GREEN);
 		g.fillRect(451, 61, 150 * ga.getOpposingCurrentHP() / ga.getOpposingMaxHP(), 13);
 		g.setColor(Color.BLACK);
+		
+		for (int i=0; i<2; i++)
+		{
+			for (int k=0; k<3; k++){
+				g.drawImage(pokeballImage, 24+(k*20), 380+(i*15), 15, 15, this);
+			}
+		}
+		
+		for (int i=0; i<2; i++)
+		{
+			for (int k=0; k<3; k++){
+				g.drawImage(pokeballImage, 705+(k*20), 180+(i*15), 15, 15, this);
+			}
+		}
 	}
 	
 	private void setImages () {
-		pokeballImage = (new ImageIcon ("images/pokeball.png")).getImage();
+		pokeballImage = (new ImageIcon ("images/pokeball.gif")).getImage();
 		backgroundImage= new ImageIcon ("images/back.jpg").getImage();
 		if (playerName.equals("Player 1")) {
 			playerImage = (new ImageIcon ("images/ash.gif")).getImage();
