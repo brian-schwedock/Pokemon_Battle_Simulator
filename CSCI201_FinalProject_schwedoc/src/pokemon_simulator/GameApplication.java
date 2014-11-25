@@ -289,13 +289,6 @@ public class GameApplication extends JFrame {
 		}
 	}
 
-	/*
-	public void setCurrentPokemon (int current) {
-		currentPokemon = current;
-		//TODO: change the GUI to reflect current Pokemon
-	}
-	*/
-
 	public void setOpposingPokemonImage (String opposingPokemonString) {
 		Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
 		this.opposingPokemonImage = opposingPokemon;
@@ -310,7 +303,6 @@ public class GameApplication extends JFrame {
 	}
 
 	public void setOpposingPokemonAlive (int alive) {
-		//TODO: write the function
 		opposingPokemonAlive = alive;
 	}
 
@@ -485,6 +477,13 @@ public class GameApplication extends JFrame {
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
 			pokemonSwitchButtons.get(i).setToolTipText(curHP + "/" + maxHP + " - " + type);
+			
+			if (i == 0)
+				pokemonSwitchButtons.get(i).setEnabled(false);
+			else if (allPokemon.get(i).isFainted())
+				pokemonSwitchButtons.get(i).setEnabled(false);
+			else
+				pokemonSwitchButtons.get(i).setEnabled(true);
 		}
     }
 
@@ -493,22 +492,18 @@ public class GameApplication extends JFrame {
 			int moveChosen = 0;
 			if (ae.getSource() == attackButtons.get(0)){
 				System.out.println("Attack 1 clicked");
-				//TODO: Remove print and send message to server
 				moveChosen = 1;
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
-				//TODO: Remove print and send message to server
 				moveChosen = 2;
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
-				//TODO: Remove print and send message to server
 				moveChosen = 3;
 			}
 			else{
 				System.out.println("Attack 4 clicked");
-				//TODO: Remove print and send message to server
 				moveChosen = 4;
 			}
 			System.out.println("Sending client to server class to attack");
@@ -545,33 +540,27 @@ public class GameApplication extends JFrame {
 			int chosenPokemon;
 			if (ae.getSource() == pokemonSwitchButtons.get(0)){
 				System.out.println("Pokemon 1 clicked");
-				//TODO: Remove print and send message to server
 				chosenPokemon = 1;
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
 				System.out.println("Pokemon 2 clicked");
-				//TODO: Remove print and send message to server
 				chosenPokemon = 2;
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
 				System.out.println("Pokemon 3 clicked");
 				chosenPokemon = 3;
-				//TODO: Remove print and send message to server
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
 				System.out.println("Pokemon 4 clicked");
 				chosenPokemon = 4;
-				//TODO: Remove print and send message to server
 			}
 			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
 				System.out.println("Pokemon 5 clicked");
 				chosenPokemon = 5;
-				//TODO: Remove print and send message to server
 			}
 			else{
 				System.out.println("Pokemon 6 clicked");
 				chosenPokemon = 6;
-				//TODO: Remove print and send message to server
 			}
 			System.out.println("Sending client to server class to switch pokemon");
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
@@ -593,7 +582,6 @@ public class GameApplication extends JFrame {
 			outToServer.writeObject(cts);
 			outToServer.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
