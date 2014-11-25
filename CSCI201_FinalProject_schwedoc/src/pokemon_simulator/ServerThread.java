@@ -44,7 +44,7 @@ public class ServerThread extends Thread {
 					}
 					
 					
-					if(server.getActionCount() >=2){
+					if(server.getActionCount() ==2){
 						server.makePlayerMoves();
 						
 					}
