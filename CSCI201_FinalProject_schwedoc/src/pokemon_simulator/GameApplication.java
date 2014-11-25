@@ -315,7 +315,6 @@ public class GameApplication extends JFrame {
 
 	public void addMessage (String message, String playerName) {
 		try{
-			doc.insertString(doc.getLength(), playerName + ": ", null);
 			String buff =message.toLowerCase();
 			if(buff.contains("kappa")){
 				chatTextPane.setCaretPosition(doc.getLength());
