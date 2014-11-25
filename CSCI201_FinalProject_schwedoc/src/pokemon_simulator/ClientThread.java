@@ -52,11 +52,13 @@ public class ClientThread extends Thread {
 			//System.out.println ("action:" + stc.action);
 			
 			if (stc.action == 1){
-				//System.out.println("Client Class adding a message");
+				//Opposing player sent a chat message
 				
 				ga.addChatMessage(stc.message, opposingPlayerName);
 			}
 			else if (stc.action == 2){
+				//Opposing player switched Pokemon
+				
 				ga.setOpposingPokemonImage(stc.opposingPokemonImage);
 				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
@@ -68,6 +70,8 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 			}
 			else if (stc.action == 3){
+				//You switched Pokemon
+				
 				ga.setAllPokemon(stc.allPokemon);
 				ga.resetBottomPanel();
 				//ga.repaint();
@@ -77,21 +81,29 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 			}
 			else if (stc.action == 4){
+				//Opposing player used a move and did not faint your Pokemon
 				
 			}
 			else if (stc.action == 5){
+				//You used a move and did not faint opposing Pokemon
 				
 			}
 			else if (stc.action == 6){
+				//Opposing player used a move and fainted your Pokemon
+				//And you still have unfainted Pokemon
 				
 			}
 			else if (stc.action == 7){
+				//You used a move and fainted the opposing Pokemon
+				//And opponent still has unfainted Pokemon
 				
 			}
 			else if (stc.action == 8){
+				//You lose
 				
 			}
 			else {  //stc.action == 9
+				//You win
 				
 			}
 			
