@@ -342,7 +342,7 @@ public class GameApplication extends JFrame {
 					chatTextPane.insertIcon(new ImageIcon("./images/frankerz.png"));
 					message = message.substring(buff.indexOf("frankerz") + 8, message.length());
 					buff = message.toLowerCase();
-					if(buff.length()< 5 || !buff.contains("frankerz"))
+					if(buff.length()< 8 || !buff.contains("frankerz"))
 						break;
 				}
 			}
@@ -356,7 +356,7 @@ public class GameApplication extends JFrame {
 						chatTextPane.insertIcon(new ImageIcon("./images/residentsleeper.png"));
 						message = message.substring(buff.indexOf("residentsleeper") + 15, message.length());
 						buff = message.toLowerCase();
-						if(buff.length()< 5 || !buff.contains("residentsleeper"))
+						if(buff.length()< 15 || !buff.contains("residentsleeper"))
 							break;
 					}
 			}
@@ -370,7 +370,7 @@ public class GameApplication extends JFrame {
 					chatTextPane.insertIcon(new ImageIcon("./images/duDudu.png"));
 					message = message.substring(buff.indexOf("dududu") + 6, message.length());
 					buff = message.toLowerCase();
-					if(buff.length()< 5 || !buff.contains("dududu"))
+					if(buff.length()< 6 || !buff.contains("dududu"))
 						break;
 				}
 			}
@@ -384,7 +384,7 @@ public class GameApplication extends JFrame {
 					chatTextPane.insertIcon(new ImageIcon("./images/praiseit.png"));
 					message = message.substring(buff.indexOf("praiseit") + 8, message.length());
 					buff = message.toLowerCase();
-					if(buff.length()< 5 || !buff.contains("praiseit"))
+					if(buff.length()< 8 || !buff.contains("praiseit"))
 						break;
 				}
 			}
