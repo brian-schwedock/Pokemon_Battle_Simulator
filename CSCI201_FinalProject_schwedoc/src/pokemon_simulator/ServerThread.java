@@ -32,17 +32,19 @@ public class ServerThread extends Thread {
 				}else{
 					// this occurs when actions 2 or three are chosen. the server class
 					// will handle appropriate implementation of these instances
-					if(playerNumber == 1 && !server.playerOneMadeMove){
-						server.setCTS(true, cts);
-						server.playerOneMadeMove = true;
-						server.incrementActionCount();
+					if(cts.action!=4){
+						if(playerNumber == 1 && !server.playerOneMadeMove){
+							server.setCTS(true, cts);
+							server.playerOneMadeMove = true;
+							server.incrementActionCount();
+						}
+						if(playerNumber == 2 && !server.playerTwoMadeMove){
+							server.setCTS(false, cts);
+							server.playerTwoMadeMove = true;
+							
+							server.incrementActionCount();
+						}
 					}
-					if(playerNumber == 2 && !server.playerTwoMadeMove){
-						server.setCTS(false, cts);
-						server.playerTwoMadeMove = true;
-						server.incrementActionCount();
-					}
-					
 					
 					if(server.getActionCount() ==2){
 						server.makePlayerMoves();

@@ -219,8 +219,19 @@ public class Server {
 		System.out.println("Both players have made an action, now making player moves");
 		ServerToClient stcSwitching;
 		ServerToClient stcNotSwitching;
+		if(ctsOne.action == 4){
+			stcNotSwitching = new ServerToClient(2, 2, partyTwo, 1, imageOne, partyOne.get(0).getName(), 
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
+			
+			sendSTC(stcNotSwitching, false);
+		}
 		
-		
+		if(ctsTwo.action == 4){
+			// send stcTwo to player who did not switch pokemon in this case Player ONE
+			stcNotSwitching = new ServerToClient(2 , 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0);
+			sendSTC(stcNotSwitching, true);
+		}
 		if(ctsOne.action == 3){
 			switchPokemon(ctsOne.pokemonChosen - 1, 1);
 			int playerOneDamageTaken = 0;
