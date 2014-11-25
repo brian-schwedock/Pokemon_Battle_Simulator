@@ -61,7 +61,7 @@ public class ClientThread extends Thread {
 				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
 				ga.setOpposingPokemonName(stc.opposingPokemonName);
-				ga.repaint();
+				//ga.repaint();
 				
 				ga.addMessage(opposingPlayerName + "switched Pokemon");
 				
@@ -69,7 +69,7 @@ public class ClientThread extends Thread {
 			}
 			else if (stc.action == 3){
 				ga.setAllPokemon(stc.allPokemon);
-				ga.repaint();
+				//ga.repaint();
 				
 				ga.addMessage("You switched Pokemon");
 				

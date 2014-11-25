@@ -243,10 +243,12 @@ public class GameApplication extends JFrame {
 		return opposingPlayerName;
 	}
 
+	/*
 	//We may not need this method
 	public Image getPokemonImage (int number) {
 		return allPokemon.get(number - 1).getFrontImage();
 	}
+	*/
 
 	public Image getCurrentPokemonImage () {
 		return allPokemon.get(currentPokemon).getBackImage();
@@ -282,6 +284,9 @@ public class GameApplication extends JFrame {
 
 	public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
 		this.allPokemon = allPokemon;
+		for (int i = 0; i < 6; ++i){
+			allPokemon.get(i).setImages();
+		}
 	}
 
 	/*
