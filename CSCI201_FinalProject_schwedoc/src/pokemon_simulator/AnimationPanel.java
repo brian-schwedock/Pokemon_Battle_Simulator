@@ -45,8 +45,7 @@ public class AnimationPanel extends JPanel {
 		g.setFont(g.getFont().deriveFont((float) 25));
 		g.drawString(pokemonName, 150, 200);
 		g.drawRect(150, 210, 151, 15);
-		g.setColor(Color.GREEN);
-		g.fillRect(151, 211, 150 * ga.getCurrentHP() / ga.getMaxHP(), 13);
+		drawHP(g);
 		g.setColor(Color.BLACK);
 		
 		//Draw components for opponent
@@ -60,8 +59,7 @@ public class AnimationPanel extends JPanel {
 		g.setFont(g.getFont().deriveFont((float) 25));
 		g.drawString(opposingPokemonName, 450, 50);
 		g.drawRect(450, 60, 151, 15);
-		g.setColor(Color.GREEN);
-		g.fillRect(451, 61, 150 * ga.getOpposingCurrentHP() / ga.getOpposingMaxHP(), 13);
+		drawOpposingHP(g);
 		g.setColor(Color.BLACK);
 		
 		int count = 0;
@@ -117,11 +115,13 @@ public class AnimationPanel extends JPanel {
 		opponentPokemonDead++; 
 	}
 	
-	public void drawHP (Graphics g, int currentHP, int maxHP) {
-		//TODO: write function
+	public void drawHP (Graphics g) {
+		g.setColor(Color.GREEN);
+		g.fillRect(151, 211, 150 * ga.getCurrentHP() / ga.getMaxHP(), 13);
 	}
 	
-	public void drawOpposingHP (Graphics g, int opposingCurrentHP, int opposingMaxHP) {
-		//TODO: write function
-	}
+	public void drawOpposingHP (Graphics g) {
+		g.setColor(Color.GREEN);
+		g.fillRect(451, 61, 150 * ga.getOpposingCurrentHP() / ga.getOpposingMaxHP(), 13);
+	} 
 }
