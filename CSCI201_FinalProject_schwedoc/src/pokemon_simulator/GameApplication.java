@@ -332,6 +332,19 @@ public class GameApplication extends JFrame {
 						break;
 				}
 			}
+			else if(buff.contains("keepo")){
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("keepo"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/keepo.png"));
+					message = message.substring(buff.indexOf("keepo") + 5, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 5 || !buff.contains("keepo"))
+						break;
+				}
+			}
 			else if(buff.contains("frankerz")){
 				chatTextPane.setCaretPosition(doc.getLength());
 				while(true)
@@ -388,10 +401,21 @@ public class GameApplication extends JFrame {
 						break;
 				}
 			}
-			else{
-				doc.insertString(doc.getLength(), message + "\n", null);
+			else if(buff.contains("biblethump")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("biblethump"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/biblethump.png"));
+					message = message.substring(buff.indexOf("biblethump") + 8, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 10 || !buff.contains("biblethump"))
+						break;
+				}
 			}
-			doc.insertString(doc.getLength(), "\n", null);
+			doc.insertString(doc.getLength(), message + "\n", null);
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
