@@ -296,6 +296,7 @@ public class GameApplication extends JFrame {
 
 	public void setOpposingPokemonAlive (int alive) {
 		//TODO: write the function
+		opposingPokemonAlive = alive;
 	}
 
 	public void setOpposingPokemonName (String name) {
