@@ -381,7 +381,7 @@ public class Server {
 	 * otherwise player two is attacked by player one
 	 * @param move is the move determined by the CTS class sent to the server
 	 * by the attacking player.
-	 * @return true if the attack resulted in fainting the opponents
+	 * @return true if the attack missed
 	 * pokemon false otherwise
 	 * 
 	 */
