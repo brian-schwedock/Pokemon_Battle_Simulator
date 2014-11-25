@@ -392,32 +392,46 @@ public class Server {
 		//player1 attacked by player 2
 		if(player)
 		{
-			if(dmg >= partyOne.get(0).getCurrentHP())
+			if(dmg == -1)
 			{
-				partyOne.get(0).setCurrentHP(dmg);
+				dmg=0;
+				partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
 				return true;
 			}
 			
 			else
 			{
-				partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
-				return false;
+				if(dmg >= partyOne.get(0).getCurrentHP()){
+					partyOne.get(0).setCurrentHP(dmg);
+					return false;
+				}
+				else{
+					partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
+					return false;
+				}
 			}
 		}
 		
 		//p2 attacked by p1
 		else
 		{
-			if(dmg >= partyTwo.get(0).getCurrentHP())
+			if(dmg == -1)
 			{
-				partyTwo.get(0).setCurrentHP(dmg);
+				dmg=0;
+				partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
 				return true;
 			}
 			
 			else
 			{
-				partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
-				return false;
+				if(dmg >= partyTwo.get(0).getCurrentHP()){
+					partyTwo.get(0).setCurrentHP(dmg);
+					return false;
+				}
+				else{
+					partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
+					return false;
+				}
 			}
 		}
 	}
@@ -483,7 +497,7 @@ public class Server {
 		}
 		else {
 			//missed
-			damage=0;
+			damage=-1;
 		}
 		
 		
