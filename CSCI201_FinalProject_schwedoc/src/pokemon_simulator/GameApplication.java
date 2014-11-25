@@ -422,7 +422,7 @@ public class GameApplication extends JFrame {
 					String before = message.substring(0,buff.indexOf("biblethump"));
 					doc.insertString(doc.getLength(), before, null);
 					chatTextPane.insertIcon(new ImageIcon("./images/biblethump.png"));
-					message = message.substring(buff.indexOf("biblethump") + 8, message.length());
+					message = message.substring(buff.indexOf("biblethump") + 10, message.length());
 					buff = message.toLowerCase();
 					if(buff.length()< 10 || !buff.contains("biblethump"))
 						break;
