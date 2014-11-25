@@ -223,8 +223,15 @@ public class GameApplication extends JFrame {
 			pokemonSwitchButtonPanel.add(pokemonSwitchButton);
 		}
 		actionPanel.add(pokemonSwitchButtonPanel);
+		
+		bottomGameScreenPanel.add(actionPanel, "actionPanel");
+		
+		waitingPanel = new JPanel ();
+		waitingLabel = new JLabel ("Waiting for opponent to make a move.");
+		waitingPanel.add(waitingLabel);
+		bottomGameScreenPanel.add(waitingPanel, "waitingPanel");
 
-		gameScreenPanel.add(actionPanel, BorderLayout.SOUTH);
+		gameScreenPanel.add(bottomGameScreenPanel, BorderLayout.SOUTH);
 	}
 
 	public String getPlayerName () {
@@ -511,6 +518,8 @@ public class GameApplication extends JFrame {
 			System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
 			sendCTS(cts);
+			
+			changeBottomPanel (false);
 		}
 	}
 
@@ -571,6 +580,8 @@ public class GameApplication extends JFrame {
 			System.out.println("Sending client to server class to switch pokemon");
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
 			sendCTS(cts);
+			
+			changeBottomPanel (false);
 		}
 	}
 
@@ -591,11 +602,17 @@ public class GameApplication extends JFrame {
 		}
 
 	}
-	/*
-	 * Add a key listener so that when the enter key is clicked
-	 * if there is a message in the textbox, the message shows up
-	 * in the textarea and the message is sent to the server
-	 */
+
+	public void changeBottomPanel (boolean action) {
+		//True changes to actionPanel
+		//False changes to waitingPanel
+		
+		CardLayout cl = (CardLayout) bottomGameScreenPanel.getLayout();
+		if (action == true)
+			cl.show(bottomGameScreenPanel, "actionPanel");
+		else
+			cl.show(bottomGameScreenPanel, "waitingPanel");
+	}
 
 	public static void main (String [] args) {
 		try { 

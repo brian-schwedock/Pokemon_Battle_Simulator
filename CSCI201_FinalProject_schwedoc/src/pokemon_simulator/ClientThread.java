@@ -8,6 +8,7 @@
 
 package pokemon_simulator;
 
+import java.awt.CardLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -65,12 +66,14 @@ public class ClientThread extends Thread {
 				ga.updateSwitchButtons();
 				ga.updateAttackButtons();
 				ga.resetBottomPanel();
-				ga.repaint();
+				//ga.repaint();
 				//Add a message indicating damage percentage lost
 				//and whether a Pokemon has fainted
 				
 				//And some additional info based on value of action
 			}
+			
+			ga.changeBottomPanel (true);
 		}
 	}
 }
