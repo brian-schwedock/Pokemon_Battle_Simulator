@@ -83,6 +83,7 @@ public class ClientThread extends Thread {
 			else if (stc.action == 4){
 				//Opposing player used a move and did not faint your Pokemon
 				
+				ga.setAllPokemon(stc.allPokemon);
 			}
 			else if (stc.action == 5){
 				//You used a move and did not faint opposing Pokemon

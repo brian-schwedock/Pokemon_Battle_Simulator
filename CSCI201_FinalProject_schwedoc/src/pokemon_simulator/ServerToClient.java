@@ -18,11 +18,12 @@ public class ServerToClient implements Serializable {
 	int opposingPokemonAlive;
 	String message;
 	int damageTaken;
+	String attackName;
 	
 	public ServerToClient (int action, int playerNumber, ArrayList<Pokemon> allPokemon, 
 			int pokemonInPlay, String opposingPokemonImage, String opposingPokemonName, 
 			int opposingCurrentHP,int opposingMaxHP, int opposingPokemonAlive, String message,
-			int damageTaken) {
+			int damageTaken, String attackName) {
 		this.action = action;
 		this.playerNumber = playerNumber;
 		this.allPokemon = allPokemon;
@@ -34,5 +35,6 @@ public class ServerToClient implements Serializable {
 		this.opposingPokemonAlive = opposingPokemonAlive;
 		this.message = message;
 		this.damageTaken = damageTaken;
+		this.attackName = attackName;
 	}
 }

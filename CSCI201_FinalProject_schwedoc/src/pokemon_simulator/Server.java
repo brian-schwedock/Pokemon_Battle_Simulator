@@ -131,11 +131,11 @@ public class Server {
 			// Opponent Pokemon Curr HP, Opponent Pokemon Max HP, Opponent Pokemon still alive, Message, Damage Taken
 			imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 			ServerToClient p1Start = new ServerToClient(1, 1, partyOne, 1, imageOne, partyTwo.get(0).getName(),
-					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0);
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0, "");
 			
 			imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 			ServerToClient p2Start = new ServerToClient(1, 2, partyTwo, 1, imageTwo, partyOne.get(0).getName(),
-					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0, "");
 			
 			outToClientP1 = new ObjectOutputStream(p1Socket.getOutputStream());
 			outToClientP2 = new ObjectOutputStream(p2Socket.getOutputStream());		
@@ -221,7 +221,7 @@ public class Server {
 		ServerToClient stcNotSwitching;
 		if(ctsOne.action == 4){
 			stcNotSwitching = new ServerToClient(2, 2, partyTwo, 1, imageOne, partyOne.get(0).getName(), 
-					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0);
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", 0, "");
 			
 			sendSTC(stcNotSwitching, false);
 		}
@@ -229,7 +229,7 @@ public class Server {
 		if(ctsTwo.action == 4){
 			// send stcTwo to player who did not switch pokemon in this case Player ONE
 			stcNotSwitching = new ServerToClient(2 , 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
-					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0);
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", 0, "");
 			sendSTC(stcNotSwitching, true);
 		}
 		if(ctsOne.action == 3){
@@ -241,10 +241,10 @@ public class Server {
 			
 			// send stcOne to player who switched pokemon. In this case Player ONE
 			stcSwitching = new ServerToClient(3, 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
-					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken, "");
 			// send stcTwo to player who did not switch pokemon in this case Player TWO
 			stcNotSwitching = new ServerToClient(2, 2, partyTwo, 1, imageOne, partyOne.get(0).getName(), 
-					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken, "");
 			sendSTC(stcSwitching, true);
 			sendSTC(stcNotSwitching, false);
 			System.out.println("Switching playerOne pokemon");
@@ -265,10 +265,10 @@ public class Server {
 			
 			// send stcOne to player who switched pokemon. In this case Player TWO
 			stcSwitching = new ServerToClient(3, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
-					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerOneDamageTaken, "");
 			// send stcTwo to player who did not switch pokemon in this case Player ONE
 			stcNotSwitching = new ServerToClient(2 , 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
-					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerTwoDamageTaken, "");
 			sendSTC(stcNotSwitching, true);
 			sendSTC(stcSwitching, false);
 			System.out.println("Switching playerTwo pokemon");
@@ -716,7 +716,7 @@ public class Server {
 	public void sendMessageToPlayerTwo(ClientToServer cts){
 		try {
 			System.out.println("sendMessage to player two");
-			outToClientP2.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0));
+			outToClientP2.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -731,7 +731,7 @@ public class Server {
 	public void sendMessageToPlayerOne(ClientToServer cts){
 		try {
 			System.out.println("sendMessage to player one");
-			outToClientP1.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0));
+			outToClientP1.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
