@@ -34,11 +34,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 public class GameApplication extends JFrame {
-	
+
 	/*
 	 * GUI Components
 	 */
-	
+
 	//Components for chatbox
 	private JPanel chatBoxPanel;
 	private StyledDocument doc;
@@ -46,15 +46,15 @@ public class GameApplication extends JFrame {
 	private JTextPane chatTextPane;
 	private JPanel bottomChatPanel;
 	private JLabel chatBoxPlayerLabel;
-	
+
 	private JTextField messageField;
-	
+
 	//Container for all non-chat elements
 	private JPanel gameScreenPanel;
-	
+
 	//Animation panel
 	private AnimationPanel animationPanel;
-	
+
 	//Components for the bottom of the gameScreenPanel
 	private JPanel bottomGameScreenPanel;
 	private JPanel actionPanel;
@@ -62,12 +62,12 @@ public class GameApplication extends JFrame {
 	private JLabel waitingLabel;
 	private ArrayList<JButton> attackButtons;
 	private ArrayList<JButton> pokemonSwitchButtons;
-	
-	
+
+
 	/*
 	 * Variables for gameplay
 	 */
-	
+
 	ArrayList<Pokemon> allPokemon;
 	String playerName;
 	String opposingPlayerName;
@@ -78,16 +78,16 @@ public class GameApplication extends JFrame {
 	int opposingPokemonCurrentHP;
 	int opposingPokemonMaxHP;
 	int opposingPokemonAlive;
-	
+
 	/**
 	 * the outToServer stream is a connection to the server that every client (GameApplication) uses
 	 * to send ClientToServer objects to the server
 	 */
 	ObjectOutputStream outToServer;
-	
+
 	public GameApplication (ServerToClient stc, ObjectOutputStream ops) {
 		super("Pokemon Battle Simulator");
-		
+
 		//Set all initial Pokemon information
 		setPlayerNames(stc.playerNumber);
 		playerNumber = stc.playerNumber;
@@ -98,26 +98,26 @@ public class GameApplication extends JFrame {
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
 		setOpposingPokemonAlive(stc.opposingPokemonAlive);
 		setOpposingPokemonName(stc.opposingPokemonName);
-		
-		
+
+
 		//GUI Initializations
 		setSize(1200, 650);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout ());
-		
+
 		createChatBoxPanel();
 		createGameScreenPanel();
-		
+
 		outToServer = ops;
-		
+
 		setVisible(true);
 	}
-	
+
 	public void createChatBoxPanel () {
 		chatBoxPanel = new JPanel ();
 		chatBoxPanel.setLayout(new BoxLayout (chatBoxPanel, BoxLayout.Y_AXIS));
-		
+
 		chatTextPane = new JTextPane ();
 		doc = chatTextPane.getStyledDocument();
 		chatTextPane.setPreferredSize(new Dimension (400, 572));
@@ -125,23 +125,23 @@ public class GameApplication extends JFrame {
 		JScrollPane jsp = new JScrollPane (chatTextPane);
 		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+
 		bottomChatPanel = new JPanel ();
 		JLabel chatBoxPlayerLabel = new JLabel (playerName);
 		messageField = new JTextField ();
 		SendMessageListener sml= new SendMessageListener();
 		messageField.addActionListener(sml);
 		messageField.setPreferredSize(new Dimension (350, 30));
-		
+
 		bottomChatPanel.add(chatBoxPlayerLabel);
 		bottomChatPanel.add(messageField);
-		
+
 		chatBoxPanel.add(jsp);
 		chatBoxPanel.add(bottomChatPanel);
-		
+
 		add(chatBoxPanel, BorderLayout.EAST);
 	}
-	
+
 	public void createGameScreenPanel () {
 		gameScreenPanel = new JPanel ();
 		gameScreenPanel.setLayout(new BorderLayout());
@@ -149,26 +149,26 @@ public class GameApplication extends JFrame {
 		createBottomGameScreenPanel ();
 		add(gameScreenPanel, BorderLayout.CENTER);
 	}
-	
+
 	public void createAnimationPanel () {
 		animationPanel = new AnimationPanel (this, playerName, opposingPlayerName);
 		gameScreenPanel.add(animationPanel, BorderLayout.CENTER);
 	}
-	
+
 	public void createBottomGameScreenPanel () {
 		bottomGameScreenPanel = new JPanel ();
 		bottomGameScreenPanel.setLayout(new CardLayout());
-		
+
 		actionPanel = new JPanel ();
 		actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
-		
+
 		JLabel attackLabel = new JLabel ("Attack");
 		//Must create borderlayout panel to align attackLabel to the left
 		JPanel alignPanel = new JPanel ();
 		alignPanel.setLayout (new BorderLayout());
 		alignPanel.add(attackLabel, BorderLayout.WEST);
 		actionPanel.add(alignPanel);
-		
+
 		//Create attack buttons
 		JPanel attackButtonPanel = new JPanel ();
 		attackButtons = new ArrayList<JButton> ();
@@ -193,13 +193,13 @@ public class GameApplication extends JFrame {
 			attackButtonPanel.add(attackButton);
 		}
 		actionPanel.add(attackButtonPanel);
-		
+
 		JLabel pokemonSwitchLabel = new JLabel ("Switch");
 		alignPanel = new JPanel ();
 		alignPanel.setLayout (new BorderLayout());
 		alignPanel.add(pokemonSwitchLabel, BorderLayout.WEST);
 		actionPanel.add(alignPanel);
-		
+
 		//Create Pokemon switch buttons
 		JPanel pokemonSwitchButtonPanel = new JPanel ();
 		pokemonSwitchButtons = new ArrayList<JButton>();
@@ -208,155 +208,173 @@ public class GameApplication extends JFrame {
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
 			if (i == currentPokemon - 1)
 				pokemonSwitchButton.setEnabled(false);
-			
+
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 			pokemonSwitchButton.setIcon(new ImageIcon (scaledImage));		
-			
+
 			int curHP = allPokemon.get(i).getCurrentHP();
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
 			pokemonSwitchButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
-			
+
 			pokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
 			pokemonSwitchButton.addActionListener(psl);
 			pokemonSwitchButtons.add(pokemonSwitchButton);
 			pokemonSwitchButtonPanel.add(pokemonSwitchButton);
 		}
 		actionPanel.add(pokemonSwitchButtonPanel);
-		
+
 		gameScreenPanel.add(actionPanel, BorderLayout.SOUTH);
 	}
-	
+
 	public String getPlayerName () {
 		return playerName;
 	}
-	
+
 	public String getOpposingPlayerName () {
 		return opposingPlayerName;
 	}
 
 	//We may not need this method
-    public Image getPokemonImage (int number) {
-    	return allPokemon.get(number - 1).getFrontImage();
-    }
+	public Image getPokemonImage (int number) {
+		return allPokemon.get(number - 1).getFrontImage();
+	}
 
-    public Image getCurrentPokemonImage () {
-    	return allPokemon.get(0).getBackImage();
-    }
+	public Image getCurrentPokemonImage () {
+		return allPokemon.get(0).getBackImage();
+	}
 
-    public Image getOpposingPokemonImage () {
-    	return opposingPokemonImage;
-    }
+	public Image getOpposingPokemonImage () {
+		return opposingPokemonImage;
+	}
 
-    public String getPokemonName () {
-    	return allPokemon.get(0).getName();
-    }
+	public String getPokemonName () {
+		return allPokemon.get(0).getName();
+	}
 
-    public String getOpposingPokemonName () {
-    	return opposingPokemonName;
-    }
+	public String getOpposingPokemonName () {
+		return opposingPokemonName;
+	}
 
-    public int getCurrentHP () {
-    	return allPokemon.get(0).getCurrentHP();
-    }
+	public int getCurrentHP () {
+		return allPokemon.get(0).getCurrentHP();
+	}
 
-    public int getOpposingCurrentHP () {
-    	return opposingPokemonCurrentHP;
-    }
+	public int getOpposingCurrentHP () {
+		return opposingPokemonCurrentHP;
+	}
 
-    public int getMaxHP () {
-    	return allPokemon.get(0).getMaxHP();
-    }
+	public int getMaxHP () {
+		return allPokemon.get(0).getMaxHP();
+	}
 
-    public int getOpposingMaxHP () {
-    	return opposingPokemonMaxHP;
-    }
+	public int getOpposingMaxHP () {
+		return opposingPokemonMaxHP;
+	}
 
-    public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
-    	this.allPokemon = allPokemon;
-    }
+	public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
+		this.allPokemon = allPokemon;
+	}
 
-    public void setCurrentPokemon (int current) {
-    	currentPokemon = current;
-    	//TODO: change the GUI to reflect current Pokemon
-    }
+	public void setCurrentPokemon (int current) {
+		currentPokemon = current;
+		//TODO: change the GUI to reflect current Pokemon
+	}
 
-    public void setOpposingPokemonImage (String opposingPokemonString) {
-    	Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
-    	this.opposingPokemonImage = opposingPokemon;
-    }
+	public void setOpposingPokemonImage (String opposingPokemonString) {
+		Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
+		this.opposingPokemonImage = opposingPokemon;
+	}
 
-    public void setOpposingPokemonCurrentHP (int currentHP) {
-    	this.opposingPokemonCurrentHP = currentHP;
-    }
+	public void setOpposingPokemonCurrentHP (int currentHP) {
+		this.opposingPokemonCurrentHP = currentHP;
+	}
 
-    public void setOpposingPokemonMaxHP (int maxHP) {
-    	this.opposingPokemonMaxHP = maxHP;
-    }
+	public void setOpposingPokemonMaxHP (int maxHP) {
+		this.opposingPokemonMaxHP = maxHP;
+	}
 
-    public void setOpposingPokemonAlive (int alive) {
-    	//TODO: write the function
-    }
-    
-    public void setOpposingPokemonName (String name) {
-    	opposingPokemonName = name;
-    }
-    
-    public void setPlayerNames (int playerNumber) {
-    	if (playerNumber == 1) {
-    		playerName = "Player 1";
-    		opposingPlayerName = "Player 2";
-    	}
-    	else {
-    		playerName = "Player 2";
-    		opposingPlayerName = "Player 1";
-    	}
-    }
+	public void setOpposingPokemonAlive (int alive) {
+		//TODO: write the function
+	}
 
-    public void addMessage (String message, String playerName) {
-    	try{
-    	if(message.equalsIgnoreCase("Kappa")){
-    		doc.insertString(doc.getLength(), playerName + ": ", null);
-    		chatTextPane.setCaretPosition(doc.getLength());
-    		chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
-    		doc.insertString(doc.getLength(), "\n", null);
-    	}else{
-    
-			doc.insertString(doc.getLength(), playerName + ": " + message + "\n", null);
+	public void setOpposingPokemonName (String name) {
+		opposingPokemonName = name;
+	}
+
+	public void setPlayerNames (int playerNumber) {
+		if (playerNumber == 1) {
+			playerName = "Player 1";
+			opposingPlayerName = "Player 2";
 		}
-    	}catch(BadLocationException e){
-    		e.printStackTrace();
-    	}
-    	//String chatStr = chatTextPane.getText();
-		//chatTextPane.append(playerName + ": " + message);
-    	//chatStr.concat(playerName + ": " + message + "\n");
-		//chatTextPane.append("\n");
-    	//chatTextPane.setText(chatStr);
-		messageField.setText("");
-    }
+		else {
+			playerName = "Player 2";
+			opposingPlayerName = "Player 1";
+		}
+	}
 
-    public void resetBottomPanel () {
-    	//TODO: write the function
-    }
-    
-    public void updateSwitchButtons(){
-    	for (int i=0; i < 6; ++i){
+	public void addMessage (String message, String playerName) {
+		try{
+			doc.insertString(doc.getLength(), playerName + ": ", null);
+			String buff =message.toLowerCase();
+			if(buff.contains("kappa")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				String before = message.substring(0,buff.indexOf("kappa"));
+				doc.insertString(doc.getLength(), before, null);
+				chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
+				String after = message.substring(buff.indexOf("kappa") + 5, message.length());
+				doc.insertString(doc.getLength(), after, null);
+				doc.insertString(doc.getLength(), "\n", null);
+			}
+			else if(buff.contains("frankerz")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				String before = message.substring(0,buff.indexOf("frankerz"));
+				doc.insertString(doc.getLength(), before, null);
+				chatTextPane.insertIcon(new ImageIcon("./images/frankerz.png"));
+				String after = message.substring(buff.indexOf("frankerz") + 8, message.length());
+				doc.insertString(doc.getLength(), after, null);
+				doc.insertString(doc.getLength(), "\n", null);
+			}
+			else if(buff.contains("residentsleeper")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				String before = message.substring(0,buff.indexOf("residentsleeper"));
+				doc.insertString(doc.getLength(), before, null);
+				chatTextPane.insertIcon(new ImageIcon("./images/residentsleeper.png"));
+				String after = message.substring(buff.indexOf("residentsleeper") + 15, message.length());
+				doc.insertString(doc.getLength(), after, null);
+				doc.insertString(doc.getLength(), "\n", null);
+			}
+			else{
+				doc.insertString(doc.getLength(), playerName + ": " + message + "\n", null);
+			}
+		}catch(BadLocationException e){
+			e.printStackTrace();
+		}
+		messageField.setText("");
+	}
+
+	public void resetBottomPanel () {
+		//TODO: write the function
+	}
+
+	public void updateSwitchButtons(){
+		for (int i=0; i < 6; ++i){
 			JButton tempButton = pokemonSwitchButtons.get(i);
 			tempButton.setText(allPokemon.get(i).getName());
 			if (i == currentPokemon - 1)
 				tempButton.setEnabled(false);
-			
+
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 			tempButton.setIcon(new ImageIcon (scaledImage));		
-			
+
 			int curHP = allPokemon.get(i).getCurrentHP();
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
 			tempButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
 		}
-    }
+	}
 
-    class AttackListener implements ActionListener {
+	class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int moveChosen = 0;
 			if (ae.getSource() == attackButtons.get(0)){
@@ -383,17 +401,17 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
 			sendCTS(cts);
 		}
-    }
-    
-    /**
-     * 
-     *	This is called when the user has pressed enter and wishes to send a message
-     * 	that they typed out in the chat box.
-     * 	It adds their message to their chat field and sends their message to the 
-     *  server to be sent to the opposing player as well.
-     *
-     */
-    class SendMessageListener implements ActionListener {
+	}
+
+	/**
+	 * 
+	 *	This is called when the user has pressed enter and wishes to send a message
+	 * 	that they typed out in the chat box.
+	 * 	It adds their message to their chat field and sends their message to the 
+	 *  server to be sent to the opposing player as well.
+	 *
+	 */
+	class SendMessageListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
@@ -403,10 +421,10 @@ public class GameApplication extends JFrame {
 				sendCTS(cts);
 			}
 		}
-    	
-    }
-    
-    class PokemonSwitchListener implements ActionListener {
+
+	}
+
+	class PokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int chosenPokemon;
 			if (ae.getSource() == pokemonSwitchButtons.get(0)){
@@ -443,56 +461,56 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
 			sendCTS(cts);
 		}
-    }
-    
- 
-    
-    /**
-     * Sends the cts object to the server by putting it in the
-     * object output stream
-     * @param cts is the client to server object being sent
-     */
-    private void sendCTS(ClientToServer cts){
-    	try {
+	}
+
+
+
+	/**
+	 * Sends the cts object to the server by putting it in the
+	 * object output stream
+	 * @param cts is the client to server object being sent
+	 */
+	private void sendCTS(ClientToServer cts){
+		try {
 			outToServer.writeObject(cts);
 			outToServer.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    }
-    /*
-     * Add a key listener so that when the enter key is clicked
-     * if there is a message in the textbox, the message shows up
-     * in the textarea and the message is sent to the server
-     */
-	
+
+	}
+	/*
+	 * Add a key listener so that when the enter key is clicked
+	 * if there is a message in the textbox, the message shows up
+	 * in the textarea and the message is sent to the server
+	 */
+
 	public static void main (String [] args) {
 		try { 
-	        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); } 
-	    catch(Exception e){}
-		
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); } 
+		catch(Exception e){}
+
 		//Connecting to the server
 		Socket startGame = null;
 		ServerToClient stc = null;
 
 		try { 
 			startGame = new Socket("127.0.0.1", 9000); 
- 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
- 			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
- 			stc = (ServerToClient) inFromServer.readObject(); 
- 			
- 			for (Pokemon k: stc.allPokemon)
- 				k.setImages();
- 			GameApplication ga = new GameApplication (stc, outToServer);
- 			ClientThread ct = new ClientThread (inFromServer, ga);
- 			ct.start();
- 			
+			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
+			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
+			stc = (ServerToClient) inFromServer.readObject(); 
+
+			for (Pokemon k: stc.allPokemon)
+				k.setImages();
+			GameApplication ga = new GameApplication (stc, outToServer);
+			ClientThread ct = new ClientThread (inFromServer, ga);
+			ct.start();
+
 			//startGame.close(); 
- 		} catch (Exception e){ 
- 			System.out.println("Please run the server first"); 
+		} catch (Exception e){ 
+			System.out.println("Please run the server first"); 
 		} 	
-		
+
 	}
 }

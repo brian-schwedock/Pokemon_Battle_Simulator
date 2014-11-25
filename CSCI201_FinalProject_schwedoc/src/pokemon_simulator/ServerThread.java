@@ -49,20 +49,7 @@ public class ServerThread extends Thread {
 						
 					}
 					
-				}/*
-				else if(cts.action == 2)
-				{
-					//Move
 				}
-				else if(cts.action == 3)
-				{
-					//Switch Pokemon
-					System.out.println("player: " + playerNumber + " wants to switch pokemon");
-					server.incrementActionCount();
-					if(server.getActionCount() >=2){
-					server.switchPokemon(cts.pokemonChosen - 1, playerNumber);
-					}
-				}*/
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
