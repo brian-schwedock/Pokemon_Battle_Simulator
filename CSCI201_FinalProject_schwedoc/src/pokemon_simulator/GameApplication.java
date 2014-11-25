@@ -357,22 +357,54 @@ public class GameApplication extends JFrame {
 		//TODO: write the function
 	}
 
-	public void updateSwitchButtons(){
-		for (int i=0; i < 6; ++i){
+	/**
+     * updates the attack buttons to show the 4 moves of the current pokemon
+     * in battle. This method should be called any time the player switches
+     * pokemon.
+     */
+    public void updateAttackButtons(){
+    	for (int i=0; i < 4; ++i){
+			JButton tempButton = attackButtons.get(i);
+			tempButton.setText(allPokemon.get(0).getMoves().get(i).getName());
+			//tempButton.setPreferredSize(new Dimension (190, 30));
+			//attackButton.addActionListener(al);
+
+			String type =  allPokemon.get(0).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(0).getMoves().get(i).isSpecial();
+			String specialPhysical;
+			if (isSpecial == 0)
+				specialPhysical = "Physical";
+			else
+				specialPhysical = "Special";
+			int power = allPokemon.get(0).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(0).getMoves().get(i).getAccuracy();
+			tempButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
+			
+			//attackButtons.add(attackButton);
+			//attackButtonPanel.add(attackButton);
+		}
+    }
+    
+    /**
+     * updates the switch buttons to show the 6 pokemon in the player's party
+     * This method should be called after the player switches pokemon
+     */
+    public void updateSwitchButtons(){
+    	for (int i=0; i < 6; ++i){
 			JButton tempButton = pokemonSwitchButtons.get(i);
 			tempButton.setText(allPokemon.get(i).getName());
 			if (i == currentPokemon - 1)
 				tempButton.setEnabled(false);
-
+			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 			tempButton.setIcon(new ImageIcon (scaledImage));		
-
+			
 			int curHP = allPokemon.get(i).getCurrentHP();
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
 			tempButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
 		}
-	}
+    }
 
 	class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
