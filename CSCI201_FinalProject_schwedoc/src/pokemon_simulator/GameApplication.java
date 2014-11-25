@@ -459,7 +459,7 @@ public class GameApplication extends JFrame {
 			int accuracy = allPokemon.get(0).getMoves().get(i).getAccuracy();
 			tempButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 			
-			attackButtons.get(i).setEnabled(true);
+//			attackButtons.get(i).setVisible(true);
 			//attackButtons.add(attackButton);
 			//attackButtonPanel.add(attackButton);
 		}
@@ -494,8 +494,8 @@ public class GameApplication extends JFrame {
 				//TODO: Remove print and send message to server
 				moveChosen = 1;
 				
-				for(int i=0; i<4; i++)
-				{attackButtons.get(i).setEnabled(false);}
+//				for(int i=0; i<4; i++)
+//				{attackButtons.get(i).setVisible(false);}
 
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
@@ -503,24 +503,24 @@ public class GameApplication extends JFrame {
 				//TODO: Remove print and send message to server
 				moveChosen = 2;
 				
-				for(int i=0; i<4; i++)
-				{attackButtons.get(i).setEnabled(false);}
+//				for(int i=0; i<4; i++)
+//				{attackButtons.get(i).setVisible(false);}
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 3;
 				
-				for(int i=0; i<4; i++)
-				{attackButtons.get(i).setEnabled(false);}
+//				for(int i=0; i<4; i++)
+//				{attackButtons.get(i).setVisible(false);}
 			}
 			else{
 				System.out.println("Attack 4 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 4;
 				
-				for(int i=0; i<4; i++)
-				{attackButtons.get(i).setEnabled(false);}
+//				for(int i=0; i<4; i++)
+//				{attackButtons.get(i).setVisible(false);}
 			}
 			System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
