@@ -63,7 +63,7 @@ public class ClientThread extends Thread {
 				ga.setOpposingPokemonName(stc.opposingPokemonName);
 				//ga.repaint();
 				
-				ga.addMessage(opposingPlayerName + "switched Pokemon");
+				ga.addMessage(opposingPlayerName + " switched Pokemon");
 				
 				changeBottomPanel++;
 			}
