@@ -71,7 +71,8 @@ public class GameApplication extends JFrame {
 	ArrayList<Pokemon> allPokemon;
 	String playerName;
 	String opposingPlayerName;
-	int currentPokemon;
+	//int currentPokemon;
+	private final int currentPokemon = 0;
 	int playerNumber;
 	Image opposingPokemonImage;
 	String opposingPokemonName;
@@ -92,7 +93,7 @@ public class GameApplication extends JFrame {
 		setPlayerNames(stc.playerNumber);
 		playerNumber = stc.playerNumber;
 		setAllPokemon(stc.allPokemon);
-		setCurrentPokemon(stc.pokemonInPlay);
+		//setCurrentPokemon(stc.pokemonInPlay);
 		setOpposingPokemonImage(stc.opposingPokemonImage);
 		setOpposingPokemonCurrentHP(stc.opposingCurrentHP);
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
@@ -174,19 +175,19 @@ public class GameApplication extends JFrame {
 		attackButtons = new ArrayList<JButton> ();
 		AttackListener al = new AttackListener ();
 		for (int i=0; i < 4; ++i){
-			JButton attackButton = new JButton (allPokemon.get(currentPokemon - 1).getMoves().get(i).getName());
+			JButton attackButton = new JButton (allPokemon.get(currentPokemon).getMoves().get(i).getName());
 			attackButton.setPreferredSize(new Dimension (190, 30));
 			attackButton.addActionListener(al);
 
-			String type =  allPokemon.get(currentPokemon - 1).getMoves().get(i).getType();
-			int isSpecial =  allPokemon.get(currentPokemon - 1).getMoves().get(i).isSpecial();
+			String type =  allPokemon.get(currentPokemon).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(currentPokemon).getMoves().get(i).isSpecial();
 			String specialPhysical;
 			if (isSpecial == 0)
 				specialPhysical = "Physical";
 			else
 				specialPhysical = "Special";
-			int power = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAttackPower();
-			int accuracy = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAccuracy();
+			int power = allPokemon.get(currentPokemon).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(currentPokemon).getMoves().get(i).getAccuracy();
 			attackButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 
 			attackButtons.add(attackButton);
@@ -206,7 +207,7 @@ public class GameApplication extends JFrame {
 		PokemonSwitchListener psl = new PokemonSwitchListener ();
 		for (int i=0; i < 6; ++i){
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
-			if (i == currentPokemon - 1)
+			if (i == currentPokemon)
 				pokemonSwitchButton.setEnabled(false);
 
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
@@ -242,13 +243,15 @@ public class GameApplication extends JFrame {
 		return opposingPlayerName;
 	}
 
+	/*
 	//We may not need this method
 	public Image getPokemonImage (int number) {
 		return allPokemon.get(number - 1).getFrontImage();
 	}
+	*/
 
 	public Image getCurrentPokemonImage () {
-		return allPokemon.get(0).getBackImage();
+		return allPokemon.get(currentPokemon).getBackImage();
 	}
 
 	public Image getOpposingPokemonImage () {
@@ -256,7 +259,7 @@ public class GameApplication extends JFrame {
 	}
 
 	public String getPokemonName () {
-		return allPokemon.get(0).getName();
+		return allPokemon.get(currentPokemon).getName();
 	}
 
 	public String getOpposingPokemonName () {
@@ -264,7 +267,7 @@ public class GameApplication extends JFrame {
 	}
 
 	public int getCurrentHP () {
-		return allPokemon.get(0).getCurrentHP();
+		return allPokemon.get(currentPokemon).getCurrentHP();
 	}
 
 	public int getOpposingCurrentHP () {
@@ -281,12 +284,17 @@ public class GameApplication extends JFrame {
 
 	public void setAllPokemon (ArrayList<Pokemon> allPokemon) {
 		this.allPokemon = allPokemon;
+		for (int i = 0; i < 6; ++i){
+			allPokemon.get(i).setImages();
+		}
 	}
 
+	/*
 	public void setCurrentPokemon (int current) {
 		currentPokemon = current;
 		//TODO: change the GUI to reflect current Pokemon
 	}
+	*/
 
 	public void setOpposingPokemonImage (String opposingPokemonString) {
 		Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
@@ -320,11 +328,20 @@ public class GameApplication extends JFrame {
 			opposingPlayerName = "Player 1";
 		}
 	}
+	
+	public void addMessage (String message) {
+		try {
+			doc.insertString(doc.getLength(), message, null);
+			chatTextPane.setCaretPosition(doc.getLength());
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public void addMessage (String message, String playerName) {
+	public void addChatMessage (String message, String playerName) {
 		try{
 			doc.insertString(doc.getLength(), playerName + ": ", null);
-			String buff =message.toLowerCase();
+			String buff = message.toLowerCase();
 			chatTextPane.setCaretPosition(doc.getLength());
 			if(buff.contains("kappa")){
 				while(true)
@@ -426,7 +443,8 @@ public class GameApplication extends JFrame {
 	}
 
 	public void resetBottomPanel () {
-		//TODO: write the function
+		updateAttackButtons();
+		updateSwitchButtons();
 	}
 
 	/**
@@ -434,27 +452,20 @@ public class GameApplication extends JFrame {
      * in battle. This method should be called any time the player switches
      * pokemon.
      */
-    public void updateAttackButtons(){
+    private void updateAttackButtons(){
     	for (int i=0; i < 4; ++i){
-			JButton tempButton = attackButtons.get(i);
-			tempButton.setText(allPokemon.get(0).getMoves().get(i).getName());
-			//tempButton.setPreferredSize(new Dimension (190, 30));
-			//attackButton.addActionListener(al);
+			attackButtons.get(i).setText(allPokemon.get(currentPokemon).getMoves().get(i).getName());
 
-			String type =  allPokemon.get(0).getMoves().get(i).getType();
-			int isSpecial =  allPokemon.get(0).getMoves().get(i).isSpecial();
+			String type =  allPokemon.get(currentPokemon).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(currentPokemon).getMoves().get(i).isSpecial();
 			String specialPhysical;
 			if (isSpecial == 0)
 				specialPhysical = "Physical";
 			else
 				specialPhysical = "Special";
-			int power = allPokemon.get(0).getMoves().get(i).getAttackPower();
-			int accuracy = allPokemon.get(0).getMoves().get(i).getAccuracy();
-			tempButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
-			
-//			attackButtons.get(i).setVisible(true);
-			//attackButtons.add(attackButton);
-			//attackButtonPanel.add(attackButton);
+			int power = allPokemon.get(currentPokemon).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(currentPokemon).getMoves().get(i).getAccuracy();
+			attackButtons.get(i).setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 		}
     }
     
@@ -462,20 +473,17 @@ public class GameApplication extends JFrame {
      * updates the switch buttons to show the 6 pokemon in the player's party
      * This method should be called after the player switches pokemon
      */
-    public void updateSwitchButtons(){
+    private void updateSwitchButtons(){
     	for (int i=0; i < 6; ++i){
-			JButton tempButton = pokemonSwitchButtons.get(i);
-			tempButton.setText(allPokemon.get(i).getName());
-			if (i == currentPokemon - 1)
-				tempButton.setEnabled(false);
+			pokemonSwitchButtons.get(i).setText(allPokemon.get(i).getName());
 			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-			tempButton.setIcon(new ImageIcon (scaledImage));		
+			pokemonSwitchButtons.get(i).setIcon(new ImageIcon (scaledImage));		
 			
 			int curHP = allPokemon.get(i).getCurrentHP();
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
-			tempButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
+			pokemonSwitchButtons.get(i).setToolTipText(curHP + "/" + maxHP + " - " + type);
 		}
     }
 
@@ -486,34 +494,21 @@ public class GameApplication extends JFrame {
 				System.out.println("Attack 1 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 1;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
-
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 2;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 3;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			else{
 				System.out.println("Attack 4 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 4;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
@@ -522,7 +517,7 @@ public class GameApplication extends JFrame {
 			changeBottomPanel (false);
 		}
 	}
-
+	
 	/**
 	 * 
 	 *	This is called when the user has pressed enter and wishes to send a message
@@ -535,7 +530,7 @@ public class GameApplication extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
-				addMessage (enteredMessage, playerName);
+				addChatMessage (enteredMessage, playerName);
 				//System.out.println("Trying to send message from client: " + playerName );
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
 				sendCTS(cts);
