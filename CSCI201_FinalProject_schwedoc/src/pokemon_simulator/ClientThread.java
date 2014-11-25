@@ -121,8 +121,10 @@ public class ClientThread extends Thread {
 			//And some additional info based on value of action
 			 */
 			
-			if (changeBottomPanel >= 2)
+			if (changeBottomPanel >= 2){
 				ga.changeBottomPanel (true);
+				changeBottomPanel = 0;
+			}
 		}
 	}
 }
