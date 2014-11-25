@@ -217,45 +217,70 @@ public class Server {
 	 */
 	public void makePlayerMoves(){
 		System.out.println("Both players have made an action, now making player moves");
-		ServerToClient stcOne;
-		ServerToClient stcTwo;
+		ServerToClient stcSwitching;
+		ServerToClient stcNotSwitching;
 		
 		
 		if(ctsOne.action == 3){
 			switchPokemon(ctsOne.pokemonChosen - 1, 1);
 			int playerOneDamageTaken = 0;
 			int playerTwoDamageTaken = 0;
-			stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
+			imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+			imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+			
+			// send stcOne to player who switched pokemon. In this case Player ONE
+			stcSwitching = new ServerToClient(3, 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
 					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
-			stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageTwo,partyOne.get(0).getName(), 
+			// send stcTwo to player who did not switch pokemon in this case Player TWO
+			stcNotSwitching = new ServerToClient(2, 2, partyTwo, 1, imageOne, partyOne.get(0).getName(), 
 					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
-			sendSTC(stcOne, true);
-			sendSTC(stcTwo, false);
+			sendSTC(stcSwitching, true);
+			sendSTC(stcNotSwitching, false);
 			System.out.println("Switching playerOne pokemon");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 			
 		if(ctsTwo.action == 3){
 			switchPokemon(ctsTwo.pokemonChosen - 1, 2);
 			int playerOneDamageTaken = 0;
 			int playerTwoDamageTaken = 0;
-			stcOne = new ServerToClient(ctsOne.action, 2, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
-					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
-			stcTwo = new ServerToClient(ctsTwo.action, 1, partyTwo, 1, imageTwo,partyOne.get(0).getName(), 
-					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
-			sendSTC(stcTwo, true);
-			sendSTC(stcOne, false);
+			imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+			imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+			
+			// send stcOne to player who switched pokemon. In this case Player TWO
+			stcSwitching = new ServerToClient(3, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
+					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
+			// send stcTwo to player who did not switch pokemon in this case Player ONE
+			stcNotSwitching = new ServerToClient(2 , 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
+					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
+			sendSTC(stcNotSwitching, true);
+			sendSTC(stcSwitching, false);
 			System.out.println("Switching playerTwo pokemon");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		if(ctsOne.action == 3 && ctsTwo.action == 3){
+		resetActionCount();
+		playerOneMadeMove = false;
+		playerTwoMadeMove = false;
+		/*if(ctsOne.action == 3 && ctsTwo.action == 3){
 			
 			int playerOneDamageTaken = 0;
 			int playerTwoDamageTaken = 0;
-			imageOne = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
-			imageTwo = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
-			stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageOne,partyTwo.get(0).getName(), 
+			
+			imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
+			imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
+			stcOne = new ServerToClient(ctsOne.action, 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
 					partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken);
-			stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageTwo,partyOne.get(0).getName(), 
+			stcTwo = new ServerToClient(ctsTwo.action, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
 					partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken);
 			sendSTC(stcOne, true);
 			sendSTC(stcTwo, false);
@@ -265,7 +290,7 @@ public class Server {
 			playerOneMadeMove = false;
 			playerTwoMadeMove = false;
 		}	
-		
+		*/
 		/*else {
 			int playerOneSpeed = partyOne.get(0).getAllStats().get("Speed");
 			int playerTwoSpeed = partyTwo.get(0).getAllStats().get("Speed");

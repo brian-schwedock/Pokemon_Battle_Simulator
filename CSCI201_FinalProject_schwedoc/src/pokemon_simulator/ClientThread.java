@@ -69,6 +69,7 @@ public class ClientThread extends Thread {
 			}
 			else if (stc.action == 3){
 				ga.setAllPokemon(stc.allPokemon);
+				ga.resetBottomPanel();
 				//ga.repaint();
 				
 				ga.addMessage("You switched Pokemon");

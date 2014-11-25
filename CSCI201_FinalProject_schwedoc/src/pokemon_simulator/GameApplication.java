@@ -331,8 +331,8 @@ public class GameApplication extends JFrame {
 	
 	public void addMessage (String message) {
 		try {
-			doc.insertString(doc.getLength(), "\n", null);
 			doc.insertString(doc.getLength(), message, null);
+			doc.insertString(doc.getLength(), "\n", null);
 			chatTextPane.setCaretPosition(doc.getLength());
 		} catch (BadLocationException e) {
 			e.printStackTrace();
