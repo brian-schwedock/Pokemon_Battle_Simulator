@@ -320,11 +320,20 @@ public class GameApplication extends JFrame {
 			opposingPlayerName = "Player 1";
 		}
 	}
+	
+	public void addMessage (String message) {
+		try {
+			doc.insertString(doc.getLength(), message, null);
+			chatTextPane.setCaretPosition(doc.getLength());
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public void addMessage (String message, String playerName) {
+	public void addChatMessage (String message, String playerName) {
 		try{
 			doc.insertString(doc.getLength(), playerName + ": ", null);
-			String buff =message.toLowerCase();
+			String buff = message.toLowerCase();
 			chatTextPane.setCaretPosition(doc.getLength());
 			if(buff.contains("kappa")){
 				while(true)
@@ -426,7 +435,8 @@ public class GameApplication extends JFrame {
 	}
 
 	public void resetBottomPanel () {
-		//TODO: write the function
+		updateAttackButtons();
+		updateSwitchButtons();
 	}
 
 	/**
@@ -434,12 +444,9 @@ public class GameApplication extends JFrame {
      * in battle. This method should be called any time the player switches
      * pokemon.
      */
-    public void updateAttackButtons(){
+    private void updateAttackButtons(){
     	for (int i=0; i < 4; ++i){
-			JButton tempButton = attackButtons.get(i);
-			tempButton.setText(allPokemon.get(0).getMoves().get(i).getName());
-			//tempButton.setPreferredSize(new Dimension (190, 30));
-			//attackButton.addActionListener(al);
+			attackButtons.get(i).setText(allPokemon.get(0).getMoves().get(i).getName());
 
 			String type =  allPokemon.get(0).getMoves().get(i).getType();
 			int isSpecial =  allPokemon.get(0).getMoves().get(i).isSpecial();
@@ -450,11 +457,7 @@ public class GameApplication extends JFrame {
 				specialPhysical = "Special";
 			int power = allPokemon.get(0).getMoves().get(i).getAttackPower();
 			int accuracy = allPokemon.get(0).getMoves().get(i).getAccuracy();
-			tempButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
-			
-//			attackButtons.get(i).setVisible(true);
-			//attackButtons.add(attackButton);
-			//attackButtonPanel.add(attackButton);
+			attackButtons.get(i).setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 		}
     }
     
@@ -462,20 +465,17 @@ public class GameApplication extends JFrame {
      * updates the switch buttons to show the 6 pokemon in the player's party
      * This method should be called after the player switches pokemon
      */
-    public void updateSwitchButtons(){
+    private void updateSwitchButtons(){
     	for (int i=0; i < 6; ++i){
-			JButton tempButton = pokemonSwitchButtons.get(i);
-			tempButton.setText(allPokemon.get(i).getName());
-			if (i == currentPokemon - 1)
-				tempButton.setEnabled(false);
+			pokemonSwitchButtons.get(i).setText(allPokemon.get(i).getName());
 			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-			tempButton.setIcon(new ImageIcon (scaledImage));		
+			pokemonSwitchButtons.get(i).setIcon(new ImageIcon (scaledImage));		
 			
 			int curHP = allPokemon.get(i).getCurrentHP();
 			int maxHP = allPokemon.get(i).getMaxHP();
 			String type =  allPokemon.get(i).getType();
-			tempButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
+			pokemonSwitchButtons.get(i).setToolTipText(curHP + "/" + maxHP + " - " + type);
 		}
     }
 
@@ -522,7 +522,7 @@ public class GameApplication extends JFrame {
 			changeBottomPanel (false);
 		}
 	}
-
+	
 	/**
 	 * 
 	 *	This is called when the user has pressed enter and wishes to send a message
@@ -535,7 +535,7 @@ public class GameApplication extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
-				addMessage (enteredMessage, playerName);
+				addChatMessage (enteredMessage, playerName);
 				//System.out.println("Trying to send message from client: " + playerName );
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
 				sendCTS(cts);

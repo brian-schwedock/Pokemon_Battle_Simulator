@@ -23,6 +23,12 @@ public class ClientThread extends Thread {
 	
 	public void run () {
 		ServerToClient stc = null;
+		
+		//This variable is to control when to change the bottom
+		//panel back to action panel.  Increment when action is
+		//2,3,4,5.  If 6 or 7, set right to 2.  When it is 2,
+		//change the bottom panel;
+		int changeBottomPanel = 0;
 
 		while(true){
 			
@@ -36,44 +42,86 @@ public class ClientThread extends Thread {
 				e.printStackTrace();
 			}
 			
-			String opposingPlayerName = "Player 1";
+			String opposingPlayerName = null;
 			if (stc.playerNumber == 1)
-				opposingPlayerName = "Player 1";
-			else if(stc.playerNumber == 2)
 				opposingPlayerName = "Player 2";
+			else
+				opposingPlayerName = "Player 1";
+			
+			
+			//System.out.println ("action:" + stc.action);
 			
 			if (stc.action == 1){
 				//System.out.println("Client Class adding a message");
 				
-				ga.addMessage(stc.message, opposingPlayerName);
+				ga.addChatMessage(stc.message, opposingPlayerName);
 			}
-			else {
-	 			for (Pokemon k: stc.allPokemon)
-	 				k.setImages();
-	 			
-				ga.setAllPokemon(stc.allPokemon);
-				ga.setCurrentPokemon(stc.pokemonInPlay);
-				System.out.println(ga.getPokemonName());
-				ga.setOpposingPokemonImage (stc.opposingPokemonImage);
+			else if (stc.action == 2){
+				ga.setOpposingPokemonImage(stc.opposingPokemonImage);
 				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
-				ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
 				ga.setOpposingPokemonName(stc.opposingPokemonName);
+				ga.repaint();
 				
-				if(stc.damageTaken > 0)
-				{ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");}
+				ga.addMessage(opposingPlayerName + "switched Pokemon");
 				
-				ga.updateSwitchButtons();
-				ga.updateAttackButtons();
-				ga.resetBottomPanel();
-				//ga.repaint();
-				//Add a message indicating damage percentage lost
-				//and whether a Pokemon has fainted
+				changeBottomPanel++;
+			}
+			else if (stc.action == 3){
+				ga.setAllPokemon(stc.allPokemon);
+				ga.repaint();
 				
-				//And some additional info based on value of action
+				ga.addMessage("You switched Pokemon");
+				
+				changeBottomPanel++;
+			}
+			else if (stc.action == 4){
+				
+			}
+			else if (stc.action == 5){
+				
+			}
+			else if (stc.action == 6){
+				
+			}
+			else if (stc.action == 7){
+				
+			}
+			else if (stc.action == 8){
+				
+			}
+			else {  //stc.action == 9
+				
 			}
 			
-			ga.changeBottomPanel (true);
+			/*
+ 			for (Pokemon k: stc.allPokemon)
+ 				k.setImages();
+ 			
+			ga.setAllPokemon(stc.allPokemon);
+			ga.setCurrentPokemon(stc.pokemonInPlay);
+			System.out.println(ga.getPokemonName());
+			ga.setOpposingPokemonImage (stc.opposingPokemonImage);
+			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
+			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
+			ga.setOpposingPokemonName(stc.opposingPokemonName);
+			
+			if(stc.damageTaken > 0)
+			{ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");}
+			
+			ga.updateSwitchButtons();
+			ga.updateAttackButtons();
+			ga.resetBottomPanel();
+			//ga.repaint();
+			//Add a message indicating damage percentage lost
+			//and whether a Pokemon has fainted
+			
+			//And some additional info based on value of action
+			 */
+			
+			if (changeBottomPanel >= 2)
+				ga.changeBottomPanel (true);
 		}
 	}
 }
