@@ -493,33 +493,34 @@ public class GameApplication extends JFrame {
 				System.out.println("Attack 1 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 1;
-				attackButtons.get(1).setEnabled(false);
-				attackButtons.get(2).setEnabled(false);
-				attackButtons.get(3).setEnabled(false);
+				
+				for(int i=0; i<4; i++)
+				{attackButtons.get(i).setEnabled(false);}
+
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 2;
-				attackButtons.get(0).setEnabled(false);
-				attackButtons.get(2).setEnabled(false);
-				attackButtons.get(3).setEnabled(false);
+				
+				for(int i=0; i<4; i++)
+				{attackButtons.get(i).setEnabled(false);}
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 3;
-				attackButtons.get(1).setEnabled(false);
-				attackButtons.get(0).setEnabled(false);
-				attackButtons.get(3).setEnabled(false);
+				
+				for(int i=0; i<4; i++)
+				{attackButtons.get(i).setEnabled(false);}
 			}
 			else{
 				System.out.println("Attack 4 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 4;
-				attackButtons.get(1).setEnabled(false);
-				attackButtons.get(2).setEnabled(false);
-				attackButtons.get(0).setEnabled(false);
+				
+				for(int i=0; i<4; i++)
+				{attackButtons.get(i).setEnabled(false);}
 			}
 			System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
