@@ -74,20 +74,44 @@ public class ClientThread extends Thread {
 				
 				ga.setAllPokemon(stc.allPokemon);
 				ga.resetBottomPanel();
-				//ga.repaint();
-				
 				ga.addMessage("You switched Pokemon");
+				//ga.repaint();
 				
 				changeBottomPanel++;
 			}
 			else if (stc.action == 4){
 				//Opposing player used a move and did not faint your Pokemon
+				//damageTaken == -1 means that the move missed
 				
-				ga.setAllPokemon(stc.allPokemon);
+				if (stc.damageTaken != -1){
+					ga.setAllPokemon(stc.allPokemon);
+					int percentDamage = stc.damageTaken * 100 / stc.allPokemon.get(0).getMaxHP();
+					ga.addMessage(stc.opposingPokemonName + " attacked " + stc.allPokemon.get(0).getName()
+							+ " for " + percentDamage + "% damage");
+				}
+				else
+					ga.addMessage(stc.opposingPokemonName + "'s attack missed " + stc.allPokemon.get(0).getName());
+				
+				//ga.repaint();
+				
+				changeBottomPanel++;
 			}
 			else if (stc.action == 5){
 				//You used a move and did not faint opposing Pokemon
+				//damageTaken == -1 means that the move missed
 				
+				if (stc.damageTaken != -1){
+					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+					int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
+					ga.addMessage(stc.allPokemon.get(0).getName() + " attacked " + stc.opposingPokemonName
+							+ " for " + percentDamage + "% damage");
+				}
+				else
+					ga.addMessage(stc.allPokemon.get(0).getName() + "'s attack missed " + stc.opposingPokemonName);
+				
+				//ga.repaint();
+				
+				changeBottomPanel++;
 			}
 			else if (stc.action == 6){
 				//Opposing player used a move and fainted your Pokemon
@@ -109,9 +133,6 @@ public class ClientThread extends Thread {
 			}
 			
 			/*
- 			for (Pokemon k: stc.allPokemon)
- 				k.setImages();
- 			
 			ga.setAllPokemon(stc.allPokemon);
 			ga.setCurrentPokemon(stc.pokemonInPlay);
 			System.out.println(ga.getPokemonName());
