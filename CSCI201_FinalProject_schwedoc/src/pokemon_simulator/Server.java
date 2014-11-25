@@ -716,7 +716,7 @@ public class Server {
 	public void sendMessageToPlayerTwo(ClientToServer cts){
 		try {
 			System.out.println("sendMessage to player two");
-			outToClientP2.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
+			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -731,7 +731,7 @@ public class Server {
 	public void sendMessageToPlayerOne(ClientToServer cts){
 		try {
 			System.out.println("sendMessage to player one");
-			outToClientP1.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
+			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
