@@ -25,48 +25,51 @@ public class ClientThread extends Thread {
 
 		while(true){
 			
-		try {
-			stc = (ServerToClient) ois.readObject ();
+			try {
+				stc = (ServerToClient) ois.readObject ();
+				
+				//System.out.println("read in client to server class");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
-			//System.out.println("read in client to server class");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		String opposingPlayerName = "Player 1";
-		if (stc.playerNumber == 1)
-			opposingPlayerName = "Player 1";
-		else if(stc.playerNumber == 2)
-			opposingPlayerName = "Player 2";
-		
-		if (stc.action == 1){
-			//System.out.println("Client Class adding a message");
+			String opposingPlayerName = "Player 1";
+			if (stc.playerNumber == 1)
+				opposingPlayerName = "Player 1";
+			else if(stc.playerNumber == 2)
+				opposingPlayerName = "Player 2";
 			
-			ga.addMessage(stc.message, opposingPlayerName);
-		}
-		else {
- 			for (Pokemon k: stc.allPokemon)
- 				k.setImages();
- 			
-			ga.setAllPokemon(stc.allPokemon);
-			ga.setCurrentPokemon(stc.pokemonInPlay);
-			System.out.println(ga.getPokemonName());
-			ga.setOpposingPokemonImage (stc.opposingPokemonImage);
-			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
-			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
-			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
-			ga.setOpposingPokemonName(stc.opposingPokemonName);
-			ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");
-			ga.updateSwitchButtons();
-			ga.updateAttackButtons();
-			ga.repaint();
-			//Add a message indicating damage percentage lost
-			//and whether a Pokemon has fainted
-			
-			//And some additional info based on value of action
-		}
+			if (stc.action == 1){
+				//System.out.println("Client Class adding a message");
+				
+				ga.addMessage(stc.message, opposingPlayerName);
+			}
+			else {
+	 			for (Pokemon k: stc.allPokemon)
+	 				k.setImages();
+	 			
+				ga.setAllPokemon(stc.allPokemon);
+				ga.setCurrentPokemon(stc.pokemonInPlay);
+				System.out.println(ga.getPokemonName());
+				ga.setOpposingPokemonImage (stc.opposingPokemonImage);
+				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+				ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
+				ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
+				ga.setOpposingPokemonName(stc.opposingPokemonName);
+				
+				if(stc.damageTaken > 0)
+				{ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");}
+				
+				ga.updateSwitchButtons();
+				ga.updateAttackButtons();
+				ga.repaint();
+				//Add a message indicating damage percentage lost
+				//and whether a Pokemon has fainted
+				
+				//And some additional info based on value of action
+			}
 		}
 	}
 }
