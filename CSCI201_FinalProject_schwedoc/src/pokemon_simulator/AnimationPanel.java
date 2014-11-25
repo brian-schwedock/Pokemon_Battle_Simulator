@@ -13,9 +13,11 @@ public class AnimationPanel extends JPanel {
 	Image playerImage;
 	Image opposingPlayerImage;
 	Image pokeballImage;
+	Image pokeballXImage;
 	Image backgroundImage;
 	String playerName;
 	String opposingPlayerName;
+	Integer currPokemonDead, opponentPokemonDead;
 	
 	public AnimationPanel (GameApplication ga, String playerName, String opposingPlayerName) {
 		this.ga = ga;
@@ -24,6 +26,8 @@ public class AnimationPanel extends JPanel {
 		this.playerName = playerName;
 		this.opposingPlayerName = opposingPlayerName;
 		
+		currPokemonDead = 0;
+		opponentPokemonDead = 0;
 		setImages();
 	}
 	
@@ -60,16 +64,32 @@ public class AnimationPanel extends JPanel {
 		g.fillRect(451, 61, 150 * ga.getOpposingCurrentHP() / ga.getOpposingMaxHP(), 13);
 		g.setColor(Color.BLACK);
 		
+		int count = 0;
 		for (int i=0; i<2; i++)
 		{
 			for (int k=0; k<3; k++){
+				if (currPokemonDead > count)
+				{
+					//If there are any dead pokemon, draw an X'd out pokeball
+					g.drawImage(pokeballXImage, 24+(k*20), 380+(i*15), 15, 15, this);
+					count++;
+					continue;
+				}
 				g.drawImage(pokeballImage, 24+(k*20), 380+(i*15), 15, 15, this);
 			}
 		}
 		
+		count = 0;
 		for (int i=0; i<2; i++)
 		{
 			for (int k=0; k<3; k++){
+				if (opponentPokemonDead > count)
+				{
+					//If there are any dead pokemon, draw an X'd out pokeball
+					g.drawImage(pokeballXImage, 24+(k*20), 380+(i*15), 15, 15, this);
+					count++;
+					continue;
+				}
 				g.drawImage(pokeballImage, 705+(k*20), 180+(i*15), 15, 15, this);
 			}
 		}
@@ -77,6 +97,7 @@ public class AnimationPanel extends JPanel {
 	
 	private void setImages () {
 		pokeballImage = (new ImageIcon ("images/pokeball.gif")).getImage();
+		pokeballXImage = (new ImageIcon ("images/pokeballX.png")).getImage();
 		backgroundImage= new ImageIcon ("images/back.jpg").getImage();
 		if (playerName.equals("Player 1")) {
 			playerImage = (new ImageIcon ("images/ash.gif")).getImage();
@@ -88,12 +109,12 @@ public class AnimationPanel extends JPanel {
 		}
 	}
 	
-	public void crossOutPokemon (Graphics g, int whichPokemon) {
-		//TODO: write function
+	public void crossOutPokemon () {
+		currPokemonDead++;
 	}
 	
-	public void crossOutOpposingPokemon (Graphics g, int numberOfPokemon) {
-		//TODO: write function
+	public void crossOutOpposingPokemon () {
+		opponentPokemonDead++; 
 	}
 	
 	public void drawHP (Graphics g, int currentHP, int maxHP) {
