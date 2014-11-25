@@ -71,7 +71,8 @@ public class GameApplication extends JFrame {
 	ArrayList<Pokemon> allPokemon;
 	String playerName;
 	String opposingPlayerName;
-	int currentPokemon;
+	//int currentPokemon;
+	private final int currentPokemon = 0;
 	int playerNumber;
 	Image opposingPokemonImage;
 	String opposingPokemonName;
@@ -92,7 +93,7 @@ public class GameApplication extends JFrame {
 		setPlayerNames(stc.playerNumber);
 		playerNumber = stc.playerNumber;
 		setAllPokemon(stc.allPokemon);
-		setCurrentPokemon(stc.pokemonInPlay);
+		//setCurrentPokemon(stc.pokemonInPlay);
 		setOpposingPokemonImage(stc.opposingPokemonImage);
 		setOpposingPokemonCurrentHP(stc.opposingCurrentHP);
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
@@ -174,19 +175,19 @@ public class GameApplication extends JFrame {
 		attackButtons = new ArrayList<JButton> ();
 		AttackListener al = new AttackListener ();
 		for (int i=0; i < 4; ++i){
-			JButton attackButton = new JButton (allPokemon.get(currentPokemon - 1).getMoves().get(i).getName());
+			JButton attackButton = new JButton (allPokemon.get(currentPokemon).getMoves().get(i).getName());
 			attackButton.setPreferredSize(new Dimension (190, 30));
 			attackButton.addActionListener(al);
 
-			String type =  allPokemon.get(currentPokemon - 1).getMoves().get(i).getType();
-			int isSpecial =  allPokemon.get(currentPokemon - 1).getMoves().get(i).isSpecial();
+			String type =  allPokemon.get(currentPokemon).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(currentPokemon).getMoves().get(i).isSpecial();
 			String specialPhysical;
 			if (isSpecial == 0)
 				specialPhysical = "Physical";
 			else
 				specialPhysical = "Special";
-			int power = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAttackPower();
-			int accuracy = allPokemon.get(currentPokemon - 1).getMoves().get(i).getAccuracy();
+			int power = allPokemon.get(currentPokemon).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(currentPokemon).getMoves().get(i).getAccuracy();
 			attackButton.setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 
 			attackButtons.add(attackButton);
@@ -206,7 +207,7 @@ public class GameApplication extends JFrame {
 		PokemonSwitchListener psl = new PokemonSwitchListener ();
 		for (int i=0; i < 6; ++i){
 			JButton pokemonSwitchButton = new JButton (allPokemon.get(i).getName());
-			if (i == currentPokemon - 1)
+			if (i == currentPokemon)
 				pokemonSwitchButton.setEnabled(false);
 
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
@@ -248,7 +249,7 @@ public class GameApplication extends JFrame {
 	}
 
 	public Image getCurrentPokemonImage () {
-		return allPokemon.get(0).getBackImage();
+		return allPokemon.get(currentPokemon).getBackImage();
 	}
 
 	public Image getOpposingPokemonImage () {
@@ -256,7 +257,7 @@ public class GameApplication extends JFrame {
 	}
 
 	public String getPokemonName () {
-		return allPokemon.get(0).getName();
+		return allPokemon.get(currentPokemon).getName();
 	}
 
 	public String getOpposingPokemonName () {
@@ -264,7 +265,7 @@ public class GameApplication extends JFrame {
 	}
 
 	public int getCurrentHP () {
-		return allPokemon.get(0).getCurrentHP();
+		return allPokemon.get(currentPokemon).getCurrentHP();
 	}
 
 	public int getOpposingCurrentHP () {
@@ -283,10 +284,12 @@ public class GameApplication extends JFrame {
 		this.allPokemon = allPokemon;
 	}
 
+	/*
 	public void setCurrentPokemon (int current) {
 		currentPokemon = current;
 		//TODO: change the GUI to reflect current Pokemon
 	}
+	*/
 
 	public void setOpposingPokemonImage (String opposingPokemonString) {
 		Image opposingPokemon = new ImageIcon(opposingPokemonString).getImage();
@@ -446,17 +449,17 @@ public class GameApplication extends JFrame {
      */
     private void updateAttackButtons(){
     	for (int i=0; i < 4; ++i){
-			attackButtons.get(i).setText(allPokemon.get(0).getMoves().get(i).getName());
+			attackButtons.get(i).setText(allPokemon.get(currentPokemon).getMoves().get(i).getName());
 
-			String type =  allPokemon.get(0).getMoves().get(i).getType();
-			int isSpecial =  allPokemon.get(0).getMoves().get(i).isSpecial();
+			String type =  allPokemon.get(currentPokemon).getMoves().get(i).getType();
+			int isSpecial =  allPokemon.get(currentPokemon).getMoves().get(i).isSpecial();
 			String specialPhysical;
 			if (isSpecial == 0)
 				specialPhysical = "Physical";
 			else
 				specialPhysical = "Special";
-			int power = allPokemon.get(0).getMoves().get(i).getAttackPower();
-			int accuracy = allPokemon.get(0).getMoves().get(i).getAccuracy();
+			int power = allPokemon.get(currentPokemon).getMoves().get(i).getAttackPower();
+			int accuracy = allPokemon.get(currentPokemon).getMoves().get(i).getAccuracy();
 			attackButtons.get(i).setToolTipText(type + " - " + specialPhysical + " - Power:" + power + " - Accuracy:" + accuracy);
 		}
     }
@@ -486,34 +489,21 @@ public class GameApplication extends JFrame {
 				System.out.println("Attack 1 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 1;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
-
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
 				System.out.println("Attack 2 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 2;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
 				System.out.println("Attack 3 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 3;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			else{
 				System.out.println("Attack 4 clicked");
 				//TODO: Remove print and send message to server
 				moveChosen = 4;
-				
-//				for(int i=0; i<4; i++)
-//				{attackButtons.get(i).setVisible(false);}
 			}
 			System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
