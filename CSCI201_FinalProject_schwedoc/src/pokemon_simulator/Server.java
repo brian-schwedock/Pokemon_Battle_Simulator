@@ -400,7 +400,7 @@ public class Server {
 			
 			else
 			{
-				partyOne.get(0).setCurrentHP(dmg);
+				partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
 				return false;
 			}
 		}
@@ -416,7 +416,7 @@ public class Server {
 			
 			else
 			{
-				partyTwo.get(0).setCurrentHP(dmg);
+				partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
 				return false;
 			}
 		}
@@ -432,9 +432,9 @@ public class Server {
 	 */
 	private boolean playerLost(boolean player){
 		if(player)
-			return playerOne.getPlayablePokemon() > 0;
+			return (playerOne.getPlayablePokemon() > 0);
 		else
-			return  playerTwo.getPlayablePokemon() > 0;
+			return  (playerTwo.getPlayablePokemon() > 0);
 	}
 	
 	/**

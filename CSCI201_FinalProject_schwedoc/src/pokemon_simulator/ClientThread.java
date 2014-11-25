@@ -64,6 +64,7 @@ public class ClientThread extends Thread {
 				
 				ga.updateSwitchButtons();
 				ga.updateAttackButtons();
+				ga.resetBottomPanel();
 				ga.repaint();
 				//Add a message indicating damage percentage lost
 				//and whether a Pokemon has fainted
