@@ -70,7 +70,7 @@ public class ClientThread extends Thread {
 				ga.setOpposingPokemonName(stc.opposingPokemonName);
 				//ga.repaint();
 				
-				ga.addMessage(opposingPlayerName + " switched Pokemon");
+				ga.addMessage(opposingPlayerName + " sent out " + stc.opposingPokemonName + "!");
 				
 				changeBottomPanel++;
 			}
@@ -79,7 +79,7 @@ public class ClientThread extends Thread {
 				
 				ga.setAllPokemon(stc.allPokemon);
 				ga.resetBottomPanel();
-				ga.addMessage("You switched Pokemon");
+				ga.addMessage("You sent out " + stc.allPokemon.get(0).getName() + "!");
 				//ga.repaint();
 				
 				changeBottomPanel++;
@@ -90,16 +90,20 @@ public class ClientThread extends Thread {
 				if (stc.damageTaken != -1){
 					ga.setAllPokemon(stc.allPokemon);
 					int percentDamage = (stc.damageTaken * 100) / stc.allPokemon.get(0).getMaxHP();
-					String message = stc.opposingPokemonName + " attacked " + stc.allPokemon.get(0).getName()
-							+ " for " + percentDamage + "% damage";
-					ga.addMessage(message);
-					//ga.addChatMessage(message, "");	// player name is blank since we are sending game state information
-				}
-				else{
-					String message= stc.opposingPokemonName + "'s attack missed " + stc.allPokemon.get(0).getName();
-					ga.addMessage(message);
-					//ga.addChatMessage(message, "");
 					
+					String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
+					String message2 = stc.allPokemon.get(0).getName() + " lost " + percentDamage 
+							+ "% of its health!";				
+					
+					ga.addMessage(message1);
+					ga.addMessage(message2);
+				}
+				else{					
+					String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
+					String message2 = "The attack missed!";
+					
+					ga.addMessage(message1);		
+					ga.addMessage(message2);
 				}
 				
 				//ga.repaint();
@@ -109,19 +113,27 @@ public class ClientThread extends Thread {
 			else if (stc.action == 5){
 				//You used a move and did not faint opposing Pokemon
 				//damageTaken == -1 means that the move missed
-				System.out.println("ACTION 5 DETECTED");
+				
+				//System.out.println("ACTION 5 DETECTED");
 				if (stc.damageTaken != -1){
 					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+					
 					int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
-					String message = stc.allPokemon.get(0).getName() + " attacked " + stc.opposingPokemonName
-							+ " for " + percentDamage + "% damage";
-					ga.addMessage(message);
-					//ga.addChatMessage(message, "");
+					
+					String message1 = stc.allPokemon.get(0).getName() + " used " + stc.attackName + "!";
+					String message2 = "The opposing " + stc.opposingPokemonName + " lost " + percentDamage 
+							+ "% of its health!";	
+					
+					
+					ga.addMessage(message1);
+					ga.addMessage(message2);
 				}
 				else{
-					String message = stc.allPokemon.get(0).getName() + "'s attack missed " + stc.opposingPokemonName;
-					ga.addMessage(message);
-					//ga.addChatMessage(message, "");
+					String message1 = stc.allPokemon.get(0).getName() + " used " + stc.attackName + "!";
+					String message2 = "The attack missed!";
+					
+					ga.addMessage(message1);
+					ga.addMessage(message2);
 				}
 				//ga.repaint();
 				
