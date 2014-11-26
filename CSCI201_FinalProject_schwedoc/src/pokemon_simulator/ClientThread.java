@@ -89,6 +89,8 @@ public class ClientThread extends Thread {
 				//damageTaken == -1 means that the move missed
 				if (stc.damageTaken != -1){
 					ga.setAllPokemon(stc.allPokemon);
+					ga.resetBottomPanel();
+					
 					int percentDamage = (stc.damageTaken * 100) / stc.allPokemon.get(0).getMaxHP();
 					
 					String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
@@ -143,10 +145,18 @@ public class ClientThread extends Thread {
 				//Opposing player used a move and fainted your Pokemon
 				//And you still have unfainted Pokemon
 				
+				String message = stc.allPokemon.get(0).getName() + " fainted!";
+				ga.addMessage(message);
+				//System.out.println("goober");
+				
 			}
 			else if (stc.action == 7){
 				//You used a move and fainted the opposing Pokemon
 				//And opponent still has unfainted Pokemon
+				
+				String message = "The opposing " + stc.opposingPokemonName + " fainted!";
+				ga.addMessage(message);
+				//System.out.println("noober");
 				
 			}
 			else if (stc.action == 8){
