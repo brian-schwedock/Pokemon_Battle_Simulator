@@ -303,6 +303,12 @@ public class Server {
 			if(ctsOne.action == 2){
 				System.out.println("PLAYER ONE ATTACKS");
 				playerOneAttack();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			// player two attacks
@@ -316,6 +322,12 @@ public class Server {
 			if(ctsTwo.action == 2){
 				System.out.println("PLAYER TWO ATTACKS");
 				playerTwoAttack();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			// player one attacks

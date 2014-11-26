@@ -491,28 +491,64 @@ public class GameApplication extends JFrame {
 		public void actionPerformed(ActionEvent ae) {
 			int moveChosen = 0;
 			if (ae.getSource() == attackButtons.get(0)){
-				System.out.println("Attack 1 clicked");
+				//System.out.println("Attack 1 clicked");
 				moveChosen = 1;
 			}
 			else if (ae.getSource() == attackButtons.get(1)){
-				System.out.println("Attack 2 clicked");
+				//System.out.println("Attack 2 clicked");
 				moveChosen = 2;
 			}
 			else if (ae.getSource() == attackButtons.get(2)){
-				System.out.println("Attack 3 clicked");
+				//System.out.println("Attack 3 clicked");
 				moveChosen = 3;
 			}
 			else{
-				System.out.println("Attack 4 clicked");
+				//System.out.println("Attack 4 clicked");
 				moveChosen = 4;
 			}
-			System.out.println("Sending client to server class to attack");
+			//System.out.println("Sending client to server class to attack");
 			ClientToServer cts = new ClientToServer(2, "", moveChosen, 1);
 			sendCTS(cts);
 			
 			changeBottomPanel (false);
 		}
 	}
+	
+	class PokemonSwitchListener implements ActionListener {
+		public void actionPerformed(ActionEvent ae) {
+			int chosenPokemon;
+			if (ae.getSource() == pokemonSwitchButtons.get(0)){
+				//System.out.println("Pokemon 1 clicked");
+				chosenPokemon = 1;
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
+				//System.out.println("Pokemon 2 clicked");
+				chosenPokemon = 2;
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
+				//System.out.println("Pokemon 3 clicked");
+				chosenPokemon = 3;
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
+				//System.out.println("Pokemon 4 clicked");
+				chosenPokemon = 4;
+			}
+			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
+				//System.out.println("Pokemon 5 clicked");
+				chosenPokemon = 5;
+			}
+			else{
+				//System.out.println("Pokemon 6 clicked");
+				chosenPokemon = 6;
+			}
+			//System.out.println("Sending client to server class to switch pokemon");
+			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
+			sendCTS(cts);
+			
+			changeBottomPanel (false);
+		}
+	}
+	
 	
 	/**
 	 * 
@@ -534,42 +570,6 @@ public class GameApplication extends JFrame {
 		}
 
 	}
-
-	class PokemonSwitchListener implements ActionListener {
-		public void actionPerformed(ActionEvent ae) {
-			int chosenPokemon;
-			if (ae.getSource() == pokemonSwitchButtons.get(0)){
-				System.out.println("Pokemon 1 clicked");
-				chosenPokemon = 1;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
-				System.out.println("Pokemon 2 clicked");
-				chosenPokemon = 2;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
-				System.out.println("Pokemon 3 clicked");
-				chosenPokemon = 3;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
-				System.out.println("Pokemon 4 clicked");
-				chosenPokemon = 4;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
-				System.out.println("Pokemon 5 clicked");
-				chosenPokemon = 5;
-			}
-			else{
-				System.out.println("Pokemon 6 clicked");
-				chosenPokemon = 6;
-			}
-			System.out.println("Sending client to server class to switch pokemon");
-			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
-			sendCTS(cts);
-			
-			changeBottomPanel (false);
-		}
-	}
-
 
 
 	/**
