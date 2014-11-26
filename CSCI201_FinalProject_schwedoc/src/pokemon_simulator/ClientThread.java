@@ -89,12 +89,18 @@ public class ClientThread extends Thread {
 				//damageTaken == -1 means that the move missed
 				if (stc.damageTaken != -1){
 					ga.setAllPokemon(stc.allPokemon);
-					int percentDamage = stc.damageTaken * 100 / stc.allPokemon.get(0).getMaxHP();
-					ga.addMessage(stc.opposingPokemonName + " attacked " + stc.allPokemon.get(0).getName()
-							+ " for " + percentDamage + "% damage");
+					int percentDamage = (stc.damageTaken * 100) / stc.allPokemon.get(0).getMaxHP();
+					String message = stc.opposingPokemonName + " attacked " + stc.allPokemon.get(0).getName()
+							+ " for " + percentDamage + "% damage";
+					ga.addMessage(message);
+					//ga.addChatMessage(message, "");	// player name is blank since we are sending game state information
 				}
-				else
-					ga.addMessage(stc.opposingPokemonName + "'s attack missed " + stc.allPokemon.get(0).getName());
+				else{
+					String message= stc.opposingPokemonName + "'s attack missed " + stc.allPokemon.get(0).getName();
+					ga.addMessage(message);
+					//ga.addChatMessage(message, "");
+					
+				}
 				
 				//ga.repaint();
 				
@@ -107,12 +113,16 @@ public class ClientThread extends Thread {
 				if (stc.damageTaken != -1){
 					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 					int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
-					ga.addMessage(stc.allPokemon.get(0).getName() + " attacked " + stc.opposingPokemonName
-							+ " for " + percentDamage + "% damage");
+					String message = stc.allPokemon.get(0).getName() + " attacked " + stc.opposingPokemonName
+							+ " for " + percentDamage + "% damage";
+					ga.addMessage(message);
+					//ga.addChatMessage(message, "");
 				}
-				else
-					ga.addMessage(stc.allPokemon.get(0).getName() + "'s attack missed " + stc.opposingPokemonName);
-				
+				else{
+					String message = stc.allPokemon.get(0).getName() + "'s attack missed " + stc.opposingPokemonName;
+					ga.addMessage(message);
+					//ga.addChatMessage(message, "");
+				}
 				//ga.repaint();
 				
 				changeBottomPanel++;

@@ -343,10 +343,14 @@ public class Server {
 		if(ctsOne.action == 2){
 			int player2currentHp=partyTwo.get(0).getCurrentHP();
 			Move moveUsed = partyOne.get(0).getMoves().get(ctsOne.moveChosen-1);
-			System.out.println("BEFORE ATTACK");
+			//System.out.println("BEFORE ATTACK");
 			missed=attack(false , moveUsed);
-			System.out.println("REACH PAST ATTACK");
-			playerTwoDamageTaken=player2currentHp-partyTwo.get(0).getCurrentHP();
+			//System.out.println("REACH PAST ATTACK");
+			if(!missed){
+				playerTwoDamageTaken=player2currentHp-partyTwo.get(0).getCurrentHP();
+			}else{
+				playerTwoDamageTaken = -1;
+			}
 			lose=playerLost(false);//check loss
 			lose = false;
 			if(lose){
@@ -354,7 +358,7 @@ public class Server {
 				System.out.println("PLAYER LOST WHAT");
 				stcAttacking = new ServerToClient(9,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-						getPokemonAlive(true), "", 0, moveUsed.getName());
+						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
 				
 				stcDefending = new ServerToClient(8,2,partyTwo, 0,imageOne, partyOne.get(0).getName(),
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
@@ -364,7 +368,7 @@ public class Server {
 				System.out.println("PLAYER FAINTED WHAT");
 				stcAttacking = new ServerToClient(7,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-						getPokemonAlive(true), "", 0, moveUsed.getName());
+						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
 				
 				stcDefending = new ServerToClient(6,2,partyTwo, 0,imageOne, partyOne.get(0).getName(),
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
@@ -374,7 +378,7 @@ public class Server {
 				System.out.println("THIS SHOULD POP UP");
 				stcAttacking = new ServerToClient(5,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-						getPokemonAlive(true), "", 0, moveUsed.getName());
+						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
 				
 				stcDefending = new ServerToClient(4,2,partyTwo, 0,imageOne, partyOne.get(0).getName(),
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
@@ -399,10 +403,14 @@ public class Server {
 		if(ctsTwo.action == 2){
 			int player1currentHp=partyOne.get(0).getCurrentHP();
 			Move moveUsed = partyTwo.get(0).getMoves().get(ctsTwo.moveChosen-1);
-			System.out.println("BEFORE ATTACK");
-			missed=attack(false , moveUsed);
-			System.out.println("REACH PAST ATTACK");
-			playerOneDamageTaken=player1currentHp-partyOne.get(0).getCurrentHP();
+			//System.out.println("BEFORE ATTACK");
+			missed=attack(true , moveUsed);
+			//System.out.println("REACH PAST ATTACK");
+			if(!missed){
+				playerOneDamageTaken=player1currentHp-partyTwo.get(0).getCurrentHP();
+			}else{
+				playerOneDamageTaken = -1;
+			}
 			lose=playerLost(true);//check loss
 			lose = false;
 			if(lose){
@@ -411,7 +419,7 @@ public class Server {
 				System.out.println("PLAYER LOST WHAT");
 				stcAttacking = new ServerToClient(9,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", 0, moveUsed.getName());
+				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(8,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
@@ -423,7 +431,7 @@ public class Server {
 				System.out.println("PLAYER FAINTED WHAT");
 				stcAttacking = new ServerToClient(7,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", 0, moveUsed.getName());
+				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(6,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
@@ -435,7 +443,7 @@ public class Server {
 				System.out.println("THIS SHOULD POP UP");
 				stcAttacking = new ServerToClient(5,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", 0, moveUsed.getName());
+				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(4,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
@@ -563,7 +571,8 @@ public class Server {
 	private boolean attack(boolean player, Move move){
 		
 		int dmg = calculateDamage(player, move);
-		
+		System.out.println("PLAYER 1 HP:" + partyOne.get(0).getCurrentHP());
+		System.out.println("PLAYER 2 HP:" + partyTwo.get(0).getCurrentHP());
 		//player1 attacked by player 2
 		if(player)
 		{
@@ -577,7 +586,7 @@ public class Server {
 			else
 			{
 				if(dmg >= partyOne.get(0).getCurrentHP()){
-					partyOne.get(0).setCurrentHP(dmg);
+					partyOne.get(0).setCurrentHP(0);
 					return false;
 				}
 				else{
@@ -600,7 +609,7 @@ public class Server {
 			else
 			{
 				if(dmg >= partyTwo.get(0).getCurrentHP()){
-					partyTwo.get(0).setCurrentHP(dmg);
+					partyTwo.get(0).setCurrentHP(0);
 					return false;
 				}
 				else{
@@ -621,15 +630,15 @@ public class Server {
 	 */
 	private boolean playerLost(boolean player){
 		if(player)
-			return (getPokemonAlive(true) > 0);
+			return (getPokemonAlive(player) > 0);
 		else
-			return  (getPokemonAlive(false) > 0);
+			return  (getPokemonAlive(player) > 0);
 	}
 	
 	/**
 	 * calculates the amount of damage a certain move does to a player's pokemon
 	 * <p>
-	 * <li>Dmg = ( [0.84] * [{Attack(attacking) * AttackStat(attacking)} / Defense or SpDefense(defending)] /50 + 2) * Modifier
+	 * <li>((( 42 * AttackStat * AttackPower / DefenseStat) / 50) + 2) * STAB * Weakness/Resistance * RandomNumber / 100
 	 * <li>attack: the attack power of the move used
 	 * <li>attackStat: the attack stat of the attacking pokemon. Will be SpAttack or just Attack based on  the type of the attacking move used. 
 	 * <li>Defense or SpDefense: defense stat of the defending pokemon. Will be based on the type of the
@@ -662,21 +671,37 @@ public class Server {
 		int defendingType = movePairs.get(defendingPokemon.getType());
 		int attackingType = movePairs.get(attackingPokemon.getType());
 		double damage;
-		if(randInt(0,100)>=move.getAccuracy()){
+		Random randGen= new Random();
+		int randomAccuracy = randGen.nextInt((100 - 0) + 1) + 0;
+		if(randomAccuracy > 100 - move.getAccuracy()){
 
 			double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
-			double stabMultiplier = getStab(moveIntType, attackingType);
-			double modifier = typeEffectiveness * stabMultiplier * (Math.random() + 0.86);
+			double STAB = getStab(moveIntType, attackingType);
+			//double modifier = typeEffectiveness * STAB * (Math.random() + 0.86);
 			
-			damage =  (0.84 *((move.getAttackPower() * attackingStats.get("Attack") ) / defendingStats.get("Defense")) / 50 + 2) * modifier;
-		}
-		else {
+			int attackStat;
+			int attackPower;
+			int defenseStat;
+			
+			if(move.isSpecial() ==1){
+				attackStat = attackingStats.get("SpecialAttack");
+				defenseStat = defendingStats.get("SpecialDefense");
+			}else{
+				attackStat = attackingStats.get("Attack");
+				defenseStat = defendingStats.get("Defense");
+			}
+			attackPower = move.getAttackPower();
+			Random rand= new Random();
+			int randomNum = rand.nextInt((100 - 85) + 1) + 85;
+			damage = ((( 42 * attackStat * attackPower / defenseStat) / 50) + 2)* STAB * typeEffectiveness * randomNum / 100;
+			System.out.println("DAMAGE CALCULATED FROM ATTACK " + move.getName() + ": " + damage );
+		}else {
 			//missed
 			damage=-1;
 		}
 		
-		return 1;	// only temporary since damage calculations are not working
-		//return (int)damage;
+		
+		return (int)damage;
 	}
 	
 	/**

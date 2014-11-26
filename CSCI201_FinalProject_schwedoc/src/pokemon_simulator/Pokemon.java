@@ -67,8 +67,9 @@ public class Pokemon implements Serializable {
 		return type;
 	}
 	
-	public void setCurrentHP (int damage){
-		currentHP=currentHP-damage;
+	// sets the hp based on 
+	public void setCurrentHP (int newHP){
+		currentHP = newHP;
 		if(currentHP<=0){
 			currentHP=0;
 		}
