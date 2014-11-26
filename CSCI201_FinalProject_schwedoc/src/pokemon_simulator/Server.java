@@ -397,12 +397,10 @@ public class Server {
 				
 				stcDefending = new ServerToClient(4,2,partyTwo, 0,imageOne, partyOne.get(0).getName(),
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-						getPokemonAlive(false),"",playerTwoDamageTaken, moveUsed.getName());
-				sendSTC(stcAttacking, true);
-				sendSTC(stcDefending, false);
-				
+						getPokemonAlive(false),"",playerTwoDamageTaken, moveUsed.getName());			
 			}
-			
+			sendSTC(stcAttacking, true);
+			sendSTC(stcDefending, false);
 		}
 	}
 	
@@ -433,42 +431,40 @@ public class Server {
 				// playerTwo is attacking
 				System.out.println("PLAYER LOST WHAT");
 				stcAttacking = new ServerToClient(9,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
-				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
+						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
+						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(8,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
-				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-				0,"",playerOneDamageTaken, moveUsed.getName());
+						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
+						0,"",playerOneDamageTaken, moveUsed.getName());
 			}else if(partyOne.get(0).getCurrentHP()==0){	//checks faint
 				// opponent's pokemon has fainted.
 				// playerTwo is attacking
 				System.out.println("PLAYER FAINTED WHAT");
 				stcAttacking = new ServerToClient(7,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
-				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
+						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
+						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(6,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
-				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-				getPokemonAlive(true),"",playerOneDamageTaken, moveUsed.getName());
+						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
+						getPokemonAlive(true),"",playerOneDamageTaken, moveUsed.getName());
 							
 			}else{	// attack did not faint oppoenent's pokemon
 				// playerTwo is attacking
 				System.out.println("THIS SHOULD POP UP");
 				stcAttacking = new ServerToClient(5,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
-				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
-				getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
+						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
+						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
 								
 				// playerOne is defending
 				stcDefending = new ServerToClient(4,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
-				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
-				getPokemonAlive(true),"",playerOneDamageTaken, moveUsed.getName());
-				sendSTC(stcAttacking, false);
-				sendSTC(stcDefending, true);
-								
+						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
+						getPokemonAlive(true),"",playerOneDamageTaken, moveUsed.getName());							
 			}
-			
+			sendSTC(stcAttacking, false);
+			sendSTC(stcDefending, true);
 		}
 
 	}

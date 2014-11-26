@@ -144,19 +144,40 @@ public class ClientThread extends Thread {
 			else if (stc.action == 6){
 				//Opposing player used a move and fainted your Pokemon
 				//And you still have unfainted Pokemon
+
+				ga.setAllPokemon(stc.allPokemon);
+				ga.resetBottomPanel();
 				
-				String message = stc.allPokemon.get(0).getName() + " fainted!";
-				ga.addMessage(message);
-				//System.out.println("goober");
+				int percentDamage = (stc.damageTaken * 100) / stc.allPokemon.get(0).getMaxHP();
+				
+				String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
+				String message2 = stc.allPokemon.get(0).getName() + " lost " + percentDamage 
+						+ "% of its health!";				
+				String message3 = stc.allPokemon.get(0).getName() + " fainted!";
+				
+				ga.addMessage(message1);
+				ga.addMessage(message2);
+				ga.addMessage(message3);
+				
+
 				
 			}
 			else if (stc.action == 7){
 				//You used a move and fainted the opposing Pokemon
 				//And opponent still has unfainted Pokemon
+
+				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				
-				String message = "The opposing " + stc.opposingPokemonName + " fainted!";
-				ga.addMessage(message);
-				//System.out.println("noober");
+				int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
+				
+				String message1 = stc.allPokemon.get(0).getName() + " used " + stc.attackName + "!";
+				String message2 = "The opposing " + stc.opposingPokemonName + " lost " + percentDamage 
+						+ "% of its health!";	
+				String message3 = "The opposing " + stc.opposingPokemonName + " fainted!";
+				
+				ga.addMessage(message1);
+				ga.addMessage(message2);
+				ga.addMessage(message3);
 				
 			}
 			else if (stc.action == 8){
