@@ -22,7 +22,8 @@ public class Pokemon implements Serializable {
 			int def, int spAtk, int spDef, int spd) {
 		this.name = name;
 		this.type = type;
-		this.maxHP = this.currentHP = HP;
+		this.currentHP = HP;
+		this.maxHP = currentHP;
 		
 		allStats.put("Attack", atk);
 		allStats.put("Defense", def);

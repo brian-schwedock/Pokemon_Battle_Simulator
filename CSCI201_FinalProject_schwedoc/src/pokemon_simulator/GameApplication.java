@@ -507,7 +507,7 @@ public class GameApplication extends JFrame {
 				moveChosen = 4;
 			}
 			System.out.println("Sending client to server class to attack");
-			ClientToServer cts = new ClientToServer(3, "", moveChosen, 1);
+			ClientToServer cts = new ClientToServer(2, "", moveChosen, 1);
 			sendCTS(cts);
 			
 			changeBottomPanel (false);

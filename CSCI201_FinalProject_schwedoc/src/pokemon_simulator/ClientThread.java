@@ -9,6 +9,7 @@
 package pokemon_simulator;
 
 import java.awt.CardLayout;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -33,8 +34,9 @@ public class ClientThread extends Thread {
 		while(true){
 			
 			try {
-				stc = (ServerToClient) ois.readObject ();
 				
+				stc = (ServerToClient) ois.readObject ();
+				System.out.println("READ IN OBJECT");
 				//System.out.println("read in client to server class");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -44,6 +46,9 @@ public class ClientThread extends Thread {
 			
 			String opposingPlayerName = null;
 			if (stc.playerNumber == 1)
+				
+				
+				
 				opposingPlayerName = "Player 2";
 			else
 				opposingPlayerName = "Player 1";
@@ -82,7 +87,6 @@ public class ClientThread extends Thread {
 			else if (stc.action == 4){
 				//Opposing player used a move and did not faint your Pokemon
 				//damageTaken == -1 means that the move missed
-				
 				if (stc.damageTaken != -1){
 					ga.setAllPokemon(stc.allPokemon);
 					int percentDamage = stc.damageTaken * 100 / stc.allPokemon.get(0).getMaxHP();
@@ -99,7 +103,7 @@ public class ClientThread extends Thread {
 			else if (stc.action == 5){
 				//You used a move and did not faint opposing Pokemon
 				//damageTaken == -1 means that the move missed
-				
+				System.out.println("ACTION 5 DETECTED");
 				if (stc.damageTaken != -1){
 					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 					int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
