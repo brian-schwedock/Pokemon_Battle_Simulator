@@ -422,7 +422,7 @@ public class Server {
 			missed=attack(true , moveUsed);
 			//System.out.println("REACH PAST ATTACK");
 			if(!missed){
-				playerOneDamageTaken=player1currentHp-partyTwo.get(0).getCurrentHP();
+				playerOneDamageTaken=player1currentHp-partyOne.get(0).getCurrentHP();
 			}else{
 				playerOneDamageTaken = -1;
 			}
