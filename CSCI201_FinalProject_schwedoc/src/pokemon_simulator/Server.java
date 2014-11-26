@@ -238,6 +238,7 @@ public class Server {
 		if(ctsTwo.action == 3){
 			playerTwoSwitch();
 		}
+		
 		imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 		// get the speeds of the pokemon currently in play
@@ -256,13 +257,12 @@ public class Server {
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			
 			// player two attacks
-			if(ctsTwo.action == 2){
+			if((ctsTwo.action == 2) && (!partyTwo.get(0).isFainted())){			
 				System.out.println("PLAYER TWO ATTACKS");
 				playerTwoAttack();
 			}
@@ -275,13 +275,12 @@ public class Server {
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			
 			// player one attacks
-			if(ctsOne.action == 2){
+			if((ctsOne.action == 2) && (!partyOne.get(0).isFainted())){  //TODO: fix
 				System.out.println("PLAYER ONE ATTACKS");
 				playerOneAttack();
 			}
@@ -315,7 +314,6 @@ public class Server {
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -341,7 +339,6 @@ public class Server {
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -466,8 +463,8 @@ public class Server {
 			sendSTC(stcAttacking, false);
 			sendSTC(stcDefending, true);
 		}
-
 	}
+	
 	void switchPokemon(int number,int playerNumber)
 	{	
 		if(playerNumber == 1)
@@ -815,7 +812,6 @@ public class Server {
 			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -830,12 +826,11 @@ public class Server {
 			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	// TODO send a STC class once the action count has reached 2
+	// TODO: send a STC class once the action count has reached 2
 	public void sendSTC(ServerToClient stc, boolean player){
 		
 		try{
