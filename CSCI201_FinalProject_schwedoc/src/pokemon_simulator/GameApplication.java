@@ -94,6 +94,9 @@ public class GameApplication extends JFrame {
 	int opposingPokemonCurrentHP;
 	int opposingPokemonMaxHP;
 	int opposingPokemonAlive;
+	
+	private String [] emojis = {"biblethump", "dududu", "failfish", "frankerz", "kappa", 
+			"keepo", "pjsalt", "praiseit", "rektbox", "residentsleeper", "rip"};
 
 	/**
 	 * the outToServer stream is a connection to the server that every client (GameApplication) uses
@@ -393,146 +396,54 @@ public class GameApplication extends JFrame {
 		}
 	}
 
-	public void addChatMessage (String message, String playerName) {
+	public void addChatMessage(String message, String playerName){
 		try{
 			doc.insertString(doc.getLength(), playerName + ": ", null);
-			String buff = message.toLowerCase();
-			chatTextPane.setCaretPosition(doc.getLength());
-			if(buff.contains("kappa")){
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("kappa"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/kappa.png"));
-					message = message.substring(buff.indexOf("kappa") + 5, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 5 || !buff.contains("kappa"))
-						break;
-				}
-			}
-			else if(buff.contains("keepo")){
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("keepo"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/keepo.png"));
-					message = message.substring(buff.indexOf("keepo") + 5, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 5 || !buff.contains("keepo"))
-						break;
-				}
-			}
-			else if(buff.contains("frankerz")){
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("frankerz"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/frankerz.png"));
-					message = message.substring(buff.indexOf("frankerz") + 8, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 8 || !buff.contains("frankerz"))
-						break;
-				}
-			}
-			else if(buff.contains("residentsleeper")){
-					while(true)
-					{
-						buff =message.toLowerCase();
-						String before = message.substring(0,buff.indexOf("residentsleeper"));
-						doc.insertString(doc.getLength(), before, null);
-						chatTextPane.insertIcon(new ImageIcon("./images/residentsleeper.png"));
-						message = message.substring(buff.indexOf("residentsleeper") + 15, message.length());
-						buff = message.toLowerCase();
-						if(buff.length()< 15 || !buff.contains("residentsleeper"))
-							break;
+			String [] words = message.split(" ");
+			int position = 0; 
+			for(int i = 0; i < words.length; i++){
+				boolean emojiFound = false;
+				int indexOfWord = message.indexOf(words[i], position);
+				for(int j = 0; j < emojis.length; j++){
+					if(words[i].equalsIgnoreCase(emojis[j])){
+						// found an emoji inside the string message
+						emojiFound = true;
+						// print out any trailing whitespace the user may have put in
+						doc.insertString(doc.getLength(), message.substring(position, indexOfWord), null);
+						// now print out the emoji
+						chatTextPane.setCaretPosition(doc.getLength());
+						chatTextPane.insertIcon(new ImageIcon("./images/" + emojis[j] + ".png"));
+						position = indexOfWord + emojis[j].length();
 					}
-			}
-			else if(buff.contains("dududu")){
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("dududu"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/duDudu.png"));
-					message = message.substring(buff.indexOf("dududu") + 6, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 6 || !buff.contains("dududu"))
-						break;
+				}
+				if(!emojiFound){
+					doc.insertString(doc.getLength(), message.substring(position, indexOfWord +words[i].length()), null);
+					position = indexOfWord + words[i].length();
 				}
 			}
-			else if(buff.contains("praiseit")){
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("praiseit"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/praiseit.png"));
-					message = message.substring(buff.indexOf("praiseit") + 8, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 8 || !buff.contains("praiseit"))
-						break;
+			doc.insertString(doc.getLength(), "\n",null);
+			doc.insertString(doc.getLength(), "\n",null);
+			/*
+			int position = 0;
+			String input = message.toLowerCase();
+			boolean emojiAppeared = true;
+			// start looking for emojis in the user's message
+			while(position < message.length() && emojiAppeared){
+				emojiAppeared =false;
+				for(int i = 0; i < emojis.length; i++){
+					if(index != -1){
+						emojiAppeared = true;
+						doc.insertString(doc.getLength(), input.substring(position, index), null);
+						chatTextPane.insertIcon(new ImageIcon("./images/" + emojis[i] + ".png"));
+						position = index + emojis[i].length();
+					}
 				}
 			}
-			else if(buff.contains("biblethump")){
-				chatTextPane.setCaretPosition(doc.getLength());
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("biblethump"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/biblethump.png"));
-					message = message.substring(buff.indexOf("biblethump") + 10, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 10 || !buff.contains("biblethump"))
-						break;
-				}
-			}
-			else if(buff.contains("failfish")){
-				chatTextPane.setCaretPosition(doc.getLength());
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("failfish"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/failfish.png"));
-					message = message.substring(buff.indexOf("failfish") + 8, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 8 || !buff.contains("failfish"))
-						break;
-				}
-			}
-			else if(buff.contains("pjsalt")){
-				chatTextPane.setCaretPosition(doc.getLength());
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("pjsalt"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/pjsalt.png"));
-					message = message.substring(buff.indexOf("pjsalt") + 6, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 6 || !buff.contains("pjsalt"))
-						break;
-				}
-			}
-			else if(buff.contains("rektbox")){
-				chatTextPane.setCaretPosition(doc.getLength());
-				while(true)
-				{
-					buff =message.toLowerCase();
-					String before = message.substring(0,buff.indexOf("rektbox"));
-					doc.insertString(doc.getLength(), before, null);
-					chatTextPane.insertIcon(new ImageIcon("./images/rektbox.png"));
-					message = message.substring(buff.indexOf("rektbox") + 7, message.length());
-					buff = message.toLowerCase();
-					if(buff.length()< 7 || !buff.contains("rektbox"))
-						break;
-				}
-			}
-			doc.insertString(doc.getLength(), message + "\n", null);
+			if(!emojiAppeared){
+				doc.insertString(doc.getLength(), message + "\n", null);
+			}else{
+				doc.insertString(doc.getLength(), "\n",null);
+			}*/
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
