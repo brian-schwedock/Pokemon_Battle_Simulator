@@ -183,12 +183,13 @@ public class ClientThread extends Thread {
 			}
 			else if (stc.action == 8){
 				//You lose
-				
+				ga.won(false);
 			}
 			else {  //stc.action == 9
 				//You win
-				
+				ga.won(true);
 			}
+
 
 			
 			if (changeBottomPanel >= 2){
