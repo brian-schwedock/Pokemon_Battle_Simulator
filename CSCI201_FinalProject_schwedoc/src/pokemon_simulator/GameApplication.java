@@ -293,19 +293,6 @@ public class GameApplication extends JFrame {
 	public String getOpposingPlayerName () {
 		return opposingPlayerName;
 	}
-
-	/*
-	//We may not need this method
-	public Image getPokemonImage (int number) {
-		return allPokemon.get(number - 1).getFrontImage();
-	}
-	*/
-	public void crossoutOpposingPokemon(){
-		animationPanel.crossOutOpposingPokemon();
-	}
-	public void crossoutFaintedPokemon(){
-		animationPanel.crossOutPokemon();
-	}
 	
 	public Image getCurrentPokemonImage () {
 		return allPokemon.get(currentPokemon).getBackImage();
@@ -376,6 +363,14 @@ public class GameApplication extends JFrame {
 			playerName = "Player 2";
 			opposingPlayerName = "Player 1";
 		}
+	}
+	
+	public void crossoutFaintedPokemon(){
+		animationPanel.crossOutPokemon();
+	}
+	
+	public void crossoutOpposingFaintedPokemon(){
+		animationPanel.crossOutOpposingPokemon();
 	}
 	
 	public void addMessage (String message) {
