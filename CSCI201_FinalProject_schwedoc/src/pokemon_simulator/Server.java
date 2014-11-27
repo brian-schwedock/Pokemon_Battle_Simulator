@@ -38,8 +38,8 @@ public class Server {
 	static Map<Integer, Pokemon> allPokemon = new HashMap<Integer, Pokemon>();
 	static Map<String, Integer> movePairs = new HashMap<String, Integer>();
 	
-	private static Player playerOne;
-	private static Player playerTwo;
+	//private static Player playerOne;
+	//private static Player playerTwo;
 	
 	private ObjectOutputStream outToClientP1;
 	private ObjectOutputStream outToClientP2;
@@ -112,8 +112,8 @@ public class Server {
 	private ClientToServer ctsOne;
 	private ClientToServer ctsTwo;
 	
-	public static boolean playerOneMadeMove = false;
-	public static boolean playerTwoMadeMove = false;
+	public boolean playerOneMadeMove = false;
+	public boolean playerTwoMadeMove = false;
 	
 	Server(){
 		try {
@@ -561,10 +561,10 @@ public class Server {
 	 * makes two players and populates them with six random pokemon
 	 * by calling the method {@link generatePokemon()}
 	 */
-	private static void makePlayers(){
+	/*private static void makePlayers(){
 		playerOne = new Player(generatePokemon());
 		playerTwo = new Player(generatePokemon());
-	}
+	}*/
 	
 	/**
 	 * Performs an attack on the other player. 

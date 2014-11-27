@@ -46,10 +46,16 @@ public class ServerThread extends Thread {
 						}
 					}
 					else {
-						if (playerNumber == 1)
+						if (playerNumber == 1){
 							server.setCTS(true, cts);
-						else
+							//server.playerOneMadeMove = true;
+							//server.playerTwoMadeMove = false;
+						}
+						else{
 							server.setCTS(false, cts);
+							//server.playerOneMadeMove = false;
+							//server.playerTwoMadeMove = true;
+						}
 						server.makePlayerMoves();
 					}
 					
