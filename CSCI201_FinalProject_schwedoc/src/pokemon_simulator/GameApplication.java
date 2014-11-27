@@ -300,7 +300,13 @@ public class GameApplication extends JFrame {
 		return allPokemon.get(number - 1).getFrontImage();
 	}
 	*/
-
+	public void crossoutOpposingPokemon(){
+		animationPanel.crossOutOpposingPokemon();
+	}
+	public void crossoutFaintedPokemon(){
+		animationPanel.crossOutPokemon();
+	}
+	
 	public Image getCurrentPokemonImage () {
 		return allPokemon.get(currentPokemon).getBackImage();
 	}
