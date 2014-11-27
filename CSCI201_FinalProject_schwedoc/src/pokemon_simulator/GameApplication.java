@@ -256,7 +256,7 @@ public class GameApplication extends JFrame {
 		//Create fainted Pokemon switch buttons
 		JPanel faintedPokemonSwitchButtonPanel = new JPanel ();
 		faintedPokemonSwitchButtons = new ArrayList<JButton>();
-		//PokemonSwitchListener psl = new PokemonSwitchListener ();
+		FaintedPokemonSwitchListener fpsl = new FaintedPokemonSwitchListener ();
 		for (int i=0; i < 6; ++i){
 			JButton faintedPokemonSwitchButton = new JButton (allPokemon.get(i).getName());
 			if (i == currentPokemon)
@@ -271,7 +271,7 @@ public class GameApplication extends JFrame {
 			faintedPokemonSwitchButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
 
 			faintedPokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
-			//faintedPokemonSwitchButton.addActionListener(psl);
+			faintedPokemonSwitchButton.addActionListener(fpsl);
 			faintedPokemonSwitchButtons.add(faintedPokemonSwitchButton);
 			faintedPokemonSwitchButtonPanel.add(faintedPokemonSwitchButton);
 		}
@@ -519,6 +519,7 @@ public class GameApplication extends JFrame {
      */
     private void updateSwitchButtons(){
     	for (int i=0; i < 6; ++i){
+    		//Update switchButtons for actionPanel
 			pokemonSwitchButtons.get(i).setText(allPokemon.get(i).getName());
 			
 			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
@@ -535,6 +536,16 @@ public class GameApplication extends JFrame {
 				pokemonSwitchButtons.get(i).setEnabled(false);
 			else
 				pokemonSwitchButtons.get(i).setEnabled(true);
+			
+			//Update switchButtons for faintedPokemonPanel
+			faintedPokemonSwitchButtons.get(i).setText(allPokemon.get(i).getName());
+			faintedPokemonSwitchButtons.get(i).setIcon(new ImageIcon (scaledImage));		
+			faintedPokemonSwitchButtons.get(i).setToolTipText(curHP + "/" + maxHP + " - " + type);
+			
+			if (allPokemon.get(i).isFainted())
+				faintedPokemonSwitchButtons.get(i).setEnabled(false);
+			else
+				faintedPokemonSwitchButtons.get(i).setEnabled(true);
 		}
     }
 
@@ -594,6 +605,41 @@ public class GameApplication extends JFrame {
 			}
 			//System.out.println("Sending client to server class to switch pokemon");
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
+			sendCTS(cts);
+			
+			changeBottomPanel (2);
+		}
+	}
+	
+	class FaintedPokemonSwitchListener implements ActionListener {
+		public void actionPerformed(ActionEvent ae) {
+			int chosenPokemon;
+			if (ae.getSource() == faintedPokemonSwitchButtons.get(0)){
+				//System.out.println("Pokemon 1 clicked");
+				chosenPokemon = 1;
+			}
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(1)){
+				//System.out.println("Pokemon 2 clicked");
+				chosenPokemon = 2;
+			}
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(2)){
+				//System.out.println("Pokemon 3 clicked");
+				chosenPokemon = 3;
+			}
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(3)){
+				//System.out.println("Pokemon 4 clicked");
+				chosenPokemon = 4;
+			}
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(4)){
+				//System.out.println("Pokemon 5 clicked");
+				chosenPokemon = 5;
+			}
+			else{
+				//System.out.println("Pokemon 6 clicked");
+				chosenPokemon = 6;
+			}
+			//System.out.println("Sending client to server class to switch pokemon");
+			ClientToServer cts = new ClientToServer(4, "", 0, chosenPokemon);
 			sendCTS(cts);
 			
 			changeBottomPanel (2);
