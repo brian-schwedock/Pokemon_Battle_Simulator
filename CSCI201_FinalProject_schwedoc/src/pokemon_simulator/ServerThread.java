@@ -30,7 +30,7 @@ public class ServerThread extends Thread {
 					}
 					//Chat Message
 				}else{
-					// this occurs when actions 2 or three are chosen. the server class
+					// this occurs when actions 2, 3 or 4 are chosen. the server class
 					// will handle appropriate implementation of these instances
 					if(cts.action!=4){
 						if(playerNumber == 1 && !server.playerOneMadeMove){
@@ -48,13 +48,13 @@ public class ServerThread extends Thread {
 					else {
 						if (playerNumber == 1){
 							server.setCTS(true, cts);
-							//server.playerOneMadeMove = true;
-							//server.playerTwoMadeMove = false;
+							server.playerOneMadeMove = true;
+							server.playerTwoMadeMove = false;
 						}
 						else{
 							server.setCTS(false, cts);
-							//server.playerOneMadeMove = false;
-							//server.playerTwoMadeMove = true;
+							server.playerOneMadeMove = false;
+							server.playerTwoMadeMove = true;
 						}
 						server.makePlayerMoves();
 					}
