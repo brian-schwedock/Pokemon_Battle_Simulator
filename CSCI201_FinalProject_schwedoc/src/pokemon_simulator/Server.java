@@ -878,9 +878,5 @@ public class Server {
 		
 		//Start the server
 		new Server();
-		LoopSound clip=new LoopSound();
-
-		Thread t=new Thread(clip);
-		t.start();
 	}
 }
