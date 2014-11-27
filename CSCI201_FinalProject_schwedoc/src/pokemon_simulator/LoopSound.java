@@ -9,7 +9,7 @@ public class LoopSound implements Runnable{
 	public void run(){
 		try{
 	        File file = new File(
-	            "Sound\\champion-battle.mid");
+	            "Sound\\trainer-battle.mid");
 	        Clip clip;
 			try {
 				clip = AudioSystem.getClip();
