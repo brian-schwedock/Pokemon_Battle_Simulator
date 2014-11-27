@@ -490,6 +490,48 @@ public class GameApplication extends JFrame {
 						break;
 				}
 			}
+			else if(buff.contains("failfish")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("failfish"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/failfish.png"));
+					message = message.substring(buff.indexOf("failfish") + 8, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 8 || !buff.contains("failfish"))
+						break;
+				}
+			}
+			else if(buff.contains("pjsalt")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("pjsalt"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/pjsalt.png"));
+					message = message.substring(buff.indexOf("pjsalt") + 6, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 6 || !buff.contains("pjsalt"))
+						break;
+				}
+			}
+			else if(buff.contains("rektbox")){
+				chatTextPane.setCaretPosition(doc.getLength());
+				while(true)
+				{
+					buff =message.toLowerCase();
+					String before = message.substring(0,buff.indexOf("rektbox"));
+					doc.insertString(doc.getLength(), before, null);
+					chatTextPane.insertIcon(new ImageIcon("./images/rektbox.png"));
+					message = message.substring(buff.indexOf("rektbox") + 7, message.length());
+					buff = message.toLowerCase();
+					if(buff.length()< 7 || !buff.contains("rektbox"))
+						break;
+				}
+			}
 			doc.insertString(doc.getLength(), message + "\n", null);
 		}catch(BadLocationException e){
 			e.printStackTrace();
