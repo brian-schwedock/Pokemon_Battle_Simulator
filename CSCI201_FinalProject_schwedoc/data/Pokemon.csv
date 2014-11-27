@@ -59,8 +59,8 @@ Primeape,Fighting,334,309,219,219,239,289,Cross Chop,Earthquake,Stone Edge,Ice P
 Growlithe,Fire,314,239,189,239,199,219,Return,Wild Charge,Flare Blitz,Aerial Ace
 Arcanine,Fire,384,319,259,299,259,289,Return,Wild Charge,Flare Blitz,Extreme Speed
 Poliwag,Water,284,199,179,179,179,279,Water Gun,Waterfall,Hidden Power Grass,Blizzard
-Poliwhirl,Water,334,229,229,199,199,279,Ice Punch,Bubble Beam,Return,Body Slam
-Poliwrath,Water,384,289,289,239,279,239,Ice Punch,Brick Break,Return,Earthquake
+Poliwhirl,Water,334,229,229,199,199,279,Ice Punch,Bubble Beam,Waterfall,Body Slam
+Poliwrath,Water,384,289,289,239,279,239,Ice Punch,Brick Break,Waterfall,Earthquake
 Abra,Psychic,254,139,129,309,209,279,Energy Ball,Shadow Ball,Hidden Power Fighting,Psychic
 Kadabra,Psychic,284,169,159,339,239,309,Psychic,Shadow Ball,Energy Ball,Hidden Power Fighting
 Alakazam,Psychic,314,199,229,449,289,399,Psyshock,Shadow Ball,Energy Ball,Signal Beam
