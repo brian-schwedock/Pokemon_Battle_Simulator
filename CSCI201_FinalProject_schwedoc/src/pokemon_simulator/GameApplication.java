@@ -19,14 +19,12 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
@@ -36,7 +34,7 @@ import javax.swing.text.StyledDocument;
 
 public class GameApplication extends JFrame {
 
-	/*
+	/**
 	 * GUI Components
 	 */
 
@@ -68,7 +66,7 @@ public class GameApplication extends JFrame {
 	private ArrayList<JButton> faintedPokemonSwitchButtons;
 
 
-	/*
+	/**
 	 * Variables for gameplay
 	 */
 
@@ -232,7 +230,7 @@ public class GameApplication extends JFrame {
 		bottomGameScreenPanel.add(actionPanel, "actionPanel");
 		
 		
-		/*
+		/**
 		 * WaitingPanel for when an action has been selected
 		 */
 		waitingPanel = new JPanel ();
@@ -241,7 +239,7 @@ public class GameApplication extends JFrame {
 		bottomGameScreenPanel.add(waitingPanel, "waitingPanel");
 		
 		
-		/*
+		/**
 		 * FaintedPokemonPanel for when a new pokemon must be selected
 		 */
 		faintedPokemonPanel = new JPanel ();
@@ -281,8 +279,6 @@ public class GameApplication extends JFrame {
 		
 		bottomGameScreenPanel.add(faintedPokemonPanel, "faintedPokemonPanel");
 
-
-		
 		gameScreenPanel.add(bottomGameScreenPanel, BorderLayout.SOUTH);
 	}
 
@@ -553,23 +549,15 @@ public class GameApplication extends JFrame {
 	class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int moveChosen = 0;
-			if (ae.getSource() == attackButtons.get(0)){
-				//System.out.println("Attack 1 clicked");
+			if (ae.getSource() == attackButtons.get(0))
 				moveChosen = 1;
-			}
-			else if (ae.getSource() == attackButtons.get(1)){
-				//System.out.println("Attack 2 clicked");
+			else if (ae.getSource() == attackButtons.get(1))
 				moveChosen = 2;
-			}
-			else if (ae.getSource() == attackButtons.get(2)){
-				//System.out.println("Attack 3 clicked");
-				moveChosen = 3;
-			}
-			else{
-				//System.out.println("Attack 4 clicked");
+			else if (ae.getSource() == attackButtons.get(2))
+				moveChosen = 3;			
+			else
 				moveChosen = 4;
-			}
-			//System.out.println("Sending client to server class to attack");
+
 			ClientToServer cts = new ClientToServer(2, "", moveChosen, 1);
 			sendCTS(cts);
 			
@@ -580,31 +568,19 @@ public class GameApplication extends JFrame {
 	class PokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int chosenPokemon;
-			if (ae.getSource() == pokemonSwitchButtons.get(0)){
-				//System.out.println("Pokemon 1 clicked");
+			if (ae.getSource() == pokemonSwitchButtons.get(0))
 				chosenPokemon = 1;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(1)){
-				//System.out.println("Pokemon 2 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(1))
 				chosenPokemon = 2;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(2)){
-				//System.out.println("Pokemon 3 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(2))
 				chosenPokemon = 3;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(3)){
-				//System.out.println("Pokemon 4 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(3))
 				chosenPokemon = 4;
-			}
-			else if (ae.getSource() == pokemonSwitchButtons.get(4)){
-				//System.out.println("Pokemon 5 clicked");
+			else if (ae.getSource() == pokemonSwitchButtons.get(4))
 				chosenPokemon = 5;
-			}
-			else{
-				//System.out.println("Pokemon 6 clicked");
+			else
 				chosenPokemon = 6;
-			}
-			//System.out.println("Sending client to server class to switch pokemon");
+
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
 			sendCTS(cts);
 			
@@ -615,31 +591,19 @@ public class GameApplication extends JFrame {
 	class FaintedPokemonSwitchListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int chosenPokemon;
-			if (ae.getSource() == faintedPokemonSwitchButtons.get(0)){
-				//System.out.println("Pokemon 1 clicked");
+			if (ae.getSource() == faintedPokemonSwitchButtons.get(0))
 				chosenPokemon = 1;
-			}
-			else if (ae.getSource() == faintedPokemonSwitchButtons.get(1)){
-				//System.out.println("Pokemon 2 clicked");
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(1))
 				chosenPokemon = 2;
-			}
-			else if (ae.getSource() == faintedPokemonSwitchButtons.get(2)){
-				//System.out.println("Pokemon 3 clicked");
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(2))
 				chosenPokemon = 3;
-			}
-			else if (ae.getSource() == faintedPokemonSwitchButtons.get(3)){
-				//System.out.println("Pokemon 4 clicked");
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(3))
 				chosenPokemon = 4;
-			}
-			else if (ae.getSource() == faintedPokemonSwitchButtons.get(4)){
-				//System.out.println("Pokemon 5 clicked");
+			else if (ae.getSource() == faintedPokemonSwitchButtons.get(4))
 				chosenPokemon = 5;
-			}
-			else{
-				//System.out.println("Pokemon 6 clicked");
+			else
 				chosenPokemon = 6;
-			}
-			//System.out.println("Sending client to server class to switch pokemon");
+
 			ClientToServer cts = new ClientToServer(4, "", 0, chosenPokemon);
 			sendCTS(cts);
 			
@@ -661,7 +625,6 @@ public class GameApplication extends JFrame {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
 				addChatMessage (enteredMessage, playerName);
-				//System.out.println("Trying to send message from client: " + playerName );
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
 				sendCTS(cts);
 			}
