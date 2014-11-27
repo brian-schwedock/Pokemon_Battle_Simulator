@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -672,6 +674,49 @@ public class GameApplication extends JFrame {
 			cl.show(bottomGameScreenPanel, "waitingPanel");
 		else
 			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
+	}
+	public void won(boolean playerWon)
+	{
+		//You won!
+		Object[] options = {"Exit",
+		"Rematch"};
+		if(playerWon)
+		{
+			Random r = new Random();
+			int n = JOptionPane.showOptionDialog(this,
+					"You loot ¥" + (r.nextInt(1001) + 1) + " off the dead guy's corpse" ,
+					"THERE CAN ONLY BE ONE",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.INFORMATION_MESSAGE,
+					null,     //do not use a custom Icon
+					options,  //the titles of buttons
+					options[0]); //default button title
+			if(n == JOptionPane.NO_OPTION)
+			{
+				//Rematch
+			}
+			else
+				System.exit(0);
+		}
+		else
+		{
+			//You Lost
+			int n = JOptionPane.showOptionDialog(this,
+					"You lost. Newb." ,
+					"THERE CAN ONLY BE ONE",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,     //do not use a custom Icon
+					options,  //the titles of buttons
+					options[0]); //default button title
+			if(n == JOptionPane.NO_OPTION)
+			{
+				//Rematch
+			}
+			else
+				System.exit(0);
+		}
+		
 	}
 	
 	class WrapEditorKit extends StyledEditorKit {
