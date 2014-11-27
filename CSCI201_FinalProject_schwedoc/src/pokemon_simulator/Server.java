@@ -222,12 +222,20 @@ public class Server {
 		// player one had a fainted pokmeon in the previous turn and had to pick pokemon from party
 		if(ctsOne.action == 4){
 			playerOneSwitch();
+			
+			resetActionCount();
+			playerOneMadeMove = false;
+			playerTwoMadeMove = false;
 			return;
 		}
 		// player two had a fainted pokmeon in the previous turn and had to pick pokemon from party
 		if(ctsTwo.action == 4){
 			// send stcTwo to player who did not switch pokemon in this case Player ONE
 			playerTwoSwitch();
+			
+			resetActionCount();
+			playerOneMadeMove = false;
+			playerTwoMadeMove = false;
 			return;
 		}
 		

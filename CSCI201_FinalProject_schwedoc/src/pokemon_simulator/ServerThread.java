@@ -32,7 +32,7 @@ public class ServerThread extends Thread {
 				}else{
 					// this occurs when actions 2, 3 or 4 are chosen. the server class
 					// will handle appropriate implementation of these instances
-					if(cts.action!=4){
+					if(cts.action != 4){
 						if(playerNumber == 1 && !server.playerOneMadeMove){
 							server.setCTS(true, cts);
 							server.playerOneMadeMove = true;
@@ -41,11 +41,10 @@ public class ServerThread extends Thread {
 						if(playerNumber == 2 && !server.playerTwoMadeMove){
 							server.setCTS(false, cts);
 							server.playerTwoMadeMove = true;
-							
 							server.incrementActionCount();
 						}
 					}
-					else {
+					else {  //Chose new Pokemon after fainting
 						if (playerNumber == 1){
 							server.setCTS(true, cts);
 							server.playerOneMadeMove = true;
@@ -59,7 +58,7 @@ public class ServerThread extends Thread {
 						server.makePlayerMoves();
 					}
 					
-					if(server.getActionCount() ==2){
+					if(server.getActionCount() == 2){
 						server.makePlayerMoves();
 					}
 					
