@@ -34,7 +34,6 @@ public class ClientThread extends Thread {
 		while(true){
 			
 			try {
-				
 				stc = (ServerToClient) ois.readObject ();
 				System.out.println("READ IN OBJECT");
 				//System.out.println("read in client to server class");
@@ -46,9 +45,6 @@ public class ClientThread extends Thread {
 			
 			String opposingPlayerName = null;
 			if (stc.playerNumber == 1)
-				
-				
-				
 				opposingPlayerName = "Player 2";
 			else
 				opposingPlayerName = "Player 1";
@@ -159,8 +155,8 @@ public class ClientThread extends Thread {
 				ga.addMessage(message2);
 				ga.addMessage(message3);
 				
-
-				
+				ga.changeBottomPanel (3);
+				changeBottomPanel = 1;
 			}
 			else if (stc.action == 7){
 				//You used a move and fainted the opposing Pokemon
@@ -178,7 +174,8 @@ public class ClientThread extends Thread {
 				ga.addMessage(message1);
 				ga.addMessage(message2);
 				ga.addMessage(message3);
-				
+
+				changeBottomPanel = 1;
 			}
 			else if (stc.action == 8){
 				//You lose
@@ -188,32 +185,10 @@ public class ClientThread extends Thread {
 				//You win
 				
 			}
-			
-			/*
-			ga.setAllPokemon(stc.allPokemon);
-			ga.setCurrentPokemon(stc.pokemonInPlay);
-			System.out.println(ga.getPokemonName());
-			ga.setOpposingPokemonImage (stc.opposingPokemonImage);
-			ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
-			ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
-			ga.setOpposingPokemonAlive (stc.opposingPokemonAlive);
-			ga.setOpposingPokemonName(stc.opposingPokemonName);
-			
-			if(stc.damageTaken > 0)
-			{ga.addMessage(""+ stc.damageTaken + " damage to player " + opposingPlayerName, "");}
-			
-			ga.updateSwitchButtons();
-			ga.updateAttackButtons();
-			ga.resetBottomPanel();
-			//ga.repaint();
-			//Add a message indicating damage percentage lost
-			//and whether a Pokemon has fainted
-			
-			//And some additional info based on value of action
-			 */
+
 			
 			if (changeBottomPanel >= 2){
-				ga.changeBottomPanel (true);
+				ga.changeBottomPanel (1);
 				changeBottomPanel = 0;
 			}
 		}

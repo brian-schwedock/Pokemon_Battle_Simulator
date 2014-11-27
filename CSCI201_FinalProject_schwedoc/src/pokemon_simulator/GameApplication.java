@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -59,9 +60,12 @@ public class GameApplication extends JFrame {
 	private JPanel bottomGameScreenPanel;
 	private JPanel actionPanel;
 	private JPanel waitingPanel;
+	private JPanel faintedPokemonPanel;
 	private JLabel waitingLabel;
+	private JLabel faintedPokemonLabel;
 	private ArrayList<JButton> attackButtons;
 	private ArrayList<JButton> pokemonSwitchButtons;
+	private ArrayList<JButton> faintedPokemonSwitchButtons;
 
 
 	/*
@@ -227,11 +231,58 @@ public class GameApplication extends JFrame {
 		
 		bottomGameScreenPanel.add(actionPanel, "actionPanel");
 		
+		
+		/*
+		 * WaitingPanel for when an action has been selected
+		 */
 		waitingPanel = new JPanel ();
 		waitingLabel = new JLabel ("Waiting for opponent to make a move.");
 		waitingPanel.add(waitingLabel);
 		bottomGameScreenPanel.add(waitingPanel, "waitingPanel");
+		
+		
+		/*
+		 * FaintedPokemonPanel for when a new pokemon must be selected
+		 */
+		faintedPokemonPanel = new JPanel ();
+		faintedPokemonPanel.setLayout(new BoxLayout(faintedPokemonPanel, BoxLayout.Y_AXIS));
+		
+		faintedPokemonLabel = new JLabel ("Switch to:");
+		alignPanel = new JPanel ();
+		alignPanel.setLayout (new BorderLayout());
+		alignPanel.add(faintedPokemonLabel, BorderLayout.WEST);
+		faintedPokemonPanel.add(alignPanel);
+		
+		//Create fainted Pokemon switch buttons
+		JPanel faintedPokemonSwitchButtonPanel = new JPanel ();
+		faintedPokemonSwitchButtons = new ArrayList<JButton>();
+		//PokemonSwitchListener psl = new PokemonSwitchListener ();
+		for (int i=0; i < 6; ++i){
+			JButton faintedPokemonSwitchButton = new JButton (allPokemon.get(i).getName());
+			if (i == currentPokemon)
+				faintedPokemonSwitchButton.setEnabled(false);
 
+			Image scaledImage = allPokemon.get(i).getFrontImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+			faintedPokemonSwitchButton.setIcon(new ImageIcon (scaledImage));		
+
+			int curHP = allPokemon.get(i).getCurrentHP();
+			int maxHP = allPokemon.get(i).getMaxHP();
+			String type =  allPokemon.get(i).getType();
+			faintedPokemonSwitchButton.setToolTipText(curHP + "/" + maxHP + " - " + type);
+
+			faintedPokemonSwitchButton.setPreferredSize(new Dimension (125, 30));
+			//faintedPokemonSwitchButton.addActionListener(psl);
+			faintedPokemonSwitchButtons.add(faintedPokemonSwitchButton);
+			faintedPokemonSwitchButtonPanel.add(faintedPokemonSwitchButton);
+		}
+		faintedPokemonPanel.add(faintedPokemonSwitchButtonPanel);
+		
+		faintedPokemonPanel.add(Box.createRigidArea(new Dimension(0, 60)));
+		
+		bottomGameScreenPanel.add(faintedPokemonPanel, "faintedPokemonPanel");
+
+
+		
 		gameScreenPanel.add(bottomGameScreenPanel, BorderLayout.SOUTH);
 	}
 
@@ -510,7 +561,7 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(2, "", moveChosen, 1);
 			sendCTS(cts);
 			
-			changeBottomPanel (false);
+			changeBottomPanel (2);
 		}
 	}
 	
@@ -545,7 +596,7 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
 			sendCTS(cts);
 			
-			changeBottomPanel (false);
+			changeBottomPanel (2);
 		}
 	}
 	
@@ -587,15 +638,18 @@ public class GameApplication extends JFrame {
 
 	}
 
-	public void changeBottomPanel (boolean action) {
-		//True changes to actionPanel
-		//False changes to waitingPanel
+	public void changeBottomPanel (int action) {
+		//1 changes to actionPanel
+		//2 changes to waitingPanel
+		//3 changes to faintedPokemonPanel
 		
 		CardLayout cl = (CardLayout) bottomGameScreenPanel.getLayout();
-		if (action == true)
+		if (action == 1)
 			cl.show(bottomGameScreenPanel, "actionPanel");
-		else
+		else if (action == 2)
 			cl.show(bottomGameScreenPanel, "waitingPanel");
+		else
+			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
 	}
 
 	public static void main (String [] args) {
