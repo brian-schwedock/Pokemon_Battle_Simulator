@@ -45,10 +45,16 @@ public class ServerThread extends Thread {
 							server.incrementActionCount();
 						}
 					}
+					else {
+						if (playerNumber == 1)
+							server.setCTS(true, cts);
+						else
+							server.setCTS(false, cts);
+						server.makePlayerMoves();
+					}
 					
 					if(server.getActionCount() ==2){
 						server.makePlayerMoves();
-						
 					}
 					
 				}
