@@ -673,35 +673,7 @@ public class GameApplication extends JFrame {
 		else
 			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
 	}
-
-	public static void main (String [] args) {
-		try { 
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); } 
-		catch(Exception e){}
-
-		//Connecting to the server
-		Socket startGame = null;
-		ServerToClient stc = null;
-		LoopSound clip=new LoopSound();
-		try { 
-			startGame = new Socket("127.0.0.1", 9000); 
-			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
-			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
-			stc = (ServerToClient) inFromServer.readObject(); 
-
-			for (Pokemon k: stc.allPokemon)
-				k.setImages();
-			GameApplication ga = new GameApplication (stc, outToServer);
-			ClientThread ct = new ClientThread (inFromServer, ga);
-			ct.start();
-			Thread t=new Thread(clip);
-			t.start();
-			//startGame.close(); 
-		} catch (Exception e){ 
-			System.out.println("Please run the server first"); 
-		} 	
-
-	}
+	
 	class WrapEditorKit extends StyledEditorKit {
 	    ViewFactory defaultFactory=new WrapColumnFactory();
 	    public ViewFactory getViewFactory() {
@@ -748,5 +720,34 @@ public class GameApplication extends JFrame {
 	        }
 	    }
 	
+	}
+
+	public static void main (String [] args) {
+		try { 
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); } 
+		catch(Exception e){}
+
+		//Connecting to the server
+		Socket startGame = null;
+		ServerToClient stc = null;
+		LoopSound clip=new LoopSound();
+		try { 
+			startGame = new Socket("127.0.0.1", 9000); 
+			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
+			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
+			stc = (ServerToClient) inFromServer.readObject(); 
+
+			for (Pokemon k: stc.allPokemon)
+				k.setImages();
+			GameApplication ga = new GameApplication (stc, outToServer);
+			ClientThread ct = new ClientThread (inFromServer, ga);
+			ct.start();
+			Thread t=new Thread(clip);
+			t.start();
+			//startGame.close(); 
+		} catch (Exception e){ 
+			System.out.println("Please run the server first"); 
+		} 	
+
 	}
 }
