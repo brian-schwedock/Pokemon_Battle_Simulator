@@ -141,6 +141,8 @@ public class ClientThread extends Thread {
 				//Opposing player used a move and fainted your Pokemon
 				//And you still have unfainted Pokemon
 				
+				ga.crossoutFaintedPokemon();
+				
 				ga.setAllPokemon(stc.allPokemon);
 				ga.resetBottomPanel();
 				
@@ -161,10 +163,9 @@ public class ClientThread extends Thread {
 			else if (stc.action == 7){
 				//You used a move and fainted the opposing Pokemon
 				//And opponent still has unfainted Pokemon
-				/*int numPokemonAlive = stc.opposingPokemonAlive;
-				for(int i=0; i<numPokemonAlive; i++){
-					ga.crossoutFaintedPokemon();
-				}*/
+				
+				ga.crossoutOpposingFaintedPokemon();
+
 				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				
 				int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;

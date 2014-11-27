@@ -38,9 +38,6 @@ public class Server {
 	static Map<Integer, Pokemon> allPokemon = new HashMap<Integer, Pokemon>();
 	static Map<String, Integer> movePairs = new HashMap<String, Integer>();
 	
-	//private static Player playerOne;
-	//private static Player playerTwo;
-	
 	private ObjectOutputStream outToClientP1;
 	private ObjectOutputStream outToClientP2;
 	
@@ -181,15 +178,12 @@ public class Server {
 			st1.start();
 			st2.start();
 			
-			
-			
 		} catch (Exception e) {
 			System.out.println("Error in server");
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
+	
 	private int returnAlive(int playerNumber)
 	{
 		int i = 0;
@@ -290,7 +284,7 @@ public class Server {
 			}
 			
 			// player one attacks
-			if((ctsOne.action == 2) && (!partyOne.get(0).isFainted())){  //TODO: fix
+			if((ctsOne.action == 2) && (!partyOne.get(0).isFainted())){
 				System.out.println("PLAYER ONE ATTACKS");
 				playerOneAttack();
 			}
@@ -490,6 +484,7 @@ public class Server {
 			partyTwo.set(0,temp);
 		}
 	}
+	
 	//Parsing functions
 	private static void parseMoves(){
 		try {
@@ -566,16 +561,7 @@ public class Server {
 		
 		return pokemonParty;
 	}
-	
-	/**
-	 * makes two players and populates them with six random pokemon
-	 * by calling the method {@link generatePokemon()}
-	 */
-	/*private static void makePlayers(){
-		playerOne = new Player(generatePokemon());
-		playerTwo = new Player(generatePokemon());
-	}*/
-	
+
 	/**
 	 * Performs an attack on the other player. 
 	 * @param player true if player one is attacked by player two
@@ -637,6 +623,7 @@ public class Server {
 			}
 		}
 	}
+	
 	/**
 	 * 
 	 * checks to see if the player lost. Condition: all six of player's
@@ -691,7 +678,7 @@ public class Server {
 		double damage;
 		Random randGen= new Random();
 		int randomAccuracy = randGen.nextInt((100 - 0) + 1) + 0;
-		if(randomAccuracy >= 100 - move.getAccuracy()){
+		if (randomAccuracy >= 100 - move.getAccuracy()){
 
 			double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
 			double STAB = getStab(moveIntType, attackingType);
@@ -746,9 +733,7 @@ public class Server {
 	 * @return the damage modifier 
 	 */
 	private double getModifier(int typeOne, int typeTwo){
-		
-		return 0.0;
-		
+		return 0.0;	
 	}
 	
 	/**
@@ -775,6 +760,7 @@ public class Server {
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
 	    return randomNum;
 	}
+	
 	/**
 	 * sets the client to server class to the appropriate player
 	 * @param player true if cts belongs to playerOne, in which case 
@@ -840,7 +826,7 @@ public class Server {
 		}
 	}
 	
-	// TODO: send a STC class once the action count has reached 2
+	//Send a STC class once the action count has reached 2
 	public void sendSTC(ServerToClient stc, boolean player){
 		
 		try{
@@ -892,6 +878,5 @@ public class Server {
 		
 		//Start the server
 		new Server();
-
 	}
 }

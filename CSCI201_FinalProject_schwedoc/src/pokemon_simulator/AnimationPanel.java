@@ -17,7 +17,7 @@ public class AnimationPanel extends JPanel {
 	Image backgroundImage;
 	String playerName;
 	String opposingPlayerName;
-	Integer currPokemonDead, opponentPokemonDead;
+	Integer currPokemonFainted, opponentPokemonFainted;
 	
 	public AnimationPanel (GameApplication ga, String playerName, String opposingPlayerName) {
 		this.ga = ga;
@@ -26,8 +26,8 @@ public class AnimationPanel extends JPanel {
 		this.playerName = playerName;
 		this.opposingPlayerName = opposingPlayerName;
 		
-		currPokemonDead = 0;
-		opponentPokemonDead = 0;
+		currPokemonFainted = 0;
+		opponentPokemonFainted = 0;
 		setImages();
 	}
 	
@@ -62,33 +62,29 @@ public class AnimationPanel extends JPanel {
 		drawOpposingHP(g);
 		g.setColor(Color.BLACK);
 		
-		int count = 0;
 		for (int i=0; i<2; i++)
 		{
-			for (int k=0; k<3; k++){
-				if (currPokemonDead > count)
+			for (int j=0;  j < 3; j++){
+				if (currPokemonFainted > (i * 3 + j)) 
 				{
 					//If there are any dead pokemon, draw an X'd out pokeball
-					g.drawImage(pokeballXImage, 24+(k*20), 380+(i*15), 15, 15, this);
-					count++;
+					g.drawImage(pokeballXImage, 24+(j*20), 380+(i*15), 15, 15, this);
 					continue;
 				}
-				g.drawImage(pokeballImage, 24+(k*20), 380+(i*15), 15, 15, this);
+				g.drawImage(pokeballImage, 24+(j*20), 380+(i*15), 15, 15, this);
 			}
 		}
 		
-		count = 0;
 		for (int i=0; i<2; i++)
 		{
-			for (int k=0; k<3; k++){
-				if (opponentPokemonDead > count)
+			for (int j=0; j < 3; j++){
+				if (opponentPokemonFainted > i * 3 + j)
 				{
 					//If there are any dead pokemon, draw an X'd out pokeball
-					g.drawImage(pokeballXImage, 24+(k*20), 380+(i*15), 15, 15, this);
-					count++;
+					g.drawImage(pokeballXImage, 705+(j*20), 180+(i*15), 15, 15, this);
 					continue;
 				}
-				g.drawImage(pokeballImage, 705+(k*20), 180+(i*15), 15, 15, this);
+				g.drawImage(pokeballImage, 705+(j*20), 180+(i*15), 15, 15, this);
 			}
 		}
 	}
@@ -108,11 +104,11 @@ public class AnimationPanel extends JPanel {
 	}
 	
 	public void crossOutPokemon () {
-		currPokemonDead++;
+		currPokemonFainted++;
 	}
 	
 	public void crossOutOpposingPokemon () {
-		opponentPokemonDead++; 
+		opponentPokemonFainted++; 
 	}
 	
 	public void drawHP (Graphics g) {
