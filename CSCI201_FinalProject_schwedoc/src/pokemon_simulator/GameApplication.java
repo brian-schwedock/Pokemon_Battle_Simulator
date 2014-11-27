@@ -7,7 +7,9 @@ package pokemon_simulator;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.management.Attribute;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -39,6 +42,7 @@ import javax.swing.text.Element;
 import javax.swing.text.IconView;
 import javax.swing.text.LabelView;
 import javax.swing.text.ParagraphView;
+import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
@@ -54,6 +58,9 @@ public class GameApplication extends JFrame {
 	//Components for chatbox
 	private JPanel chatBoxPanel;
 	private StyledDocument doc;
+	private SimpleAttributeSet plainAttribute;
+	private SimpleAttributeSet boldAttribute;
+	
 	//private JTextArea chatTextArea;
 	private JTextPane chatTextPane;
 	private JPanel bottomChatPanel;
@@ -127,6 +134,17 @@ public class GameApplication extends JFrame {
 
 		createChatBoxPanel();
 		createGameScreenPanel();
+		
+		// chat font innitializations
+		plainAttribute = new SimpleAttributeSet();
+		plainAttribute.addAttribute(StyleConstants.FontSize, 14);
+		//plainAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
+		
+		boldAttribute = new SimpleAttributeSet();
+		boldAttribute.addAttribute(StyleConstants.CharacterConstants.Bold, Boolean.TRUE);
+		boldAttribute.addAttribute(StyleConstants.FontSize, 14);
+		//boldAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
+		
 
 		outToServer = ops;
 
@@ -398,7 +416,8 @@ public class GameApplication extends JFrame {
 
 	public void addChatMessage(String message, String playerName){
 		try{
-			doc.insertString(doc.getLength(), playerName + ": ", null);
+			chatTextPane.setCaretPosition(doc.getLength());
+			doc.insertString(doc.getLength(), playerName  + ": ", boldAttribute);
 			String [] words = message.split(" ");
 			int position = 0; 
 			for(int i = 0; i < words.length; i++){
@@ -409,20 +428,21 @@ public class GameApplication extends JFrame {
 						// found an emoji inside the string message
 						emojiFound = true;
 						// print out any trailing whitespace the user may have put in
-						doc.insertString(doc.getLength(), message.substring(position, indexOfWord), null);
+						doc.insertString(doc.getLength(), message.substring(position, indexOfWord), plainAttribute);
 						// now print out the emoji
 						chatTextPane.setCaretPosition(doc.getLength());
 						chatTextPane.insertIcon(new ImageIcon("./images/" + emojis[j] + ".png"));
+						chatTextPane.setCaretPosition(doc.getLength());
 						position = indexOfWord + emojis[j].length();
 					}
 				}
 				if(!emojiFound){
-					doc.insertString(doc.getLength(), message.substring(position, indexOfWord +words[i].length()), null);
+					doc.insertString(doc.getLength(), message.substring(position, indexOfWord +words[i].length()), plainAttribute);
 					position = indexOfWord + words[i].length();
 				}
 			}
-			doc.insertString(doc.getLength(), "\n",null);
-			doc.insertString(doc.getLength(), "\n",null);
+			doc.insertString(doc.getLength(), "\n",plainAttribute);
+			doc.insertString(doc.getLength(), "\n",plainAttribute);
 			/*
 			int position = 0;
 			String input = message.toLowerCase();
