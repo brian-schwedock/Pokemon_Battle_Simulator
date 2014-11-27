@@ -694,8 +694,8 @@ public class GameApplication extends JFrame {
 			GameApplication ga = new GameApplication (stc, outToServer);
 			ClientThread ct = new ClientThread (inFromServer, ga);
 			ct.start();
-			//Thread t=new Thread(clip);
-			//t.start();
+			Thread t=new Thread(clip);
+			t.start();
 			//startGame.close(); 
 		} catch (Exception e){ 
 			System.out.println("Please run the server first"); 
