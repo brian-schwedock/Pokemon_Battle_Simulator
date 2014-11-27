@@ -681,7 +681,7 @@ public class Server {
 		double damage;
 		Random randGen= new Random();
 		int randomAccuracy = randGen.nextInt((100 - 0) + 1) + 0;
-		if(randomAccuracy > 100 - move.getAccuracy()){
+		if(randomAccuracy >= 100 - move.getAccuracy()){
 
 			double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
 			double STAB = getStab(moveIntType, attackingType);
