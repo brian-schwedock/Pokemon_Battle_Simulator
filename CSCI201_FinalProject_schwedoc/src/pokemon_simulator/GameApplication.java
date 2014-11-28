@@ -716,7 +716,6 @@ public class GameApplication extends JFrame {
 			ct.start();
 			Thread t=new Thread(clip);
 			t.start();
-			//startGame.close(); 
 		} catch (Exception e){ 
 			System.out.println("Please run the server first"); 
 		} 	

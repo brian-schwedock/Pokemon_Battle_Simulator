@@ -35,8 +35,6 @@ public class ClientThread extends Thread {
 			
 			try {
 				stc = (ServerToClient) ois.readObject ();
-				System.out.println("READ IN OBJECT");
-				//System.out.println("read in client to server class");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -48,9 +46,7 @@ public class ClientThread extends Thread {
 				opposingPlayerName = "Player 2";
 			else
 				opposingPlayerName = "Player 1";
-			
-			
-			//System.out.println ("action:" + stc.action);
+		
 			
 			if (stc.action == 1){
 				//Opposing player sent a chat message
@@ -112,7 +108,6 @@ public class ClientThread extends Thread {
 				//You used a move and did not faint opposing Pokemon
 				//damageTaken == -1 means that the move missed
 				
-				//System.out.println("ACTION 5 DETECTED");
 				if (stc.damageTaken != -1){
 					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 					
@@ -183,10 +178,45 @@ public class ClientThread extends Thread {
 			}
 			else if (stc.action == 8){
 				//You lose
+				
+				ga.crossoutFaintedPokemon();
+				
+				ga.setAllPokemon(stc.allPokemon);
+				ga.resetBottomPanel();
+				
+				int percentDamage = (stc.damageTaken * 100) / stc.allPokemon.get(0).getMaxHP();
+				
+				String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
+				String message2 = stc.allPokemon.get(0).getName() + " lost " + percentDamage 
+						+ "% of its health!";				
+				String message3 = stc.allPokemon.get(0).getName() + " fainted!";
+				
+				ga.addMessage(message1);
+				ga.addMessage(message2);
+				ga.addMessage(message3);
+				ga.addMessage("You lose!");
+				
 				ga.won(false);
 			}
 			else {  //stc.action == 9
 				//You win
+				
+				ga.crossoutOpposingFaintedPokemon();
+
+				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
+				
+				int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
+				
+				String message1 = stc.allPokemon.get(0).getName() + " used " + stc.attackName + "!";
+				String message2 = "The opposing " + stc.opposingPokemonName + " lost " + percentDamage 
+						+ "% of its health!";	
+				String message3 = "The opposing " + stc.opposingPokemonName + " fainted!";
+				
+				ga.addMessage(message1);
+				ga.addMessage(message2);
+				ga.addMessage(message3);
+				ga.addMessage("You win!");
+				
 				ga.won(true);
 			}
 

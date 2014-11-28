@@ -210,8 +210,6 @@ public class Server {
 	 * needed to make player moves such as calculate damage, switchPokemon. 
 	 */
 	public void makePlayerMoves(){
-		System.out.println("Both players have made an action, now making player moves");
-	
 		
 		// player one had a fainted pokmeon in the previous turn and had to pick pokemon from party
 		if(ctsOne.action == 4){
@@ -253,10 +251,8 @@ public class Server {
 		
 		// playerOne has faster pokemon, goes first
 		if(playerOneSpeed >= playerTwoSpeed){
-			System.out.println("PLAYER ONE FASTER");
 			// player one attacks
 			if(ctsOne.action == 2){
-				System.out.println("PLAYER ONE ATTACKS");
 				playerOneAttack();
 				try {
 					Thread.sleep(1500);
@@ -267,14 +263,11 @@ public class Server {
 			
 			// player two attacks
 			if((ctsTwo.action == 2) && (!partyTwo.get(0).isFainted())){			
-				System.out.println("PLAYER TWO ATTACKS");
 				playerTwoAttack();
 			}
 		}else if(playerTwoSpeed > playerOneSpeed){		// playerTwo has faster pokemon goes first
-			System.out.println("PLAYER TWO FASTER");
 			// player two attacks
 			if(ctsTwo.action == 2){
-				System.out.println("PLAYER TWO ATTACKS");
 				playerTwoAttack();
 				try {
 					Thread.sleep(1500);
@@ -285,7 +278,6 @@ public class Server {
 			
 			// player one attacks
 			if((ctsOne.action == 2) && (!partyOne.get(0).isFainted())){
-				System.out.println("PLAYER ONE ATTACKS");
 				playerOneAttack();
 			}
 		}
@@ -314,7 +306,6 @@ public class Server {
 		
 		sendSTC(stcSwitching, true);
 		sendSTC(stcNotSwitching, false);
-		System.out.println("Switching playerOne pokemon");
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
@@ -339,7 +330,6 @@ public class Server {
 				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerTwoDamageTaken, "");
 		sendSTC(stcNotSwitching, true);
 		sendSTC(stcSwitching, false);
-		System.out.println("Switching playerTwo pokemon");
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
@@ -354,14 +344,12 @@ public class Server {
 		boolean lose = false;
 		ServerToClient stcAttacking = null;
 		ServerToClient stcDefending = null;
-		System.out.println("CTS ONE ACTION: " + ctsOne.action);
+		
 		// player one attacks
 		if(ctsOne.action == 2){
 			int player2currentHp=partyTwo.get(0).getCurrentHP();
 			Move moveUsed = partyOne.get(0).getMoves().get(ctsOne.moveChosen-1);
-			//System.out.println("BEFORE ATTACK");
 			missed=attack(false , moveUsed);
-			//System.out.println("REACH PAST ATTACK");
 			if(!missed){
 				playerTwoDamageTaken=player2currentHp-partyTwo.get(0).getCurrentHP();
 			}else{
@@ -371,7 +359,6 @@ public class Server {
 			//lose = false;
 			if(lose){
 				//game ends
-				System.out.println("PLAYER LOST WHAT");
 				stcAttacking = new ServerToClient(9,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
@@ -381,7 +368,6 @@ public class Server {
 						0,"",playerTwoDamageTaken, moveUsed.getName());
 			}else if(partyTwo.get(0).getCurrentHP()==0){	//checks faint
 				// opponent's pokemon has fainted.
-				System.out.println("PLAYER FAINTED WHAT");
 				stcAttacking = new ServerToClient(7,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
@@ -391,7 +377,6 @@ public class Server {
 						getPokemonAlive(false),"",playerTwoDamageTaken, moveUsed.getName());
 				
 			}else{	// attack did not faint oppoenent's pokemon
-				System.out.println("THIS SHOULD POP UP");
 				stcAttacking = new ServerToClient(5,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
@@ -413,13 +398,10 @@ public class Server {
 		ServerToClient stcAttacking = null;
 		ServerToClient stcDefending = null;
 		// player two attacks
-		System.out.println("CTS TWO ACTION: " + ctsTwo.action);
 		if(ctsTwo.action == 2){
 			int player1currentHp=partyOne.get(0).getCurrentHP();
 			Move moveUsed = partyTwo.get(0).getMoves().get(ctsTwo.moveChosen-1);
-			//System.out.println("BEFORE ATTACK");
 			missed=attack(true , moveUsed);
-			//System.out.println("REACH PAST ATTACK");
 			if(!missed){
 				playerOneDamageTaken=player1currentHp-partyOne.get(0).getCurrentHP();
 			}else{
@@ -430,7 +412,6 @@ public class Server {
 			if(lose){
 				//game ends
 				// playerTwo is attacking
-				System.out.println("PLAYER LOST WHAT");
 				stcAttacking = new ServerToClient(9,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
 						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
@@ -442,7 +423,6 @@ public class Server {
 			}else if(partyOne.get(0).getCurrentHP()==0){	//checks faint
 				// opponent's pokemon has fainted.
 				// playerTwo is attacking
-				System.out.println("PLAYER FAINTED WHAT");
 				stcAttacking = new ServerToClient(7,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
 						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
@@ -454,7 +434,6 @@ public class Server {
 							
 			}else{	// attack did not faint oppoenent's pokemon
 				// playerTwo is attacking
-				System.out.println("THIS SHOULD POP UP");
 				stcAttacking = new ServerToClient(5,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
 						getPokemonAlive(false), "", playerOneDamageTaken, moveUsed.getName());
@@ -575,8 +554,7 @@ public class Server {
 	private boolean attack(boolean player, Move move){
 		
 		int dmg = calculateDamage(player, move);
-		System.out.println("PLAYER 1 HP:" + partyOne.get(0).getCurrentHP());
-		System.out.println("PLAYER 2 HP:" + partyTwo.get(0).getCurrentHP());
+		
 		//player1 attacked by player 2
 		if(player)
 		{
@@ -696,7 +674,6 @@ public class Server {
 			Random rand= new Random();
 			int randomNum = rand.nextInt((100 - 85) + 1) + 85;
 			damage = ((( 42 * attackStat * attackPower / defenseStat) / 50) + 2)* STAB * typeEffectiveness * randomNum / 100;
-			System.out.println("DAMAGE CALCULATED FROM ATTACK " + move.getName() + ": " + damage );
 		}else {
 			//missed
 			damage=-1;
@@ -801,7 +778,6 @@ public class Server {
 	 */
 	public void sendMessageToPlayerTwo(ClientToServer cts){
 		try {
-			System.out.println("sendMessage to player two");
 			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
 		} catch (IOException e) {
@@ -815,7 +791,6 @@ public class Server {
 	 */
 	public void sendMessageToPlayerOne(ClientToServer cts){
 		try {
-			System.out.println("sendMessage to player one");
 			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
 		} catch (IOException e) {
@@ -827,7 +802,6 @@ public class Server {
 	public void sendSTC(ServerToClient stc, boolean player){
 		
 		try{
-			System.out.println("SENDING STC CLASS");
 			outToClientP1.reset();
 			outToClientP2.reset();
 			if(player){

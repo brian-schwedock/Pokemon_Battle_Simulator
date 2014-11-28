@@ -20,16 +20,14 @@ public class ServerThread extends Thread {
 		while (true) {
 			try {
 				ClientToServer cts = (ClientToServer) ois.readObject();
-				if(cts.action == 1)
-				{
-					System.out.println("Message Received by server thread: " + playerNumber);
+				if(cts.action == 1)	{
 					if(playerNumber == 1){
 						server.sendMessageToPlayerTwo(cts);
 					}else if (playerNumber == 2){
 						server.sendMessageToPlayerOne(cts);
 					}
 					//Chat Message
-				}else{
+				} else {
 					// this occurs when actions 2, 3 or 4 are chosen. the server class
 					// will handle appropriate implementation of these instances
 					if(cts.action != 4){
