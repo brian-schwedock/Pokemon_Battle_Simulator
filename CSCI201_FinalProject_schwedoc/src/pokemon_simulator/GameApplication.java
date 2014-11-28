@@ -7,9 +7,7 @@ package pokemon_simulator;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +18,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.management.Attribute;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -64,7 +61,6 @@ public class GameApplication extends JFrame {
 	//private JTextArea chatTextArea;
 	private JTextPane chatTextPane;
 	private JPanel bottomChatPanel;
-	private JLabel chatBoxPlayerLabel;
 
 	private JTextField messageField;
 
@@ -93,7 +89,6 @@ public class GameApplication extends JFrame {
 	ArrayList<Pokemon> allPokemon;
 	String playerName;
 	String opposingPlayerName;
-	//int currentPokemon;
 	private final int currentPokemon = 0;
 	int playerNumber;
 	Image opposingPokemonImage;
@@ -118,7 +113,6 @@ public class GameApplication extends JFrame {
 		setPlayerNames(stc.playerNumber);
 		playerNumber = stc.playerNumber;
 		setAllPokemon(stc.allPokemon);
-		//setCurrentPokemon(stc.pokemonInPlay);
 		setOpposingPokemonImage(stc.opposingPokemonImage);
 		setOpposingPokemonCurrentHP(stc.opposingCurrentHP);
 		setOpposingPokemonMaxHP(stc.opposingMaxHP);
@@ -135,19 +129,14 @@ public class GameApplication extends JFrame {
 		createChatBoxPanel();
 		createGameScreenPanel();
 		
-		// chat font innitializations
+		// chat font initializations
 		plainAttribute = new SimpleAttributeSet();
 		plainAttribute.addAttribute(StyleConstants.FontSize, 14);
-		
-		//plainAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
 		
 		boldAttribute = new SimpleAttributeSet();
 		boldAttribute.addAttribute(StyleConstants.Alignment, StyleConstants.ALIGN_CENTER);
 		boldAttribute.addAttribute(StyleConstants.CharacterConstants.Bold, Boolean.TRUE);
 		boldAttribute.addAttribute(StyleConstants.FontSize, 14);
-		
-		//boldAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
-		
 
 		outToServer = ops;
 
@@ -446,27 +435,6 @@ public class GameApplication extends JFrame {
 			}
 			doc.insertString(doc.getLength(), "\n",plainAttribute);
 			doc.insertString(doc.getLength(), "\n",plainAttribute);
-			/*
-			int position = 0;
-			String input = message.toLowerCase();
-			boolean emojiAppeared = true;
-			// start looking for emojis in the user's message
-			while(position < message.length() && emojiAppeared){
-				emojiAppeared =false;
-				for(int i = 0; i < emojis.length; i++){
-					if(index != -1){
-						emojiAppeared = true;
-						doc.insertString(doc.getLength(), input.substring(position, index), null);
-						chatTextPane.insertIcon(new ImageIcon("./images/" + emojis[i] + ".png"));
-						position = index + emojis[i].length();
-					}
-				}
-			}
-			if(!emojiAppeared){
-				doc.insertString(doc.getLength(), message + "\n", null);
-			}else{
-				doc.insertString(doc.getLength(), "\n",null);
-			}*/
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
@@ -619,7 +587,6 @@ public class GameApplication extends JFrame {
 				sendCTS(cts);
 			}
 		}
-
 	}
 
 
@@ -635,7 +602,6 @@ public class GameApplication extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void changeBottomPanel (int action) {
@@ -651,48 +617,35 @@ public class GameApplication extends JFrame {
 		else
 			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
 	}
-	public void won(boolean playerWon)
-	{
+	
+	public void won(boolean playerWon) {
 		//You won!
-		Object[] options = {"Exit",
-		"Rematch"};
-		if(playerWon)
-		{
-			Random r = new Random();
-			int n = JOptionPane.showOptionDialog(this,
-					"You loot ¥" + (r.nextInt(1001) + 1) + " off the dead guy's corpse" ,
-					"THERE CAN ONLY BE ONE",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE,
-					null,     //do not use a custom Icon
-					options,  //the titles of buttons
-					options[0]); //default button title
-			if(n == JOptionPane.NO_OPTION)
-			{
-				//Rematch
-			}
-			else
-				System.exit(0);
-		}
-		else
-		{
-			//You Lost
-			int n = JOptionPane.showOptionDialog(this,
-					"You lost. Newb." ,
-					"THERE CAN ONLY BE ONE",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE,
-					null,     //do not use a custom Icon
-					options,  //the titles of buttons
-					options[0]); //default button title
-			if(n == JOptionPane.NO_OPTION)
-			{
-				//Rematch
-			}
-			else
-				System.exit(0);
-		}
 		
+		int opposingPlayerNumber;
+		if (playerNumber == 1)
+			opposingPlayerNumber = 2;
+		else
+			opposingPlayerNumber = 1;
+		
+		if(playerWon) {
+			Random r = new Random();
+			
+			JOptionPane.showMessageDialog (this,
+					"You received $" + (r.nextInt(1001) + 1) + " for winning!" ,
+					"You defeated Player " + opposingPlayerNumber + "!",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			System.exit(0);
+		}
+		else {  //You Lost
+			
+			JOptionPane.showMessageDialog (this,
+					"Player " + opposingPlayerNumber + " took your money!" ,
+					"You lost to Player " + opposingPlayerNumber + "!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			System.exit(0);
+		}
 	}
 	
 	class WrapEditorKit extends StyledEditorKit {
@@ -700,7 +653,6 @@ public class GameApplication extends JFrame {
 	    public ViewFactory getViewFactory() {
 	        return defaultFactory;
 	    }
-	
 	}
 
 	class WrapColumnFactory implements ViewFactory {
@@ -740,7 +692,6 @@ public class GameApplication extends JFrame {
 	                throw new IllegalArgumentException("Invalid axis: " + axis);
 	        }
 	    }
-	
 	}
 
 	public static void main (String [] args) {
@@ -769,6 +720,5 @@ public class GameApplication extends JFrame {
 		} catch (Exception e){ 
 			System.out.println("Please run the server first"); 
 		} 	
-
 	}
 }
