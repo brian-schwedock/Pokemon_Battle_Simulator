@@ -98,7 +98,9 @@ public class GameApplication extends JFrame {
 	int opposingPokemonAlive;
 	
 	private String [] emojis = {"biblethump", "dududu", "failfish", "frankerz", "kappa", 
-			"keepo", "pjsalt", "praiseit", "rektbox", "residentsleeper", "rip"};
+			"keepo", "pjsalt", "praiseit", "rektbox", "residentsleeper", "rip", "bcwarrior",
+			"bionicbunion", "dansgame", "datsheffy", "gingerpower", "kevinturtle", "kreygasm",
+			"kreygasm", "pogchamp", "pjsalt", "trihard", "rektbox", "hotpokket"};
 
 	/**
 	 * the outToServer stream is a connection to the server that every client (GameApplication) uses
@@ -131,12 +133,12 @@ public class GameApplication extends JFrame {
 		
 		// chat font initializations
 		plainAttribute = new SimpleAttributeSet();
-		plainAttribute.addAttribute(StyleConstants.FontSize, 14);
+		plainAttribute.addAttribute(StyleConstants.FontSize, 12);
 		
 		boldAttribute = new SimpleAttributeSet();
 		boldAttribute.addAttribute(StyleConstants.Alignment, StyleConstants.ALIGN_CENTER);
 		boldAttribute.addAttribute(StyleConstants.CharacterConstants.Bold, Boolean.TRUE);
-		boldAttribute.addAttribute(StyleConstants.FontSize, 14);
+		boldAttribute.addAttribute(StyleConstants.FontSize, 12);
 
 		outToServer = ops;
 
