@@ -368,7 +368,7 @@ public class Server {
 				playerTwoDamageTaken = -1;
 			}
 			lose=playerLost(false);//check loss
-			lose = false;
+			//lose = false;
 			if(lose){
 				//game ends
 				System.out.println("PLAYER LOST WHAT");
@@ -426,7 +426,7 @@ public class Server {
 				playerOneDamageTaken = -1;
 			}
 			lose=playerLost(true);//check loss
-			lose = false;
+			//lose = false;
 			if(lose){
 				//game ends
 				// playerTwo is attacking
@@ -634,10 +634,7 @@ public class Server {
 	 * 
 	 */
 	private boolean playerLost(boolean player){
-		if(player)
-			return (getPokemonAlive(player) > 0);
-		else
-			return  (getPokemonAlive(player) > 0);
+		return (getPokemonAlive(player) == 0);
 	}
 	
 	/**

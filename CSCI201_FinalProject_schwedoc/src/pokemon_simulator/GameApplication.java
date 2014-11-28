@@ -138,11 +138,14 @@ public class GameApplication extends JFrame {
 		// chat font innitializations
 		plainAttribute = new SimpleAttributeSet();
 		plainAttribute.addAttribute(StyleConstants.FontSize, 14);
+		
 		//plainAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
 		
 		boldAttribute = new SimpleAttributeSet();
+		boldAttribute.addAttribute(StyleConstants.Alignment, StyleConstants.ALIGN_CENTER);
 		boldAttribute.addAttribute(StyleConstants.CharacterConstants.Bold, Boolean.TRUE);
 		boldAttribute.addAttribute(StyleConstants.FontSize, 14);
+		
 		//boldAttribute.addAttribute(StyleConstants.SpaceAbove, 25f);
 		
 
