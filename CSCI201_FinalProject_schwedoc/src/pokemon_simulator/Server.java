@@ -209,7 +209,7 @@ public class Server {
 	 * respectively in the CTS class. This method will call all the other methods
 	 * needed to make player moves such as calculate damage, switchPokemon. 
 	 */
-	public void makePlayerMoves(){
+	public synchronized void makePlayerMoves(){
 		
 		// player one had a fainted pokmeon in the previous turn and had to pick pokemon from party
 		if(ctsOne.action == 4){
@@ -742,7 +742,7 @@ public class Server {
 	 * ctsTwo to cts;
 	 * @param cts the client to server class object from server thread
 	 */
-	public void setCTS(boolean player, ClientToServer cts){
+	public synchronized void setCTS(boolean player, ClientToServer cts){
 		if(player){
 			ctsOne = cts;
 		}else{
@@ -754,11 +754,11 @@ public class Server {
 	 * increments playerAction. Note this value should not go above 2
 	 * For explanation of what justifies an action see {@link resetActionCount()}
 	 */
-	public void incrementActionCount(){
+	public synchronized void incrementActionCount(){
 		actionCount++;
 	}
 	
-	public int getActionCount(){
+	public synchronized int getActionCount(){
 		return actionCount;
 	}
 	
@@ -776,7 +776,7 @@ public class Server {
 	 * Sends chat message to player two
 	 * @param cts is the given chat message to player one
 	 */
-	public void sendMessageToPlayerTwo(ClientToServer cts){
+	public synchronized void sendMessageToPlayerTwo(ClientToServer cts){
 		try {
 			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
@@ -789,7 +789,7 @@ public class Server {
 	 * Sends chat message to player one 
 	 * @param cts is the given cts class from player two 
 	 */
-	public void sendMessageToPlayerOne(ClientToServer cts){
+	public synchronized void sendMessageToPlayerOne(ClientToServer cts){
 		try {
 			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
