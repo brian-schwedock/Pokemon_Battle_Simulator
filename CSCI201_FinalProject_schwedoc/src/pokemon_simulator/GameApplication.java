@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
@@ -737,7 +738,9 @@ public class GameApplication extends JFrame {
 		ServerToClient stc = null;
 		LoopSound clip=new LoopSound();
 		try { 
-			startGame = new Socket("68.181.218.21", 9000); 
+//			String ipAddress = InetAddress.getLocalHost().getHostAddress();
+			String ipAddress = "127.0.0.1";
+			startGame = new Socket(ipAddress, 9000); 
 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
 			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
 			stc = (ServerToClient) inFromServer.readObject(); 
