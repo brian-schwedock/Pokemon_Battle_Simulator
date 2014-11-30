@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
@@ -82,7 +81,6 @@ public class GameApplication extends JFrame {
 	private ArrayList<JButton> attackButtons;
 	private ArrayList<JButton> pokemonSwitchButtons;
 	private ArrayList<JButton> faintedPokemonSwitchButtons;
-
 	private JButton waitingCancel;
 	private JPanel waitingPanelMove;
 	private JLabel waitingLabelMove;
@@ -455,7 +453,6 @@ public class GameApplication extends JFrame {
 				}
 			}
 			doc.insertString(doc.getLength(), "\n",plainAttribute);
-			//doc.insertString(doc.getLength(), "\n",plainAttribute);
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
@@ -526,8 +523,7 @@ public class GameApplication extends JFrame {
 
     class WaitingCancelListener implements ActionListener {
     	public void actionPerformed(ActionEvent ae) {
-    		if(ae.getSource() == waitingCancel)
-    		{changeBottomPanel(1);}
+    		changeBottomPanel(1);
     		
     		ClientToServer cts = new ClientToServer(5, "", 0, 0);
 			sendCTS(cts);
@@ -646,10 +642,14 @@ public class GameApplication extends JFrame {
 			cl.show(bottomGameScreenPanel, "actionPanel");
 		else if (action == 2)
 			cl.show(bottomGameScreenPanel, "waitingPanelSwitch");
-		else if (action == 4)
-			cl.show(bottomGameScreenPanel, "waitingPanelMove");
-		else
+		else if (action == 3)
 			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
+		else			
+			cl.show(bottomGameScreenPanel, "waitingPanelMove");
+	}
+	
+	public void enableCancel (boolean enable) {
+		waitingCancel.setEnabled(enable);
 	}
 	
 	public void won(boolean playerWon) {

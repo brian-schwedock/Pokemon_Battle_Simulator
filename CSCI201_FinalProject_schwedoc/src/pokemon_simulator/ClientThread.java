@@ -22,7 +22,7 @@ public class ClientThread extends Thread {
 		this.ga = ga;
 	}
 	
-	public synchronized void run () {
+	public void run () {
 		ServerToClient stc = null;
 		
 		//This variable is to control when to change the bottom
@@ -60,11 +60,11 @@ public class ClientThread extends Thread {
 				ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 				ga.setOpposingPokemonMaxHP (stc.opposingMaxHP);
 				ga.setOpposingPokemonName(stc.opposingPokemonName);
-				//ga.repaint();
 				
 				ga.addMessage(opposingPlayerName + " sent out " + stc.opposingPokemonName + "!");
 				
 				changeBottomPanel++;
+				ga.enableCancel(false);
 			}
 			else if (stc.action == 3){
 				//You switched Pokemon
@@ -72,9 +72,9 @@ public class ClientThread extends Thread {
 				ga.setAllPokemon(stc.allPokemon);
 				ga.resetBottomPanel();
 				ga.addMessage("You sent out " + stc.allPokemon.get(0).getName() + "!");
-				//ga.repaint();
 				
 				changeBottomPanel++;
+				ga.enableCancel(false);
 			}
 			else if (stc.action == 4){
 				//Opposing player used a move and did not faint your Pokemon
@@ -99,10 +99,9 @@ public class ClientThread extends Thread {
 					ga.addMessage(message1);		
 					ga.addMessage(message2);
 				}
-				
-				//ga.repaint();
-				
+								
 				changeBottomPanel++;
+				ga.enableCancel(false);
 			}
 			else if (stc.action == 5){
 				//You used a move and did not faint opposing Pokemon
@@ -128,9 +127,9 @@ public class ClientThread extends Thread {
 					ga.addMessage(message1);
 					ga.addMessage(message2);
 				}
-				//ga.repaint();
 				
 				changeBottomPanel++;
+				ga.enableCancel(false);
 			}
 			else if (stc.action == 6){
 				//Opposing player used a move and fainted your Pokemon
@@ -226,6 +225,7 @@ public class ClientThread extends Thread {
 			
 			if (changeBottomPanel >= 2){
 				ga.changeBottomPanel (1);
+				ga.enableCancel(true);
 				changeBottomPanel = 0;
 			}
 		}
