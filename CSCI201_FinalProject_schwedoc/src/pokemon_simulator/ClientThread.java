@@ -22,7 +22,7 @@ public class ClientThread extends Thread {
 		this.ga = ga;
 	}
 	
-	public void run () {
+	public synchronized void run () {
 		ServerToClient stc = null;
 		
 		//This variable is to control when to change the bottom

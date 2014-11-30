@@ -398,7 +398,7 @@ public class GameApplication extends JFrame {
 		animationPanel.crossOutOpposingPokemon();
 	}
 	
-	public void addMessage (String message) {
+	public synchronized void addMessage (String message) {
 		try {
 			doc.insertString(doc.getLength(), message, null);
 			doc.insertString(doc.getLength(), "\n", null);
@@ -408,7 +408,7 @@ public class GameApplication extends JFrame {
 		}
 	}
 
-	public void addChatMessage(String message, String playerName){
+	public synchronized void addChatMessage(String message, String playerName){
 		try{
 			chatTextPane.setCaretPosition(doc.getLength());
 			doc.insertString(doc.getLength(), playerName  + ": ", boldAttribute);
