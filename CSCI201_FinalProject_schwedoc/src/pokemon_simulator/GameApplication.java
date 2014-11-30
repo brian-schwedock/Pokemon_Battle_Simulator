@@ -440,7 +440,7 @@ public class GameApplication extends JFrame {
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
-		messageField.setText("");
+//		messageField.setText("");
 	}
 
 	public void resetBottomPanel () {
@@ -585,6 +585,7 @@ public class GameApplication extends JFrame {
 			String enteredMessage = messageField.getText();
 			if(!enteredMessage.equals("")){
 				addChatMessage (enteredMessage, playerName);
+				messageField.setText("");
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
 				sendCTS(cts);
 			}
@@ -706,7 +707,7 @@ public class GameApplication extends JFrame {
 		ServerToClient stc = null;
 		LoopSound clip=new LoopSound();
 		try { 
-			startGame = new Socket("127.0.0.1", 9000); 
+			startGame = new Socket("68.181.218.21", 9000); 
 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
 			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
 			stc = (ServerToClient) inFromServer.readObject(); 
