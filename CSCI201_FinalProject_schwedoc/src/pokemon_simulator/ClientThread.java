@@ -174,6 +174,8 @@ public class ClientThread extends Thread {
 				ga.addMessage(message2);
 				ga.addMessage(message3);
 
+				ga.changeBottomPanel(2);
+				
 				changeBottomPanel = 1;
 			}
 			else if (stc.action == 8){

@@ -73,13 +73,17 @@ public class GameApplication extends JFrame {
 	//Components for the bottom of the gameScreenPanel
 	private JPanel bottomGameScreenPanel;
 	private JPanel actionPanel;
-	private JPanel waitingPanel;
+	private JPanel waitingPanelSwitch;
 	private JPanel faintedPokemonPanel;
-	private JLabel waitingLabel;
+	private JLabel waitingLabelSwitch;
 	private JLabel faintedPokemonLabel;
 	private ArrayList<JButton> attackButtons;
 	private ArrayList<JButton> pokemonSwitchButtons;
 	private ArrayList<JButton> faintedPokemonSwitchButtons;
+
+	private JButton waitingCancel;
+	private JPanel waitingPanelMove;
+	private JLabel waitingLabelMove;
 
 
 	/**
@@ -260,13 +264,26 @@ public class GameApplication extends JFrame {
 		
 		
 		/**
-		 * WaitingPanel for when an action has been selected
+		 * WaitingPanelSwitch for when an action has been selected
 		 */
-		waitingPanel = new JPanel ();
-		waitingLabel = new JLabel ("Waiting for opponent to make a move.");
-		waitingPanel.add(waitingLabel);
-		bottomGameScreenPanel.add(waitingPanel, "waitingPanel");
+		waitingPanelSwitch = new JPanel ();
+		waitingLabelSwitch = new JLabel ("Waiting for opponent to switch Pokemon.");
+		waitingPanelSwitch.add(waitingLabelSwitch);
 		
+		bottomGameScreenPanel.add(waitingPanelSwitch, "waitingPanelSwitch");
+		
+//		test canceling moves
+		waitingPanelMove = new JPanel();
+		waitingCancel = new JButton("Cancel");
+		waitingLabelMove = new JLabel("Waiting for opponent to make a move.");
+		
+		WaitingCancelListener wcl = new WaitingCancelListener ();
+
+		waitingCancel.addActionListener(wcl);
+		waitingPanelMove.add(waitingLabelMove);
+		waitingPanelMove.add(waitingCancel);
+		
+		bottomGameScreenPanel.add(waitingPanelMove, "waitingPanelMove");
 		
 		/**
 		 * FaintedPokemonPanel for when a new pokemon must be selected
@@ -506,6 +523,16 @@ public class GameApplication extends JFrame {
 		}
     }
 
+    class WaitingCancelListener implements ActionListener {
+    	public void actionPerformed(ActionEvent ae) {
+    		if(ae.getSource() == waitingCancel)
+    		{changeBottomPanel(1);}
+    		
+    		ClientToServer cts = new ClientToServer(5, "", 0, 0);
+			sendCTS(cts);
+    	}
+    }
+    
 	class AttackListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			int moveChosen = 0;
@@ -521,7 +548,7 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(2, "", moveChosen, 1);
 			sendCTS(cts);
 			
-			changeBottomPanel (2);
+			changeBottomPanel (4);
 		}
 	}
 	
@@ -544,7 +571,7 @@ public class GameApplication extends JFrame {
 			ClientToServer cts = new ClientToServer(3, "", 0, chosenPokemon);
 			sendCTS(cts);
 			
-			changeBottomPanel (2);
+			changeBottomPanel (4);
 		}
 	}
 	
@@ -609,14 +636,17 @@ public class GameApplication extends JFrame {
 
 	public void changeBottomPanel (int action) {
 		//1 changes to actionPanel
-		//2 changes to waitingPanel
+		//2 changes to waitingPanelSwitch
 		//3 changes to faintedPokemonPanel
+		//4 changes to waitingPanelMove
 		
 		CardLayout cl = (CardLayout) bottomGameScreenPanel.getLayout();
 		if (action == 1)
 			cl.show(bottomGameScreenPanel, "actionPanel");
 		else if (action == 2)
-			cl.show(bottomGameScreenPanel, "waitingPanel");
+			cl.show(bottomGameScreenPanel, "waitingPanelSwitch");
+		else if (action == 4)
+			cl.show(bottomGameScreenPanel, "waitingPanelMove");
 		else
 			cl.show(bottomGameScreenPanel, "faintedPokemonPanel");
 	}

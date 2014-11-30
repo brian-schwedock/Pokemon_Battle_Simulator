@@ -758,6 +758,10 @@ public class Server {
 		actionCount++;
 	}
 	
+	public synchronized void decrementActionCount(){
+		actionCount--;
+	}
+	
 	public synchronized int getActionCount(){
 		return actionCount;
 	}
