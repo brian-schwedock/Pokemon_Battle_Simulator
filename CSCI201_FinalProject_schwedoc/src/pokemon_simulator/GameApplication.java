@@ -18,6 +18,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -454,11 +455,10 @@ public class GameApplication extends JFrame {
 				}
 			}
 			doc.insertString(doc.getLength(), "\n",plainAttribute);
-			doc.insertString(doc.getLength(), "\n",plainAttribute);
+			//doc.insertString(doc.getLength(), "\n",plainAttribute);
 		}catch(BadLocationException e){
 			e.printStackTrace();
 		}
-//		messageField.setText("");
 	}
 
 	public void resetBottomPanel () {
@@ -738,8 +738,10 @@ public class GameApplication extends JFrame {
 		ServerToClient stc = null;
 		LoopSound clip=new LoopSound();
 		try { 
-//			String ipAddress = InetAddress.getLocalHost().getHostAddress();
-			String ipAddress = "127.0.0.1";
+			Scanner sc = new Scanner (System.in);
+			System.out.print("Enter IP address of server: ");
+			String ipAddress = sc.next();
+			sc.close();
 			startGame = new Socket(ipAddress, 9000); 
 			ObjectInputStream inFromServer = new ObjectInputStream(startGame.getInputStream());
 			ObjectOutputStream outToServer = new ObjectOutputStream(startGame.getOutputStream());
