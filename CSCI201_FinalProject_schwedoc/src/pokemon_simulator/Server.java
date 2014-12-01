@@ -709,6 +709,8 @@ public class Server {
 	
 	public synchronized void decrementActionCount () {
 		actionCount--;
+		if (actionCount < 0)
+			actionCount = 0;
 	}
 	
 	public synchronized int getActionCount () {
