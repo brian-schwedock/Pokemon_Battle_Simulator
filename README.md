@@ -24,3 +24,18 @@ Alejandro Lopez: @Askem-
 + Run GameApplication.java on the same or another computer
   + Type the IP address when prompted and hit enter
 + The game is now running
+
+
+#####Emojis
+In the chat box, type the following words to send an emoji
++ biblethump
++ dududu
++ failfish
++ frankerz
++ kappa
++ keepo
++ praiseit
++ residentsleeper
++ rip
++ pjsalt
++ rektbox
