@@ -419,7 +419,7 @@ public class GameApplication extends JFrame {
 			doc.insertString(doc.getLength(), "\n", null);
 			chatTextPane.setCaretPosition(doc.getLength());
 		} catch (BadLocationException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -452,7 +452,7 @@ public class GameApplication extends JFrame {
 			}
 			doc.insertString(doc.getLength(), "\n",plainAttribute);
 		}catch(BadLocationException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -625,7 +625,7 @@ public class GameApplication extends JFrame {
 			outToServer.writeObject(cts);
 			outToServer.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

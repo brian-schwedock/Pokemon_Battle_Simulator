@@ -36,9 +36,9 @@ public class ClientThread extends Thread {
 			try {
 				stc = (ServerToClient) ois.readObject ();
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			String opposingPlayerName = null;

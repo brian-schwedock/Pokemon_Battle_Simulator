@@ -19,8 +19,7 @@ public class LoopSound implements Runnable{
 					ais = AudioSystem.
 					    getAudioInputStream( file );
 				} catch (UnsupportedAudioFileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 		        clip.open(ais);
 		        
@@ -32,8 +31,7 @@ public class LoopSound implements Runnable{
 		        clip.loop(Clip.LOOP_CONTINUOUSLY);
 		       
 			} catch (LineUnavailableException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 	       return;
     	}

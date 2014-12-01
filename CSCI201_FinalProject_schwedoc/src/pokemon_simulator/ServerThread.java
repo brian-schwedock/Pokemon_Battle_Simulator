@@ -56,7 +56,6 @@ public class ServerThread extends Thread {
 						server.makePlayerMoves();
 					}
 					else{ //action was cancelled
-//						System.out.println("ACTION CANCELLED");
 						server.decrementActionCount();
 						
 						if(playerNumber == 1)

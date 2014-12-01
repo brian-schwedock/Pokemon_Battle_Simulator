@@ -179,8 +179,7 @@ public class Server {
 			st2.start();
 			
 		} catch (Exception e) {
-			System.out.println("Error in server");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}	
 	}
 	
@@ -257,7 +256,7 @@ public class Server {
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			
@@ -272,7 +271,7 @@ public class Server {
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			
@@ -309,7 +308,7 @@ public class Server {
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -333,7 +332,7 @@ public class Server {
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -785,7 +784,7 @@ public class Server {
 			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -798,7 +797,7 @@ public class Server {
 			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -816,7 +815,7 @@ public class Server {
 				outToClientP2.flush();
 			}
 		}catch(IOException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
