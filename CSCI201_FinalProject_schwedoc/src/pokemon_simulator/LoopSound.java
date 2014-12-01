@@ -23,6 +23,12 @@ public class LoopSound implements Runnable{
 					e.printStackTrace();
 				}
 		        clip.open(ais);
+		        
+		        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		        
+//		        Reduce volume by 10 decibels.
+		        gainControl.setValue(-20.0f);
+		        
 		        clip.loop(Clip.LOOP_CONTINUOUSLY);
 		       
 			} catch (LineUnavailableException e) {
