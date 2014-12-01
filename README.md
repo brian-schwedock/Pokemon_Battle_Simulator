@@ -15,7 +15,7 @@ Alejandro Lopez: @Askem-
 ####To run program
 + Import project into Eclipse
 + If running across multiple computers
-  + Google "IP address to get your public IP address"
+  + Google "IP address" to get your public IP address
 + If running program locally
   + Use local IP address 127.0.0.1
 + Run server
