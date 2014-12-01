@@ -102,9 +102,7 @@ public class GameApplication extends JFrame {
 	int opposingPokemonAlive;
 	
 	private String [] emojis = {"biblethump", "dududu", "failfish", "frankerz", "kappa", 
-			"keepo", "pjsalt", "praiseit", "rektbox", "residentsleeper", "rip", "bcwarrior",
-			"bionicbunion", "dansgame", "datsheffy", "gingerpower", "kevinturtle", "kreygasm",
-			"kreygasm", "pogchamp", "pjsalt", "trihard", "rektbox", "hotpokket"};
+			"keepo", "praiseit", "residentsleeper", "rip", "pjsalt", "rektbox"};
 
 	/**
 	 * the outToServer stream is a connection to the server that every client (GameApplication) uses
