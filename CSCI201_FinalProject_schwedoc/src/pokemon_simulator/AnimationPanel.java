@@ -1,3 +1,13 @@
+/*
+ * Team members: Brian Schwedock, Ryan Chen,
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
+ */
+
+/**
+ * AnimationPanel is part of the GUI and contains all of the graphics.
+ * The Pokemon images and hp, the player images, pokeball images, background
+ */
+
 package pokemon_simulator;
 
 import java.awt.Color;
@@ -33,7 +43,8 @@ public class AnimationPanel extends JPanel {
 	
 	protected void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(backgroundImage,0,0, getWidth(), getHeight(),null);
+		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+		
 		//Draw components for player
 		g.drawImage(playerImage, 20, 275, 60, 100, this);
 		g.setFont(new Font ("Arial", Font.BOLD, 16));
@@ -62,12 +73,10 @@ public class AnimationPanel extends JPanel {
 		drawOpposingHP(g);
 		g.setColor(Color.BLACK);
 		
-		for (int i=0; i<2; i++)
-		{
-			for (int j=0;  j < 3; j++){
-				if (currPokemonFainted > (i * 3 + j)) 
-				{
-					//If there are any dead pokemon, draw an X'd out pokeball
+		for (int i=0; i<2; i++) {
+			for (int j=0;  j < 3; j++) {
+				if (currPokemonFainted > (i * 3 + j)) {
+					//If there are any fainted pokemon, draw an X'd out pokeball
 					g.drawImage(pokeballXImage, 24+(j*20), 380+(i*15), 15, 15, this);
 					continue;
 				}
@@ -75,12 +84,10 @@ public class AnimationPanel extends JPanel {
 			}
 		}
 		
-		for (int i=0; i<2; i++)
-		{
-			for (int j=0; j < 3; j++){
-				if (opponentPokemonFainted > i * 3 + j)
-				{
-					//If there are any dead pokemon, draw an X'd out pokeball
+		for (int i=0; i<2; i++) {
+			for (int j=0; j < 3; j++) {
+				if (opponentPokemonFainted > i * 3 + j) {
+					//If there are any fainted pokemon, draw an X'd out pokeball
 					g.drawImage(pokeballXImage, 705+(j*20), 180+(i*15), 15, 15, this);
 					continue;
 				}

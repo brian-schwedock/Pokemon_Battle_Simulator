@@ -3,6 +3,11 @@
  * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
  */
 
+/**
+ * GameApplication is the main hub for the client.
+ * It contains all GUI components and interacts with Server and ClientThread.
+ */
+
 package pokemon_simulator;
 
 import java.awt.BorderLayout;
@@ -68,22 +73,44 @@ public class GameApplication extends JFrame {
 	//Container for all non-chat elements
 	private JPanel gameScreenPanel;
 
-	//Animation panel
+	//Animation panel which contains all the graphics
 	private AnimationPanel animationPanel;
 
 	//Components for the bottom of the gameScreenPanel
+	/**
+	 * bottomGameScreenPanel consists of AnimationPanel 
+	 * and the lower panel with the buttons
+	 */
 	private JPanel bottomGameScreenPanel;
+	/**
+	 * actionPanel is the main panel which contains
+	 * buttons for attacks and for switching Pokemon
+	 */
 	private JPanel actionPanel;
+	/**
+	 * waitingPanelMove appears when you have chosen
+	 * a move and are waiting for your opponent
+	 */
+	private JPanel waitingPanelMove;
+	/**
+	 * waitingPanelSwitch appears when you are waiting
+	 * for your opponent to choose a Pokemon after
+	 * his previous Pokemon fainted
+	 */
 	private JPanel waitingPanelSwitch;
+	/**
+	 * faintedPokemonPanel appears when you have to 
+	 * choose a new Pokemon after your previous
+	 * Pokemon has fainted
+	 */
 	private JPanel faintedPokemonPanel;
+	private JLabel waitingLabelMove;
 	private JLabel waitingLabelSwitch;
 	private JLabel faintedPokemonLabel;
 	private ArrayList<JButton> attackButtons;
 	private ArrayList<JButton> pokemonSwitchButtons;
 	private ArrayList<JButton> faintedPokemonSwitchButtons;
 	private JButton waitingCancel;
-	private JPanel waitingPanelMove;
-	private JLabel waitingLabelMove;
 
 
 	/**
@@ -260,9 +287,8 @@ public class GameApplication extends JFrame {
 		
 		bottomGameScreenPanel.add(actionPanel, "actionPanel");
 		
-		
 		/**
-		 * WaitingPanelSwitch for when an action has been selected
+		 * WaitingPanelSwitch for when opponent is choosing a new Pokemon
 		 */
 		waitingPanelSwitch = new JPanel ();
 		waitingLabelSwitch = new JLabel ("Waiting for opponent to switch Pokemon.");
@@ -270,21 +296,21 @@ public class GameApplication extends JFrame {
 		
 		bottomGameScreenPanel.add(waitingPanelSwitch, "waitingPanelSwitch");
 		
-//		test canceling moves
+		/**
+		 * waitingPanelMove for when you are waiting for opponent
+		 * to make a move
+		 */
 		waitingPanelMove = new JPanel();
 		waitingCancel = new JButton("Cancel");
 		waitingLabelMove = new JLabel("Waiting for opponent to make a move.");
-		
-		WaitingCancelListener wcl = new WaitingCancelListener ();
-
-		waitingCancel.addActionListener(wcl);
+		waitingCancel.addActionListener(new WaitingCancelListener ());
 		waitingPanelMove.add(waitingLabelMove);
 		waitingPanelMove.add(waitingCancel);
 		
 		bottomGameScreenPanel.add(waitingPanelMove, "waitingPanelMove");
 		
 		/**
-		 * FaintedPokemonPanel for when a new pokemon must be selected
+		 * FaintedPokemonPanel for when a new Pokemon must be selected
 		 */
 		faintedPokemonPanel = new JPanel ();
 		faintedPokemonPanel.setLayout(new BoxLayout(faintedPokemonPanel, BoxLayout.Y_AXIS));
@@ -462,9 +488,9 @@ public class GameApplication extends JFrame {
 	}
 
 	/**
-     * updates the attack buttons to show the 4 moves of the current pokemon
+     * updates the attack buttons to show the 4 moves of the current Pokemon
      * in battle. This method should be called any time the player switches
-     * pokemon.
+     * Pokemon.
      */
     private void updateAttackButtons(){
     	for (int i=0; i < 4; ++i){
@@ -484,8 +510,8 @@ public class GameApplication extends JFrame {
     }
     
     /**
-     * updates the switch buttons to show the 6 pokemon in the player's party
-     * This method should be called after the player switches pokemon
+     * updates the switch buttons to show the 6 Pokemon in the player's party
+     * This method should be called after the player switches Pokemon
      */
     private void updateSwitchButtons(){
     	for (int i=0; i < 6; ++i){
@@ -605,7 +631,7 @@ public class GameApplication extends JFrame {
 	class SendMessageListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String enteredMessage = messageField.getText();
-			if(!enteredMessage.equals("")){
+			if(!enteredMessage.equals("")) {
 				addChatMessage (enteredMessage, playerName);
 				messageField.setText("");
 				ClientToServer cts = new ClientToServer(1, enteredMessage, 0, 0);
@@ -620,7 +646,7 @@ public class GameApplication extends JFrame {
 	 * object output stream
 	 * @param cts is the client to server object being sent
 	 */
-	private void sendCTS(ClientToServer cts){
+	private void sendCTS(ClientToServer cts) {
 		try {
 			outToServer.writeObject(cts);
 			outToServer.flush();
@@ -734,7 +760,8 @@ public class GameApplication extends JFrame {
 		//Connecting to the server
 		Socket startGame = null;
 		ServerToClient stc = null;
-		LoopSound clip=new LoopSound();
+		//clip is for music
+		LoopSound clip = new LoopSound();
 		try { 
 			Scanner sc = new Scanner (System.in);
 			System.out.print("Enter IP address of server: ");
@@ -750,7 +777,7 @@ public class GameApplication extends JFrame {
 			GameApplication ga = new GameApplication (stc, outToServer);
 			ClientThread ct = new ClientThread (inFromServer, ga);
 			ct.start();
-			Thread t=new Thread(clip);
+			Thread t = new Thread(clip);
 			t.start();
 		} catch (Exception e){ 
 			System.out.println("Please run the server first"); 

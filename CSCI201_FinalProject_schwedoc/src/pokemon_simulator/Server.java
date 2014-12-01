@@ -1,17 +1,7 @@
-package pokemon_simulator;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
+/*
+ * Team members: Brian Schwedock, Ryan Chen,
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
+ */
 
 /**
  * The intermediary that sends, receives, and manipulates data 
@@ -33,6 +23,22 @@ import java.util.Scanner;
  * 
  *
  */
+
+package pokemon_simulator;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Server {
 	static Map<String, Move> allMoves = new HashMap<String,Move>();
 	static Map<Integer, Pokemon> allPokemon = new HashMap<Integer, Pokemon>();
@@ -43,25 +49,14 @@ public class Server {
 	
 	private ArrayList<Pokemon> partyOne;
 	private ArrayList<Pokemon> partyTwo;
-	// true if playerOne wins the game false otherwise
-	private boolean playerOneVictory;
-	// true if playerTwo wins the game false otherwise
-	private boolean playerTwoVictory;
-	// true if the game is still going on meaning neither player has won
-	private boolean gameOn;
 	
 	String imageOne;
 	String imageTwo;
-	/**
-	 * array list containing all of the ServerThreads created
-	 * (the number of connections to the server socket)
-	 */
-	private ArrayList<ServerThread> serverThreads;
 	
 	/**
 	 * keeps track of the player actions during every turn. 
 	 * A chat message is not a player action. A player Action is 
-	 * either a move(attack) or change of pokemon. A turn is not 
+	 * either a move(attack) or change of Pokemon. A turn is not 
 	 * completed until both players have completed an action 
 	 * (2 actions)
 	 */
@@ -112,7 +107,7 @@ public class Server {
 	public boolean playerOneMadeMove = false;
 	public boolean playerTwoMadeMove = false;
 	
-	Server(){
+	Server () {
 		try {
 			ServerSocket socketPorts = new ServerSocket(9000);
 			
@@ -159,18 +154,6 @@ public class Server {
 			movePairs.put("Rock", 12);
 			movePairs.put("Ghost", 13);
 			movePairs.put("Dragon", 14);
-
-			
-			
-			//Remove this while loop when you use the serverthreads
-			//This loop is preventing the connections between server and clients from closing automatically
-			//while (true);
-			
-			
-			//I recommend creating the inputstreams here also and then passing in
-			//the streams instead of the sockets into server thread if you want
-			//to leave the above code as is.
-			
 			
 			ServerThread st1 = new ServerThread(this, new ObjectInputStream(p1Socket.getInputStream()),1);
 			ServerThread st2 = new ServerThread(this, new ObjectInputStream(p2Socket.getInputStream()),2);
@@ -183,34 +166,16 @@ public class Server {
 		}	
 	}
 	
-	private int returnAlive(int playerNumber)
-	{
-		int i = 0;
-		if(playerNumber == 1)
-		{
-			for(Pokemon x: partyOne)
-				if(!x.isFainted())
-					i++;
-		}
-		else
-		{
-			for(Pokemon x: partyTwo)
-				if(!x.isFainted())
-					i++;
-		}
-		return i;
-	}
-	
 	/**
 	 * makes the appropriate moves based on the CTS(client to server) class given. 
 	 * This only occurs once both players have chosen an action 
-	 * (move, or change pokemon) specified with integers 2 and 3 
+	 * (move, or change Pokemon) specified with integers 2 and 3 
 	 * respectively in the CTS class. This method will call all the other methods
 	 * needed to make player moves such as calculate damage, switchPokemon. 
 	 */
-	public synchronized void makePlayerMoves(){
+	public synchronized void makePlayerMoves () {
 		
-		// player one had a fainted pokmeon in the previous turn and had to pick pokemon from party
+		// player one had a fainted pokmeon in the previous turn and had to pick Pokemon from party
 		if(ctsOne.action == 4){
 			playerOneSwitch();
 			
@@ -219,9 +184,9 @@ public class Server {
 			playerTwoMadeMove = false;
 			return;
 		}
-		// player two had a fainted pokmeon in the previous turn and had to pick pokemon from party
-		if(ctsTwo.action == 4){
-			// send stcTwo to player who did not switch pokemon in this case Player ONE
+		// player two had a fainted Pokmeon in the previous turn and had to pick Pokemon from party
+		if (ctsTwo.action == 4) {
+			// send stcTwo to player who did not switch Pokemon in this case Player ONE
 			playerTwoSwitch();
 			
 			resetActionCount();
@@ -230,28 +195,28 @@ public class Server {
 			return;
 		}
 		
-		// player one switches pokmeon
-		if(ctsOne.action == 3){
+		// player one switches Pokmeon
+		if (ctsOne.action == 3) {
 			playerOneSwitch();
 		}
 			
-		// player two switches pokemon
-		if(ctsTwo.action == 3){
+		// player two switches Pokemon
+		if (ctsTwo.action == 3) {
 			playerTwoSwitch();
 		}
 		
 		imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
-		// get the speeds of the pokemon currently in play
+		// get the speeds of the Pokemon currently in play
 		int playerOneSpeed = partyOne.get(0).getAllStats().get("Speed");
 		int playerTwoSpeed = partyTwo.get(0).getAllStats().get("Speed");
 		
 		// now we handle cases where the players made an attack
 		
-		// playerOne has faster pokemon, goes first
-		if(playerOneSpeed >= playerTwoSpeed){
+		// playerOne has faster Pokemon, goes first
+		if (playerOneSpeed >= playerTwoSpeed) {
 			// player one attacks
-			if(ctsOne.action == 2){
+			if (ctsOne.action == 2) {
 				playerOneAttack();
 				try {
 					Thread.sleep(1500);
@@ -261,12 +226,12 @@ public class Server {
 			}
 			
 			// player two attacks
-			if((ctsTwo.action == 2) && (!partyTwo.get(0).isFainted())){			
+			if ((ctsTwo.action == 2) && (!partyTwo.get(0).isFainted())) {			
 				playerTwoAttack();
 			}
-		}else if(playerTwoSpeed > playerOneSpeed){		// playerTwo has faster pokemon goes first
+		} else if (playerTwoSpeed > playerOneSpeed) {		// playerTwo has faster pokemon goes first
 			// player two attacks
-			if(ctsTwo.action == 2){
+			if(ctsTwo.action == 2) {
 				playerTwoAttack();
 				try {
 					Thread.sleep(1500);
@@ -276,7 +241,7 @@ public class Server {
 			}
 			
 			// player one attacks
-			if((ctsOne.action == 2) && (!partyOne.get(0).isFainted())){
+			if ((ctsOne.action == 2) && (!partyOne.get(0).isFainted())) {
 				playerOneAttack();
 			}
 		}
@@ -287,7 +252,7 @@ public class Server {
 		
 	}
 	
-	public void playerOneSwitch(){
+	public void playerOneSwitch () {
 		ServerToClient stcSwitching = null;
 		ServerToClient stcNotSwitching = null;
 		switchPokemon(ctsOne.pokemonChosen - 1, 1);
@@ -296,10 +261,10 @@ public class Server {
 		imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 		
-		// send stcOne to player who switched pokemon. In this case Player ONE
+		// send stcOne to player who switched Pokemon. In this case Player ONE
 		stcSwitching = new ServerToClient(3, 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
 				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerOneDamageTaken, "");
-		// send stcTwo to player who did not switch pokemon. In this case Player TWO
+		// send stcTwo to player who did not switch Pokemon. In this case Player TWO
 		stcNotSwitching = new ServerToClient(2, 2, partyTwo, 1, imageOne, partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerTwoDamageTaken, "");
 		
@@ -312,7 +277,7 @@ public class Server {
 		}
 	}
 	
-	public void playerTwoSwitch(){
+	public void playerTwoSwitch () {
 		ServerToClient stcSwitching = null;
 		ServerToClient stcNotSwitching = null;
 		switchPokemon(ctsTwo.pokemonChosen - 1, 2);
@@ -321,10 +286,10 @@ public class Server {
 		imageOne = "./images/frontSprites/" + partyOne.get(0).getName() + ".gif";
 		imageTwo = "./images/frontSprites/" + partyTwo.get(0).getName() + ".gif";
 		
-		// send stcOne to player who switched pokemon. In this case Player TWO
+		// send stcOne to player who switched Pokemon. In this case Player TWO
 		stcSwitching = new ServerToClient(3, 2, partyTwo, 1, imageOne,partyOne.get(0).getName(), 
 				partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(), 6, "", playerOneDamageTaken, "");
-		// send stcTwo to player who did not switch pokemon. In this case Player ONE
+		// send stcTwo to player who did not switch Pokemon. In this case Player ONE
 		stcNotSwitching = new ServerToClient(2 , 1, partyOne, 1, imageTwo,partyTwo.get(0).getName(), 
 				partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(), 6, "", playerTwoDamageTaken, "");
 		sendSTC(stcNotSwitching, true);
@@ -336,8 +301,7 @@ public class Server {
 		}
 	}
 	
-	public void playerOneAttack(){
-		int playerOneDamageTaken = 0;
+	public void playerOneAttack () {
 		int playerTwoDamageTaken = 0;
 		boolean missed = false;
 		boolean lose = false;
@@ -345,18 +309,18 @@ public class Server {
 		ServerToClient stcDefending = null;
 		
 		// player one attacks
-		if(ctsOne.action == 2){
+		if (ctsOne.action == 2) {
 			int player2currentHp=partyTwo.get(0).getCurrentHP();
 			Move moveUsed = partyOne.get(0).getMoves().get(ctsOne.moveChosen-1);
 			missed=attack(false , moveUsed);
-			if(!missed){
+			if (!missed) {
 				playerTwoDamageTaken=player2currentHp-partyTwo.get(0).getCurrentHP();
-			}else{
+			} else {
 				playerTwoDamageTaken = -1;
 			}
 			lose=playerLost(false);//check loss
 			//lose = false;
-			if(lose){
+			if (lose) {
 				//game ends
 				stcAttacking = new ServerToClient(9,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
@@ -365,8 +329,8 @@ public class Server {
 				stcDefending = new ServerToClient(8,2,partyTwo, 0,imageOne, partyOne.get(0).getName(),
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
 						0,"",playerTwoDamageTaken, moveUsed.getName());
-			}else if(partyTwo.get(0).getCurrentHP()==0){	//checks faint
-				// opponent's pokemon has fainted.
+			} else if (partyTwo.get(0).getCurrentHP()==0) {	//checks faint
+				// opponent's Pokemon has fainted.
 				stcAttacking = new ServerToClient(7,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
@@ -375,7 +339,7 @@ public class Server {
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
 						getPokemonAlive(false),"",playerTwoDamageTaken, moveUsed.getName());
 				
-			}else{	// attack did not faint oppoenent's pokemon
+			} else {	// attack did not faint oppoenent's Pokemon
 				stcAttacking = new ServerToClient(5,1, partyOne, 0, imageTwo, partyTwo.get(0).getName(), 
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true), "", playerTwoDamageTaken, moveUsed.getName());
@@ -389,26 +353,25 @@ public class Server {
 		}
 	}
 	
-	public void playerTwoAttack(){
+	public void playerTwoAttack () {
 		int playerOneDamageTaken = 0;
-		int playerTwoDamageTaken = 0;
 		boolean missed = false;
 		boolean lose = false;
 		ServerToClient stcAttacking = null;
 		ServerToClient stcDefending = null;
 		// player two attacks
-		if(ctsTwo.action == 2){
+		if (ctsTwo.action == 2) {
 			int player1currentHp=partyOne.get(0).getCurrentHP();
 			Move moveUsed = partyTwo.get(0).getMoves().get(ctsTwo.moveChosen-1);
 			missed=attack(true , moveUsed);
-			if(!missed){
+			if (!missed) {
 				playerOneDamageTaken=player1currentHp-partyOne.get(0).getCurrentHP();
-			}else{
+			} else {
 				playerOneDamageTaken = -1;
 			}
 			lose=playerLost(true);//check loss
 			//lose = false;
-			if(lose){
+			if (lose) {
 				//game ends
 				// playerTwo is attacking
 				stcAttacking = new ServerToClient(9,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
@@ -419,8 +382,8 @@ public class Server {
 				stcDefending = new ServerToClient(8,1,partyOne, 0,imageTwo, partyTwo.get(0).getName(),
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						0,"",playerOneDamageTaken, moveUsed.getName());
-			}else if(partyOne.get(0).getCurrentHP()==0){	//checks faint
-				// opponent's pokemon has fainted.
+			} else if (partyOne.get(0).getCurrentHP()==0){	//checks faint
+				// opponent's Pokemon has fainted.
 				// playerTwo is attacking
 				stcAttacking = new ServerToClient(7,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
@@ -431,7 +394,7 @@ public class Server {
 						partyTwo.get(0).getCurrentHP(), partyTwo.get(0).getMaxHP(),
 						getPokemonAlive(true),"",playerOneDamageTaken, moveUsed.getName());
 							
-			}else{	// attack did not faint oppoenent's pokemon
+			} else {	// attack did not faint oppoenent's Pokemon
 				// playerTwo is attacking
 				stcAttacking = new ServerToClient(5,2, partyTwo, 0, imageOne, partyOne.get(0).getName(), 
 						partyOne.get(0).getCurrentHP(), partyOne.get(0).getMaxHP(),
@@ -447,16 +410,13 @@ public class Server {
 		}
 	}
 	
-	void switchPokemon(int number,int playerNumber)
-	{	
-		if(playerNumber == 1)
-		{
+	void switchPokemon (int number,int playerNumber) {	
+		if(playerNumber == 1) {
 			Pokemon temp = partyOne.get(number);
 			partyOne.set(number,partyOne.get(0));
 			partyOne.set(0,temp);
 		}
-		else if(playerNumber == 2)
-		{
+		else if (playerNumber == 2) {
 			Pokemon temp = partyTwo.get(number);
 			partyTwo.set(number,partyTwo.get(0));
 			partyTwo.set(0,temp);
@@ -464,7 +424,7 @@ public class Server {
 	}
 	
 	//Parsing functions
-	private static void parseMoves(){
+	private static void parseMoves () {
 		try {
 			Scanner moveReader = new Scanner(new File("./data/Moves.csv"));
 			moveReader.useDelimiter("(,)|(\n)");
@@ -486,7 +446,7 @@ public class Server {
 		}	
 	}
 	
-	private static void parsePokemon(){
+	private static void parsePokemon () {
 		try{
 			Scanner pokemonReader = new Scanner(new File("./data/Pokemon.csv"));
 			pokemonReader.useDelimiter("(,)|(\\n)");
@@ -524,9 +484,8 @@ public class Server {
 		}
 	}
 	
-	
 	//Generates six random Pokemon for a Player
-	private static ArrayList<Pokemon> generatePokemon(){
+	private static ArrayList<Pokemon> generatePokemon () {
 		ArrayList<Pokemon> pokemonParty = new ArrayList<Pokemon>();
 		
 		while (pokemonParty.size() < 6){
@@ -547,30 +506,26 @@ public class Server {
 	 * @param move is the move determined by the CTS class sent to the server
 	 * by the attacking player.
 	 * @return true if the attack missed
-	 * pokemon false otherwise
+	 * Pokemon false otherwise
 	 * 
 	 */
-	private boolean attack(boolean player, Move move){
+	private boolean attack (boolean player, Move move) {
 		
 		int dmg = calculateDamage(player, move);
 		
 		//player1 attacked by player 2
-		if(player)
-		{
-			if(dmg == -1)
-			{
+		if(player) {
+			if(dmg == -1) {
 				dmg=0;
 				partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
 				return true;
 			}
-			
-			else
-			{
-				if(dmg >= partyOne.get(0).getCurrentHP()){
+			else {
+				if (dmg >= partyOne.get(0).getCurrentHP()) {
 					partyOne.get(0).setCurrentHP(0);
 					return false;
 				}
-				else{
+				else {
 					partyOne.get(0).setCurrentHP(partyOne.get(0).getCurrentHP()-dmg);
 					return false;
 				}
@@ -578,22 +533,18 @@ public class Server {
 		}
 		
 		//p2 attacked by p1
-		else
-		{
-			if(dmg == -1)
-			{
+		else {
+			if(dmg == -1) {
 				dmg=0;
 				partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
 				return true;
 			}
-			
-			else
-			{
-				if(dmg >= partyTwo.get(0).getCurrentHP()){
+			else {
+				if (dmg >= partyTwo.get(0).getCurrentHP()) {
 					partyTwo.get(0).setCurrentHP(0);
 					return false;
 				}
-				else{
+				else {
 					partyTwo.get(0).setCurrentHP(partyTwo.get(0).getCurrentHP()-dmg);
 					return false;
 				}
@@ -610,7 +561,7 @@ public class Server {
 	 * @return true if the given player lost
 	 * 
 	 */
-	private boolean playerLost(boolean player){
+	private boolean playerLost (boolean player) {
 		return (getPokemonAlive(player) == 0);
 	}
 	
@@ -631,16 +582,16 @@ public class Server {
 	 * by the attacking player
 	 * @return the amount of damage calculated
 	 */
-	private int calculateDamage(boolean player, Move move){
+	private int calculateDamage (boolean player, Move move) {
 		Pokemon defendingPokemon;
 		Pokemon attackingPokemon;
 		
 		Map<String,Integer> defendingStats;
 		Map<String, Integer> attackingStats;
-		if(player){
+		if (player) {
 			defendingPokemon = partyOne.get(0);
 			attackingPokemon = partyTwo.get(0);
-		}else{
+		} else {
 			defendingPokemon = partyTwo.get(0);
 			attackingPokemon = partyOne.get(0);
 		}
@@ -652,7 +603,7 @@ public class Server {
 		double damage;
 		Random randGen= new Random();
 		int randomAccuracy = randGen.nextInt((100 - 0) + 1) + 0;
-		if (randomAccuracy >= 100 - move.getAccuracy()){
+		if (randomAccuracy >= 100 - move.getAccuracy()) {
 
 			double typeEffectiveness = getTypeEffectiveness(moveIntType, defendingType);
 			double STAB = getStab(moveIntType, attackingType);
@@ -662,10 +613,10 @@ public class Server {
 			int attackPower;
 			int defenseStat;
 			
-			if(move.isSpecial() ==1){
+			if(move.isSpecial() ==1) {
 				attackStat = attackingStats.get("SpecialAttack");
 				defenseStat = defendingStats.get("SpecialDefense");
-			}else{
+			} else {
 				attackStat = attackingStats.get("Attack");
 				defenseStat = defendingStats.get("Defense");
 			}
@@ -673,11 +624,10 @@ public class Server {
 			Random rand= new Random();
 			int randomNum = rand.nextInt((100 - 85) + 1) + 85;
 			damage = ((( 42 * attackStat * attackPower / defenseStat) / 50) + 2)* STAB * typeEffectiveness * randomNum / 100;
-		}else {
+		} else {
 			//missed
 			damage=-1;
 		}
-		
 		
 		return (int)damage;
 	}
@@ -695,7 +645,7 @@ public class Server {
 	 * @return the type effectiveness caused by the move on the 
 	 * player's pokemon. values are in the range {0.0,0.5,1.0,2.0}
 	 */
-	private double getTypeEffectiveness(int typeOne, int typeTwo){
+	private double getTypeEffectiveness (int typeOne, int typeTwo) {
 		return typeChart[typeOne][typeTwo];
 	}
 	
@@ -705,7 +655,7 @@ public class Server {
 	 * @param typeTwo
 	 * @return the damage modifier 
 	 */
-	private double getModifier(int typeOne, int typeTwo){
+	private double getModifier(int typeOne, int typeTwo) {
 		return 0.0;	
 	}
 	
@@ -715,20 +665,20 @@ public class Server {
 	 * @param pokemonType is the type of the attacking pokemon
 	 * @return return stab multipliers
 	 */
-	private double getStab(int moveType, int pokemonType){
-		if( moveType == pokemonType)
+	private double getStab (int moveType, int pokemonType) {
+		if (moveType == pokemonType)
 			return 1.5;
 		else
 			return 1.0;
 	}
 	
 	//Extra functions for testing/randomizing
-	private static void testParsers(){
+	private static void testParsers () {
 		for (int i=1; i<allPokemon.size()+1; i++)
 			allPokemon.get(i).printAllStats();;
 	}
 	
-	public static int randInt(int min, int max) {
+	public static int randInt (int min, int max) {
 	    Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
 	    return randomNum;
@@ -741,10 +691,10 @@ public class Server {
 	 * ctsTwo to cts;
 	 * @param cts the client to server class object from server thread
 	 */
-	public synchronized void setCTS(boolean player, ClientToServer cts){
-		if(player){
+	public synchronized void setCTS (boolean player, ClientToServer cts) {
+		if(player) {
 			ctsOne = cts;
-		}else{
+		} else {
 			ctsTwo = cts;
 		}
 	}
@@ -753,15 +703,15 @@ public class Server {
 	 * increments playerAction. Note this value should not go above 2
 	 * For explanation of what justifies an action see {@link resetActionCount()}
 	 */
-	public synchronized void incrementActionCount(){
+	public synchronized void incrementActionCount () {
 		actionCount++;
 	}
 	
-	public synchronized void decrementActionCount(){
+	public synchronized void decrementActionCount () {
 		actionCount--;
 	}
 	
-	public synchronized int getActionCount(){
+	public synchronized int getActionCount () {
 		return actionCount;
 	}
 	
@@ -771,7 +721,7 @@ public class Server {
 	 * is either an attack, or a pokemon switch. A chat message is not
 	 * a player action
 	 */
-	public void resetActionCount(){
+	public void resetActionCount () {
 		actionCount = 0;
 	}
 	
@@ -779,7 +729,7 @@ public class Server {
 	 * Sends chat message to player two
 	 * @param cts is the given chat message to player one
 	 */
-	public synchronized void sendMessageToPlayerTwo(ClientToServer cts){
+	public synchronized void sendMessageToPlayerTwo (ClientToServer cts) {
 		try {
 			outToClientP2.writeObject(new ServerToClient(1, 2, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP2.flush();
@@ -792,7 +742,7 @@ public class Server {
 	 * Sends chat message to player one 
 	 * @param cts is the given cts class from player two 
 	 */
-	public synchronized void sendMessageToPlayerOne(ClientToServer cts){
+	public synchronized void sendMessageToPlayerOne (ClientToServer cts) {
 		try {
 			outToClientP1.writeObject(new ServerToClient(1, 1, null, 0, null,null,0, 0, 0, cts.message, 0, ""));
 			outToClientP1.flush();
@@ -802,19 +752,19 @@ public class Server {
 	}
 	
 	//Send a STC class once the action count has reached 2
-	public void sendSTC(ServerToClient stc, boolean player){
+	public void sendSTC (ServerToClient stc, boolean player) {
 		
-		try{
+		try {
 			outToClientP1.reset();
 			outToClientP2.reset();
-			if(player){
+			if (player) {
 				outToClientP1.writeObject(stc);
 				outToClientP1.flush();
-			}else{
+			} else {
 				outToClientP2.writeObject(stc);
 				outToClientP2.flush();
 			}
-		}catch(IOException e){
+		} catch (IOException e) {
 			//e.printStackTrace();
 		}
 	}
@@ -827,17 +777,17 @@ public class Server {
 	 * @return the number of non-fainted pokemon left in the
 	 * party
 	 */
-	public int getPokemonAlive(boolean one){
+	public int getPokemonAlive (boolean one) {
 		int count = 6;
-		if(one){
-			for(Pokemon p: partyOne){
-				if(p.isFainted()){
+		if (one) {
+			for(Pokemon p: partyOne) {
+				if (p.isFainted()) {
 					count--;
 				}
 			}
-		}else{
-			for(Pokemon p: partyTwo){
-				if(p.isFainted()){
+		} else {
+			for (Pokemon p: partyTwo) {
+				if (p.isFainted()) {
 					count--;
 				}
 			}
@@ -845,7 +795,7 @@ public class Server {
 		return count;
 	}
 
-	public static void main (String [] args){
+	public static void main (String [] args) {
 		//Parsing all Pokemon moves and Pokemon
 		parseMoves();
 		parsePokemon();

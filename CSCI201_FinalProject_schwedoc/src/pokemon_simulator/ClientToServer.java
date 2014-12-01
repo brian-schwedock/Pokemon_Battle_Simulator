@@ -1,9 +1,20 @@
+/*
+ * Team members: Brian Schwedock, Ryan Chen,
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
+ */
+
+/**
+ * ClientToServer is the class sent from the Client to the Server and
+ * tells the server that an attack, switch, cancellation, or message
+ * has been made
+ */
+
 package pokemon_simulator;
 
 import java.io.Serializable;
 
 public class ClientToServer implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	int action;

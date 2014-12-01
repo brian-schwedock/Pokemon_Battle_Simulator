@@ -1,15 +1,18 @@
-//Changed name from ServerListener to ClientThread
+/*
+ * Team members: Brian Schwedock, Ryan Chen,
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
+ */
 
-//The job of this class is to listen to messages (ServerToClient)
-//and call the corresponding functions in GameApplication
-
-//This class will never send information to the Server
-//GameApplication will be the only class to send information to the Server
+/**
+ *The job of this class is to listen to messages (ServerToClient)
+ *and call the corresponding functions in GameApplication
+ *
+ *This class will never send information to the Server
+ *GameApplication will be the only class to send information to the Server
+*/
 
 package pokemon_simulator;
 
-import java.awt.CardLayout;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -48,12 +51,12 @@ public class ClientThread extends Thread {
 				opposingPlayerName = "Player 1";
 		
 			
-			if (stc.action == 1){
+			if (stc.action == 1) {
 				//Opposing player sent a chat message
 				
 				ga.addChatMessage(stc.message, opposingPlayerName);
 			}
-			else if (stc.action == 2){
+			else if (stc.action == 2) {
 				//Opposing player switched Pokemon
 				
 				ga.setOpposingPokemonImage(stc.opposingPokemonImage);
@@ -66,7 +69,7 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 				ga.enableCancel(false);
 			}
-			else if (stc.action == 3){
+			else if (stc.action == 3) {
 				//You switched Pokemon
 				
 				ga.setAllPokemon(stc.allPokemon);
@@ -76,10 +79,10 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 				ga.enableCancel(false);
 			}
-			else if (stc.action == 4){
+			else if (stc.action == 4) {
 				//Opposing player used a move and did not faint your Pokemon
 				//damageTaken == -1 means that the move missed
-				if (stc.damageTaken != -1){
+				if (stc.damageTaken != -1) {
 					ga.setAllPokemon(stc.allPokemon);
 					ga.resetBottomPanel();
 					
@@ -92,7 +95,7 @@ public class ClientThread extends Thread {
 					ga.addMessage(message1);
 					ga.addMessage(message2);
 				}
-				else{					
+				else {					
 					String message1 = "The opposing " + stc.opposingPokemonName + " used " + stc.attackName + "!";
 					String message2 = "The attack missed!";
 					
@@ -103,11 +106,11 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 				ga.enableCancel(false);
 			}
-			else if (stc.action == 5){
+			else if (stc.action == 5) {
 				//You used a move and did not faint opposing Pokemon
 				//damageTaken == -1 means that the move missed
 				
-				if (stc.damageTaken != -1){
+				if (stc.damageTaken != -1) {
 					ga.setOpposingPokemonCurrentHP (stc.opposingCurrentHP);
 					
 					int percentDamage = stc.damageTaken * 100 / stc.opposingMaxHP;
@@ -120,7 +123,7 @@ public class ClientThread extends Thread {
 					ga.addMessage(message1);
 					ga.addMessage(message2);
 				}
-				else{
+				else {
 					String message1 = stc.allPokemon.get(0).getName() + " used " + stc.attackName + "!";
 					String message2 = "The attack missed!";
 					
@@ -131,7 +134,7 @@ public class ClientThread extends Thread {
 				changeBottomPanel++;
 				ga.enableCancel(false);
 			}
-			else if (stc.action == 6){
+			else if (stc.action == 6) {
 				//Opposing player used a move and fainted your Pokemon
 				//And you still have unfainted Pokemon
 				
@@ -154,7 +157,7 @@ public class ClientThread extends Thread {
 				ga.changeBottomPanel (3);
 				changeBottomPanel = 1;
 			}
-			else if (stc.action == 7){
+			else if (stc.action == 7) {
 				//You used a move and fainted the opposing Pokemon
 				//And opponent still has unfainted Pokemon
 				
@@ -177,7 +180,7 @@ public class ClientThread extends Thread {
 				
 				changeBottomPanel = 1;
 			}
-			else if (stc.action == 8){
+			else if (stc.action == 8) {
 				//You lose
 				
 				ga.crossoutFaintedPokemon();
@@ -220,11 +223,10 @@ public class ClientThread extends Thread {
 				
 				ga.won(true);
 			}
-
-
 			
-			if (changeBottomPanel >= 2){
-				ga.changeBottomPanel (1);
+			
+			if (changeBottomPanel >= 2) {
+				ga.changeBottomPanel(1);
 				ga.enableCancel(true);
 				changeBottomPanel = 0;
 			}

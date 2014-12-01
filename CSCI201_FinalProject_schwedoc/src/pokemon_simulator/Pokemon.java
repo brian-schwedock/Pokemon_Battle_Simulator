@@ -1,3 +1,12 @@
+/*
+ * Team members: Brian Schwedock, Ryan Chen,
+ * Allen Shi, Chris Holmes, Jonathan Luu, and Alejandro Lopez
+ */
+
+/**
+ * Pokemon contains all information pertinent to one particular Pokemon
+ */
+
 package pokemon_simulator;
 
 import java.awt.Image;
@@ -9,6 +18,9 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 
 public class Pokemon implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String type;
 	private int currentHP;
@@ -30,8 +42,6 @@ public class Pokemon implements Serializable {
 		allStats.put("SpecialAttack", spAtk);
 		allStats.put("SpecialDefense", spDef);
 		allStats.put("Speed", spd);
-
-		//setImages();
 	}
 	
 	public void setImages () {
@@ -67,10 +77,9 @@ public class Pokemon implements Serializable {
 		return type;
 	}
 	
-	// sets the hp based on 
-	public void setCurrentHP (int newHP){
+	public void setCurrentHP (int newHP) {
 		currentHP = newHP;
-		if(currentHP<=0){
+		if(currentHP<=0) {
 			currentHP=0;
 		}
 	}
@@ -82,13 +91,14 @@ public class Pokemon implements Serializable {
 	public int getMaxHP () {
 		return maxHP;
 	}
-	public boolean isFainted()
-	{
+	
+	public boolean isFainted () {
 		if(currentHP == 0)
 			return true;
 		return false;
 	}
-	public void printAllStats(){
+	
+	public void printAllStats () {
 		System.out.println("Name:" + name + "   Type:" + type + "   HP:" + maxHP);
 		System.out.println("Attack:" + allStats.get("Attack") + "   Defense:" + allStats.get("Defense"));
 		System.out.print("Sp. Attack:" + allStats.get("SpecialAttack") + "   Special Defense" + allStats.get("SpecialDefense"));
