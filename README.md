@@ -39,3 +39,7 @@ In the chat box, type the following words to send an emoji
 + rip
 + pjsalt
 + rektbox
+
+#####Issues
++ Occasionally, odd glitches such as the game freezing occur
++ An error message related to the sound prints at the beginning without interrupting game flow
